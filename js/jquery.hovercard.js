@@ -54,8 +54,6 @@
 
             //toggle hover card details on hover
             obj.closest(".hc-preview").hover(function () {
-							console.log('klick!');
-
                 var $this = $(this);
                 adjustToViewPort($this);
 
