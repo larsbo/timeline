@@ -12,7 +12,7 @@ jQuery(document).ready(function($){
 	});
 
 	/* show mini map of the timeline */
-	$('#content').minimap();
+	$('#timeline').minimap();
 
 	var events = $('.event');
 
