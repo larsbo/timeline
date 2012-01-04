@@ -1,4 +1,5 @@
 jQuery(document).ready(function($){
+	var events = $('.event');
 
 /* iScroll */
 	var myScroll = new iScroll('wrapper',{
@@ -13,8 +14,18 @@ jQuery(document).ready(function($){
 
 	/* show mini map of the timeline */
 	$('#timeline').minimap();
+	$('#mini-map').click(function(e){
+		var mousePosition = e.pageX;
+		var offset = $(this).offset();
+		var viewSize = $('#current-view').width();
+		var newPosition = (mousePosition - viewSize/2 + 5 - offset.left) * -8;
 
-	var events = $('.event');
+console.log('viewSize: ' + viewSize);
+console.log('newPosition: ' + newPosition);
+
+		myScroll.scrollTo(newPosition, 0, 200);
+	});
+
 
 	/* show/hide event names */
 	$('#options').find('.button').click(function(){
