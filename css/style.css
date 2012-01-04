@@ -371,3 +371,54 @@ h1,h2,h3,h4,h5,h6 {
 	-o-box-shadow:inset 1px 1px 0 rgba(255,255,255,0.5);
 	box-shadow:inset 1px 1px 0 rgba(255,255,255,0.5);
 }
+
+
+/* mini-map */
+#mini-map {
+	background:#666;
+	bottom: 20px;
+	left:20px;
+	opacity:0.3;
+	position: fixed;
+	z-index: 21;
+	-webkit-transition: opacity 1s ease;
+	-moz-transition: opacity 1s ease;
+	-o-transition: opacity 1s ease;
+	transition: opacity 1s ease;
+}
+#mini-map #current-view {
+	border:1px solid #000;
+	background:none;
+	margin:-1px 0 0 -4px;
+	position:absolute;
+	z-index:22;
+}
+#mini-map div {
+	position: absolute;
+	background: #EAEAEA;
+	width: 100%;
+}
+	#mini-map div.h1 {
+		background: #666;
+	}
+	#mini-map div.h2 {
+		background: #999;
+	}
+	#mini-map div.h3 {
+		background: #CCC;
+	}
+	#mini-map div.p {
+		background: #F9F9F9;
+	}
+	#mini-map div.ul {
+		background: #FCC;
+	}
+	#mini-map div.ol {
+		background: #F60;
+	}
+	#mini-map div.figure {
+		background: #F4F4F4;
+	}
+	#mini-map div.pre {
+		background: #0Cf;
+	}
