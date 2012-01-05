@@ -89,8 +89,9 @@ h1 {
 	background-image:-ms-linear-gradient(top, #eee, #ccc);
 	background-image:-o-linear-gradient(top, #eee, #ccc);
 	background-image:linear-gradient(top, #eee, #ccc);
-	font-size:10px;
 	font-family:Arial, Helvetica;
+	font-size:10px;
+	font-weight:bold;
 	line-height:12px;
 	margin:0.5em;
 	padding:3px 5px 4px;
@@ -149,16 +150,12 @@ h1 {
 
 
 /**** EVENT DETAILS *****/
-.hc-preview {
+.event-preview {
 	display:block;
 	position:absolute;
 }
-.hc-name {
-	display:inline-block;
-	font-weight:bold;
-	position:relative;
-}
-.hc-details {
+.event-details {
+	background:#fff;
 	border:solid 1px #ddd;
 	cursor:default;
 	display:none;
@@ -175,24 +172,11 @@ h1 {
 	-webkit-box-shadow:5px 5px 5px #888;
 	box-shadow:5px 5px 5px #888;
 }
-.hc-pic {
+.event-img {
 	float:right;
 	margin-top:-1em;
 	width:70px;
 }
-.hc-details-open-left {
-	left:auto;
-	right:-10px;
-	text-align:right;
-	margin-left:80px;
-	margin-right:0;
-}
-.hc-details-open-top {
-	bottom:-10px;
-	top:auto;
-	padding:10px 10px 2em;
-}
-
 
 /***** TABLE *****/
 .bordered {
@@ -333,7 +317,7 @@ h1 {
 /***** MINI-MAP *****/
 #map-container {
 	float:left;
-	margin:10px 50px;
+	margin:10px 20px;
 	position:relative;
 }
 	#map-container p {
@@ -356,7 +340,7 @@ h1 {
 	#mini-map #current-view {
 		border:1px solid #000;
 		background:none;
-		margin:-1px 0 0 -4px;
+		margin:-2px;
 		position:absolute;
 	}
 	#current-view .line {
@@ -388,6 +372,9 @@ h1 {
 	}
 	#mini-map div.p {
 		background:#F9F9F9;
+	}
+	#mini-map div.span {
+		background:#06c;
 	}
 	#mini-map div.th {
 		background:#eee;

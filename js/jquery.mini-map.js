@@ -1,71 +1,49 @@
 /* 
 jQuery Mini-Map plugin copyright Sam Croft <samcroft@gmail.com>
+extended for timeline use copyright Lars Borchert <borchert.lars@gmail.com>
 Licensed like jQuery - http://docs.jquery.com/License
 */
 (function($){
 	$.fn.minimap = function(){
 		var miniMap = $('#mini-map');
 		var miniMapCurrentView = $('#current-view');
-		var offsetX, offsetY;
-		var mapIconX, mapIconY, yearIconLeft;
 
 		var el = this;
-		var elPosition = el.offset();
-		var events = el.find('.event');
 		var years = el.find('th');
+		var events = el.find('.event');
 
-		miniMap.height(el.height()/8 + 10);
-		miniMap.width(el.width()/8);
-		miniMapCurrentView.height(el.height()/8 + 10);
-		miniMapCurrentView.width($(window).width()/8);
+		miniMap.height(Math.round(el.height()/8) + 10);
+		miniMap.width(Math.round(el.width()/8));
+		miniMapCurrentView.height(Math.round(el.height()/8) + 12);
+		miniMapCurrentView.width(Math.round($(window).width()/8));
 
 		years.each(function(i,t){
-			if (i % 5 == 0) {	// show every 10th year
+			if (i % 5 == 0) {	// show every 5th year
 				var year = $(this);
 				var yearCoords = year.offset();
-				yearIconLeft = (yearCoords.left/8);
 
 				var mapIcon = $('<div>' + year.text() + '</div>');
 				mapIcon
 				.css({
 					'width': 18, 
-					'left': yearIconLeft
+					'left': Math.round(yearCoords.left/8)
 				})
 				.addClass(t.tagName.toLowerCase())
 				.appendTo(miniMap);
-
 			}
 		});
 
 		events.each(function(i,t){
 			var event = $(this);
 			var eventCoords = event.offset();
-			var mapIconHeight = event.height()/8;
-			var mapIconWidth = event.width()/8;
-			var mapIconMarginLeft = parseInt(event.css('margin-left'))/8;
-			var mapIconMarginRight = parseInt(event.css('margin-right'))/8;
-			var mapIconMarginTop = parseInt(event.css('margin-top'))/8;
-			var mapIconMarginBottom = parseInt(event.css('margin-bottom'))/8;
-
-			if (i == 0) {
-				mapIconX = (eventCoords.left/8) - mapIconMarginLeft;
-				mapIconY = (eventCoords.top/8) - mapIconMarginTop;
-			} else {
-				mapIconX = (eventCoords.left/8) + offsetX;
-				mapIconY = (eventCoords.top/8) + offsetY;
-			}
-			offsetX = mapIconMarginLeft + mapIconMarginRight;
-			offsetY = mapIconMarginTop + mapIconMarginBottom;
 
 			var mapIcon = $('<div>');
 			mapIcon
 			.css({
-				'height': mapIconHeight, 
-				'width': mapIconWidth, 
-				'margin-left': mapIconMarginLeft, 
-				'margin-right': mapIconMarginRight, 
-				'left': mapIconX,
-				'top': mapIconY
+				'height': Math.round(event.height()/8), 
+				'width': Math.round(event.width()/8), 
+				'left': Math.round(eventCoords.left/8),
+				'top': Math.round(eventCoords.top/8) + 3
 			})
 			.addClass(t.tagName.toLowerCase())
 			.appendTo(miniMap);
