@@ -47,10 +47,10 @@ jQuery(document).ready(function($){
 			var event = $(this);
 			switch (input.val()) {
 				case 'long':
-					event.show().html(event.attr('data-title'));
+					event.show().width(event.attr('data-width')).html(event.attr('data-title'));
 					break;
 				case 'short':
-					event.show().html('+');
+					event.show().width('').html('+');
 					break;
 				case 'hidden':
 					event.hide();
@@ -60,16 +60,9 @@ jQuery(document).ready(function($){
 	});
 
 	/* show event details */
-	var end = 0;
 	events.each(function(){
 		var $this = $(this);
-		var pos = $this.position();
 		var id = $this.attr('data-event');
-
-		if (pos.left < end) {
-			$this.css('top', '40px');
-		}
-		end = pos.left + Math.round($this.width());
 
 		$this.hovercard({
 			detailsHTML: $('#event-' + id).html()

@@ -36,6 +36,21 @@ h1 {
 }
 
 /***** TIMELINE *****/
+#wrapper {
+	bottom:0;
+	left:0;
+	overflow:auto;
+	position:absolute;
+	top:80px;
+	width:100%;
+	z-index:1;
+}
+#scroller {
+	float:left;
+	height:100%;
+	padding:0;
+	width:5000px;
+}
 #timeline {
 	*border-collapse:collapse;
 	background:#fff url(../images/bg.png);
@@ -52,7 +67,6 @@ h1 {
 		text-align:center;
 		text-shadow:0 1px 0 rgba(255, 255, 255, 0.9);
 		vertical-align:middle;
-		width:80px;
 	}
 	#timeline td {
 		border-left:1px solid #ccc;
@@ -68,7 +82,6 @@ h1 {
 	color:#333;
 	cursor:pointer;
 	display:inline-block;
-	font:bold 1em/2em Arial, Helvetica;
 	background-color:#ddd;
 	background-image:-webkit-gradient(linear, left top, left bottom, from(#eee), to(#ccc));
 	background-image:-webkit-linear-gradient(top, #eee, #ccc);
@@ -76,11 +89,13 @@ h1 {
 	background-image:-ms-linear-gradient(top, #eee, #ccc);
 	background-image:-o-linear-gradient(top, #eee, #ccc);
 	background-image:linear-gradient(top, #eee, #ccc);
+	font-size:10px;
+	font-family:Arial, Helvetica;
+	line-height:12px;
 	margin:0.5em;
-	padding:0 0.9em;
+	padding:3px 5px 4px;
 	position:absolute;
 	text-shadow:0 1px 0 rgba(255,255,255,.8);
-	white-space:nowrap;
 	-moz-border-radius: .2em;
 	-webkit-border-radius: .2em;
 	border-radius: .2em;
@@ -145,6 +160,7 @@ h1 {
 }
 .hc-details {
 	border:solid 1px #ddd;
+	cursor:default;
 	display:none;
 	line-height:1.5em;
 	margin-right:80px;
@@ -191,7 +207,6 @@ h1 {
 .bordered td, .bordered th {
 	border-left:1px solid #ccc;
 	border-top:1px solid #ccc;
-	padding:10px;
 	text-align:left;
 }
 .bordered th {
@@ -204,6 +219,7 @@ h1 {
 	background:linear-gradient(top,  #eeeeee 0%,#cccccc 100%);
 	filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#cccccc',GradientType=0 );
 	border-top: none;
+	padding:10px;
 	text-shadow:0 1px 0 rgba(255,255,255,.5);
 	-webkit-box-shadow:0 1px 0 rgba(255,255,255,.8) inset;
 	-moz-box-shadow:0 1px 0 rgba(255,255,255,.8) inset;
@@ -290,7 +306,8 @@ h1 {
 
 /***** OPTIONS *****/
 #options-container {
-	margin:5px;
+	float:left;
+	margin:10px;
 }
 	#options-container p {
 		color:#333;
@@ -315,9 +332,9 @@ h1 {
 
 /***** MINI-MAP *****/
 #map-container {
-	right:10px;
-	position:absolute;
-	top:10px;
+	float:left;
+	margin:10px 50px;
+	position:relative;
 }
 	#map-container p {
 		color:#333;
@@ -381,22 +398,6 @@ h1 {
 
 
 /***** iSCROLL *****/
-#wrapper {
-	bottom:0;
-	left:0;
-	overflow:auto;
-	position:absolute;
-	top:80px;
-	width:100%;
-	z-index:1;
-}
-#scroller {
-	float:left;
-	height:100%;
-	padding:0;
-	width:4000px;
-}
-
 .scrollbarH {
 	bottom:1px;
 	height:8px;
