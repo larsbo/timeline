@@ -1,7 +1,10 @@
 jQuery(document).ready(function($){
-	var events = $('.event');
 
-/* iScroll */
+	/* messages */
+	$().message();
+
+
+	/* iScroll */
 	var myScroll = new iScroll('wrapper',{
 		checkDOMChanges: true,
 		scrollbarClass: 'scrollbar',
@@ -14,21 +17,20 @@ jQuery(document).ready(function($){
 
 	/* show mini map of the timeline */
 	$('#timeline').minimap();
+
 	$('#mini-map').click(function(e){
+		var map = $(this);
 		var mousePosition = e.pageX;
-		var offset = $(this).offset();
-		var viewSize = $('#current-view').width();
-		var newPosition = (mousePosition - viewSize/2 + 5 - offset.left) * -8;
-
-console.log('viewSize: ' + viewSize);
-console.log('newPosition: ' + newPosition);
-
+		var offset = map.offset();
+		var view = $('#current-view').outerWidth() / 2 - 5;
+		var newPosition = (mousePosition - view - offset.left) * -8;
 		myScroll.scrollTo(newPosition, 0, 200);
 	});
 
 
 	/* show/hide event names */
-	$('#options').find('.button').click(function(){
+	var events = $('.event');
+	$('#options-container').find('.button').click(function(){
 		var elem = $(this);
 		var input = elem.next();
 		var li = elem.parent();

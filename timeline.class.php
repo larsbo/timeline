@@ -43,8 +43,8 @@ class Timeline {
 	function getEvents() {
 		$events = array();
 
-		$query = mysql_query('select * from events');
-		while ($event = mysql_fetch_object($query)) {
+		$query = @mysql_query('select * from events');
+		while ($event = @mysql_fetch_object($query)) {
 			$events[] = $event;
 		}
 		return $events;

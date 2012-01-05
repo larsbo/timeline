@@ -1,10 +1,3 @@
-<?php
-include 'inc/config.php';
-include 'inc/application_top.php';
-include 'timeline.class.php';
-
-$timeline = new Timeline(1930, 1960);
-?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,41 +11,46 @@ $timeline = new Timeline(1930, 1960);
   <script type="text/javascript" src="js/run.js"></script>
 </head>
 <body>
+<?php
+include 'inc/config.php';
+include 'inc/application_top.php';
+include 'timeline.class.php';
 
-<div id="options-container">
-  <form>
-    <p>Ereignisse anzeigen:</p>
-    <ul>
-      <li class="selected">
-        <a href="#" class="button" title="1">lang</a>
-        <input name="event-style" value="long" type="radio" checked />
-      </li>
-      <li>
-        <a href="#" class="button" title="2">kurz</a>
-        <input name="event-style" value="short" type="radio" />
-      </li>
-      <li>
-        <a href="#" class="button" title="3">ausblenden</a>
-        <input name="event-style" value="hidden" type="radio" />
-      </li>
-    </ul>
-  </form>
-</div>
-
-<div id="map-container">
-  <p>&Uuml;bersicht:</p>
-  <div id="mini-map">
-    <div id="current-view"></div>
+$timeline = new Timeline(1930, 1980);
+?>
+<div id="page">
+  <div id="options-container">
+    <form>
+      <p>Ereignisse anzeigen:</p>
+      <ul>
+        <li class="selected">
+          <a href="#" class="button" title="1">lang</a>
+          <input name="event-style" value="long" type="radio" checked />
+        </li>
+        <li>
+          <a href="#" class="button" title="2">kurz</a>
+          <input name="event-style" value="short" type="radio" />
+        </li>
+        <li>
+          <a href="#" class="button" title="3">ausblenden</a>
+          <input name="event-style" value="hidden" type="radio" />
+        </li>
+      </ul>
+    </form>
   </div>
-</div>
-
-<div id="wrapper">
-  <div id="scroller">
+  <div id="map-container">
+    <div id="mini-map">
+      <div id="current-view">
+        <div class="line"></div>
+      </div>
+    </div>
+  </div>
+  <div id="wrapper">
+    <div id="scroller">
 <?php $timeline->output('events'); ?>
+    </div>
   </div>
-</div>
-
 <?php $timeline->output('details'); ?>
-
+</div>
 </body>
 </html>
