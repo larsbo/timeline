@@ -24,15 +24,15 @@ $timeline = new Timeline(1930, 1980);
       <p>Ereignisse anzeigen:</p>
       <ul>
         <li class="selected">
-          <a href="#" class="button" title="1">lang</a>
+          <a href="#" class="button" title="lange Ereignisse anzeigen">lang</a>
           <input name="event-style" value="long" type="radio" checked />
         </li>
         <li>
-          <a href="#" class="button" title="2">kurz</a>
+          <a href="#" class="button" title="kurze Ereignisse anzeigen">kurz</a>
           <input name="event-style" value="short" type="radio" />
         </li>
         <li>
-          <a href="#" class="button" title="3">ausblenden</a>
+          <a href="#" class="button" title="Ereignisse ausblenden">ausblenden</a>
           <input name="event-style" value="hidden" type="radio" />
         </li>
       </ul>

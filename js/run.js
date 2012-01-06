@@ -3,30 +3,19 @@ jQuery(document).ready(function($){
 	/* messages */
 	$().message();
 
-
 	/* iScroll */
-	var myScroll = new iScroll('wrapper',{
+	var timeline = new iScroll('wrapper',{
 		checkDOMChanges: true,
 		scrollbarClass: 'scrollbar',
 		vScroll: false,
 		vScrollbar: false,
 		onScrollEnd: function(){
-			$('#current-view').css('left', -myScroll.x/8);
+			$('#current-view').css('left', -timeline.x/8);
 		}
 	});
 
 	/* show mini map of the timeline */
-	$('#timeline').minimap();
-
-	$('#mini-map').click(function(e){
-		var map = $(this);
-		var mousePosition = e.pageX;
-		var offset = map.offset();
-		var view = $('#current-view').outerWidth() / 2 - 5;
-		var newPosition = (mousePosition - view - offset.left) * -8;
-		myScroll.scrollTo(newPosition, 0, 200);
-	});
-
+	$('#timeline').minimap(timeline);
 
 	/* show/hide event names */
 	var events = $('.event');

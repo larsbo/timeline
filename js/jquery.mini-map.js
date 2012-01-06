@@ -4,21 +4,23 @@ extended for timeline use copyright Lars Borchert <borchert.lars@gmail.com>
 Licensed like jQuery - http://docs.jquery.com/License
 */
 (function($){
-	$.fn.minimap = function(){
-		var miniMap = $('#mini-map');
-		var miniMapCurrentView = $('#current-view');
-
+	$.fn.minimap = function(timeline){
 		var el = this;
 		var years = el.find('th');
 		var events = el.find('.event');
+		var clicked = false;
+		var miniMap = $('#mini-map');
+		var miniMapCurrentView = $('#current-view');
 
 		miniMap.height(Math.round(el.height()/8) + 10);
 		miniMap.width(Math.round(el.width()/8));
+
 		miniMapCurrentView.height(Math.round(el.height()/8) + 12);
 		miniMapCurrentView.width(Math.round($(window).width()/8));
 
+		// show every 5th year
 		years.each(function(i,t){
-			if (i % 5 == 0) {	// show every 5th year
+			if (i % 5 == 0) {
 				var year = $(this);
 				var yearCoords = year.offset();
 
@@ -33,6 +35,7 @@ Licensed like jQuery - http://docs.jquery.com/License
 			}
 		});
 
+		// show events
 		events.each(function(i,t){
 			var event = $(this);
 			var eventCoords = event.offset();
@@ -47,6 +50,35 @@ Licensed like jQuery - http://docs.jquery.com/License
 			})
 			.addClass(t.tagName.toLowerCase())
 			.appendTo(miniMap);
+		});
+
+		miniMapCurrentView.mousedown(function(){
+			clicked = true;
+		});
+
+		miniMap.mouseup(function(e){
+			clicked = false;
+
+			var view = $('#current-view');
+			var mousePosition = e.pageX;
+			var offset =  $(this).offset();
+			var viewCenter = Math.round(view.width()/2);
+			var newPosition = Math.round((mousePosition - viewCenter - offset.left) * -8);
+
+			view.css('cursor', 'pointer');
+			timeline.scrollTo(newPosition, 0, 200);
+		});
+
+		miniMapCurrentView.mousemove(function(e){
+			if (clicked) {
+				var view = $(this);
+				var mousePosition = e.pageX;
+				var offset = view.parent().offset();
+				var viewCenter = Math.round(view.width()/2);
+				var newPosition = mousePosition - viewCenter - offset.left;
+
+				view.css({'cursor': 'ew-resize', 'left': newPosition});
+			}
 		});
 	};
 
