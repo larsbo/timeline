@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>Timeline</title>
-  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
   <script type="text/javascript" src="js/iscroll.js"></script>
   <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
   <script type="text/javascript" src="js/jquery.hovercard.js"></script>
