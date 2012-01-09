@@ -67,7 +67,7 @@ class Timeline {
 					$event['length'] = max(1, $event['end_year'] - $event['start_year'] + 1) * TL_COLUMN_WIDTH - TL_EVENT_PADDING_X;
 					$event['line'] = $event['line'] * TL_EVENT_PADDING_Y;
 					$this->events_output .= "
-            <span class=\"event\" style=\"width:".$event['length']."px;top:".$event['line']."px\" data-event=\"".$event['event_id']."\" data-title=\"".$event['title']."\" data-width=\"".$event['length']."\">".$event['title']."</span>\n          ";
+            <span class=\"event\" style=\"width:".$event['length']."px;top:".$event['line']."px\" data-event=\"".$event['event_id']."\" data-title=\"".$event['title']."\" data-width=\"".$event['length']."\">".$event['title']."</span>";
 				}
 			}
 			$this->events_output .= "</td>\n";
