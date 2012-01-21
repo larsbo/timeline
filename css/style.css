@@ -146,9 +146,6 @@ body h1 {
   -moz-border-radius: 0.15em 0 0 0.15em;
   -webkit-border-radius: 0.15em 0 0 0.15em;
 }
-.event-details {
-  display: none;
-}
 /**** EVENT DETAILS *****/
 .event-preview {
   display: block;
@@ -196,6 +193,9 @@ body h1 {
   border-top: 1px solid #ccc;
   text-align: left;
 }
+.bordered td:first-child, .bordered th:first-child {
+  border-left: none;
+}
 .bordered th {
   background: #eeeeee;
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #eeeeee), color-stop(100%, #cccccc));
@@ -212,9 +212,6 @@ body h1 {
   -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset;
   -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset;
 }
-.bordered td:first-child, .bordered th:first-child {
-  border-left: none;
-}
 .bordered th:first-child {
   border-radius: 6px 0 0 0;
   -o-border-radius: 6px 0 0 0;
@@ -222,24 +219,28 @@ body h1 {
   -webkit-border-radius: 6px 0 0 0;
 }
 .bordered th:last-child {
+  border-radius: 0 6px 0 0;
+  -o-border-radius: 0 6px 0 0;
   -moz-border-radius: 0 6px 0 0;
   -webkit-border-radius: 0 6px 0 0;
-  border-radius: 0 6px 0 0;
 }
 .bordered th:only-child {
+  border-radius: 6px 6px 0 0;
+  -o-border-radius: 6px 6px 0 0;
   -moz-border-radius: 6px 6px 0 0;
   -webkit-border-radius: 6px 6px 0 0;
-  border-radius: 6px 6px 0 0;
 }
 .bordered tr:last-child td:first-child {
+  border-radius: 0 0 0 6px;
+  -o-border-radius: 0 0 0 6px;
   -moz-border-radius: 0 0 0 6px;
   -webkit-border-radius: 0 0 0 6px;
-  border-radius: 0 0 0 6px;
 }
 .bordered tr:last-child td:last-child {
+  border-radius: 0 0 6px 0;
+  -o-border-radius: 0 0 6px 0;
   -moz-border-radius: 0 0 6px 0;
   -webkit-border-radius: 0 0 6px 0;
-  border-radius: 0 0 6px 0;
 }
 /***** BUTTON *****/
 .button {
@@ -361,7 +362,7 @@ body h1 {
 #mini-map #current-view:hover .line {
   border-right: 1px solid #aaa;
 }
-#mini-map div {
+#mini-map #current-view div {
   background: #EAEAEA;
   color: #333;
   font-size: 8px;
@@ -374,25 +375,25 @@ body h1 {
   -moz-user-select: none;
   -khtml-user-select: none;
 }
-#mini-map div.h1 {
+#mini-map #current-view div.h1 {
   background: #666;
 }
-#mini-map div.h2 {
+#mini-map #current-view div.h2 {
   background: #999;
 }
-#mini-map div.h3 {
-  background: #CCC;
+#mini-map #current-view div.h3 {
+  background: #ccc;
 }
-#mini-map div.p {
+#mini-map #current-view div.p {
   background: #F9F9F9;
 }
-#mini-map div.span {
+#mini-map #current-view div.span {
   background: #06c;
 }
-#mini-map div.th {
+#mini-map #current-view div.th {
   background: #eee;
 }
-#mini-map div.pre {
+#mini-map #current-view div.pre {
   background: #0Cf;
 }
 /***** iSCROLL *****/
@@ -416,14 +417,14 @@ body h1 {
   background-image: -ms-linear-gradient(top, #258dc8 0%, #258dc8 100%);
   background-image: -moz-linear-gradient(top, #258dc8 0%, #258dc8 100%);
   background-image: -webkit-linear-gradient(top, #258dc8 0%, #258dc8 100%);
-  -webkit-background-clip: padding-box;
-  -moz-background-clip: padding-box;
-  -o-background-clip: padding-box;
   background-clip: padding-box;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -o-box-sizing: border-box;
+  -o-background-clip: padding-box;
+  -moz-background-clip: padding-box;
+  -webkit-background-clip: padding-box;
   box-sizing: border-box;
+  -o-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
   border-radius: 4px;
   -o-border-radius: 4px;
   -moz-border-radius: 4px;
