@@ -144,16 +144,19 @@ class DB
 	}
 
 	static function checkForTableCont($sql, $expectedFields) {
-		//TODO check for proper sql --- code-injection
-		$count = sizeof($expectedFields);
+		$imax = sizeof($expectedFields);
+		//assertion: expectedFields are sorted...
 
 		$results = DB::queryAssoc($sql);
-		if ($results == null)
-			return true;
+		if ($results == false)
+			return false;
+		else if ($results == null)
+			return $expectedFields;
 		else {
-			Log::debug("got some results with size: ".sizeof($results));
-			if (sizeof($results) != $count)
-				return true;
+			$jmax = sizeof($results);
+			Log::debug("got some results with size: ".$jmax);
+	//		if (sizeof($results) != $imax)
+	//			return true;
 
 			$fields = array();
 			foreach ($results as $r) {
@@ -162,10 +165,26 @@ class DB
 
 			Log::debug("found ".sizeof($fields)." fields, expected: ".$count);
 			sort($fields);
-			for ($i=0; $i<$count; $i++)
-				if (strcmp(strtolower($expectedFields[$i]), strtolower($fields[$i])))
-					return true;
+			$missingFields = array();
+			$j=0;$i=0;
+			while ($i<$imax && $j<$jmax) {
+				if ($res = strcmp(strtolower($expectedFields[$i]), strtolower($fields[$j]))) {
+					if ($res < 0) {
+						$missingFields[] = $expectedFields[$i];
+						$i++;
+					}
+					else
+						$j++;
+				}
+				else {
+					$i++;
+					$j++;
+				}
+			}
+			if (sizeof($missingFields) > 0)
+				return $missingFields;
 			Log::debug("all fields match => we aint need no update...");
+			return 0;
 		}
 
 		return false;

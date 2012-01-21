@@ -21,6 +21,28 @@ class Timeline {
 	}
 
 
+	static function checkAndUpdateTable() {
+		$tablediff = DB::checkForTable('events', 
+			array('start_year', 'end_year', 'title', 'details'));
+		
+		if ($tablediff != 0) {
+			//the table is in some wrong state .... need to update or create
+			if ($tablediff == false) {
+				//table is missing?
+			
+				//TODO create Table...
+			}
+			else {
+				//all fields in $tablediff are missing...
+				
+				//TODO alter table ....
+			}
+		}
+		else
+			return true;
+	}
+
+
 	function getEvents() {
 		$this->events = DB::queryAssoc('SELECT * FROM events');
 		// sort events by start_year
