@@ -80,7 +80,7 @@ class Timeline {
 
 	function createDetailsOutput() {
 		foreach ($this->events as $event) {
-			$this->details_output .= "<div id=\"event-".$event['event_id']."\" class=\"event-details\">".$event['details']."</div>\n";
+			$this->details_output .= "<div id=\"event-".$event['event_id']."\" class=\"event-detail\">".$event['details']."</div>\n";
 		}
 	}
 

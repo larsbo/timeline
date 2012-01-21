@@ -57,7 +57,9 @@ $timeline = new Timeline(1930, 1980);
 <?php $timeline->output('events'); ?>
     </div>
   </div>
+  <div class="eventdetails">
 <?php $timeline->output('details'); ?>
+  </div>
 </div>
 </body>
 </html>
