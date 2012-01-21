@@ -460,26 +460,26 @@ body h1 {
   -webkit-animation: animate-bg 5s linear infinite;
   -moz-animation: animate-bg 5s linear infinite;
 }
-.info {
+.msg .info {
   background-color: #4ea5cd;
   border-color: #3b8eb5;
 }
-.error {
+.msg .error {
   background-color: #de4343;
   border-color: #c43d3d;
 }
-.warning {
+.msg .warning {
   background-color: #eaaf51;
   border-color: #d99a36;
 }
-.success {
+.msg .success {
   background-color: #61b832;
   border-color: #55a12c;
 }
-.message h3 {
+.msg h3 {
   margin: 0 0 5px 0;
 }
-.message p {
+.msg p {
   margin: 0;
 }
 @-webkit-keyframes animate-bg {

@@ -1,4 +1,7 @@
 <?php
+
+require_once('db.class.php');
+
 class Timeline {
 	private $events;
 	private $matrix;
@@ -19,11 +22,7 @@ class Timeline {
 
 
 	function getEvents() {
-		$this->events = array();
-		$result = mysql_query('select * from events');
-		while ($event = mysql_fetch_array($result, MYSQL_ASSOC)) {
-			$this->events[] = $event;
-		}
+		$this->events = DB::queryAssoc('SELECT * FROM events');
 		// sort events by start_year
 		usort($this->events, array($this, 'custom_sort'));
 		// count events
@@ -50,37 +49,35 @@ class Timeline {
 
 
 	function createEventsOutput() {
-		$this->events_output = "    <table id=\"timeline\" class=\"bordered\">
-      <thead>
-        <tr>\n";
+		$this->events_output = "\t<table id=\"timeline\" class=\"bordered\">
+\t\t<thead>\n\t\t\t<tr>\n";
 		for ($year = $this->start_year; $year < $this->end_year; $year++) {
-			$this->events_output .= "          <th width=\"".TL_COLUMN_WIDTH."\">".$year."</th>\n";
+			$this->events_output .= "\t\t\t\t<th width=\"".TL_COLUMN_WIDTH."\">".$year."</th>\n";
 		}
-		$this->events_output .= "        </tr>
-      </thead>
-      <tbody>
-        <tr id=\"content\">\n";
+		$this->events_output .= "\t\t\t</tr>
+\t\t</thead>
+\t\t<tbody>
+\t\t\t<tr id=\"content\">\n";
 		for ($year = $this->start_year; $year < $this->end_year; $year++) {
-			$this->events_output .= "          <td>";
+			$this->events_output .= "\t\t\t\t<td>";
 			foreach ($this->events as $event) {
 				if ($event['start_year'] == $year) {
 					$event['length'] = max(1, $event['end_year'] - $event['start_year'] + 1) * TL_COLUMN_WIDTH - TL_EVENT_PADDING_X;
 					$event['line'] = $event['line'] * TL_EVENT_PADDING_Y;
-					$this->events_output .= "
-            <span class=\"event\" style=\"width:".$event['length']."px;top:".$event['line']."px\" data-event=\"".$event['event_id']."\" data-title=\"".$event['title']."\" data-width=\"".$event['length']."\">".$event['title']."</span>";
+					$this->events_output .= "\t\t\t\t\t<span class=\"event\" style=\"width:".$event['length']."px;top:".$event['line']."px\" data-event=\"".$event['event_id']."\" data-title=\"".$event['title']."\" data-width=\"".$event['length']."\">".$event['title']."</span>";
 				}
 			}
-			$this->events_output .= "</td>\n";
+			$this->events_output .= "\t\t\t\t</td>\n";
 		}
-		$this->events_output .= "        </tbody>
-      </tr>
-    </table>\n";
+		$this->events_output .= "\t\t\t</tr>
+\t\t</tbody>
+\t</table>\n";
 	}
 
 
 	function createDetailsOutput() {
 		foreach ($this->events as $event) {
-			$this->details_output .= "<div id=\"event-".$event['event_id']."\" class=\"event-detail\">".$event['details']."</div>\n";
+			$this->details_output .= "\t\t<div id=\"event-".$event['event_id']."\" class=\"event-detail\">".$event['details']."</div>\n";
 		}
 	}
 

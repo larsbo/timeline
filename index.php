@@ -19,8 +19,6 @@
 </head>
 <body>
 <?php
-include 'inc/config.php';
-include 'inc/application_top.php';
 include 'class/timeline.class.php';
 
 $timeline = new Timeline(1930, 1980);
