@@ -23,7 +23,8 @@ class Timeline {
 
 	static function checkAndUpdateTable() {
 		$tablediff = DB::checkForTable('events', 
-			array('details', 'end_year', 'start_year', 'title'));
+			array('details', 'end_year', 'event_id', 'start_year', 'title'));
+			//this has to be sorted ...
 		
 		//the table is in some wrong state .... need to update or create
 		
@@ -32,12 +33,14 @@ class Timeline {
 			Log::debug("we have to create the table");
 			$sql = <<<EOD
 CREATE TABLE IF NOT EXISTS `events` (
+  `event_id` INT( 11 ) NOT NULL AUTO_INCREMENT,
   `title` varchar(30) NOT NULL,
   `details` text NOT NULL,
   `start_year` int(4) NOT NULL,
   `end_year` int(4) NOT NULL,
-  PRIMARY KEY (`title`),
-  KEY `start_year` (`start_year`,`end_year`)
+  PRIMARY KEY (`id`),
+  KEY `start_year` (`start_year`),
+  KEY `end_year` (`end_year`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 EOD;
 
