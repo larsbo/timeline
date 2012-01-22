@@ -151,7 +151,7 @@ body h1 {
   display: block;
   position: absolute;
 }
-.event-detail {
+.event-details {
   background: #fff;
   border: solid 1px #ddd;
   cursor: default;

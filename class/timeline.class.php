@@ -95,7 +95,7 @@ EOD;
 		$c = Config::getInstance();
 
 		$this->events_output = <<<EOD
-\t<table id=\"timeline\" class=\"bordered\">
+\t<table id="timeline" class="bordered">
 \t\t<thead>
 \t\t\t<tr>\n
 EOD;
@@ -106,7 +106,7 @@ EOD;
 \t\t\t</tr>
 \t\t</thead>
 \t\t<tbody>
-\t\t\t<tr id=\"content\">\n
+\t\t\t<tr id="content">\n
 EOD;
 		for ($year = $this->start_year; $year < $this->end_year; $year++) {
 			$this->events_output .= "\t\t\t\t<td>\n";
@@ -129,7 +129,7 @@ EOD;
 
 	function createDetailsOutput() {
 		foreach ($this->events as $event) {
-			$this->details_output .= "\t\t<div id=\"event-".$event['event_id']."\" class=\"event-detail\">".$event['details']."</div>\n";
+			$this->details_output .= "\t<div id=\"event-".$event['event_id']."\" class=\"event-details\">".$event['details']."</div>\n";
 		}
 	}
 

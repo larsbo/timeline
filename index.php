@@ -55,7 +55,7 @@ $timeline = new Timeline($c->startdate, $c->enddate);
 <?php $timeline->output('events'); ?>
     </div>
   </div>
-  <div class="eventdetails">
+  <div class="eventbox">
 <?php $timeline->output('details'); ?>
   </div>
   <div class="debug">
