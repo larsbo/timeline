@@ -1,7 +1,7 @@
 <?php
 	include 'class/timeline.class.php';
 
-	if (Timeline::checkAndUpdateTable())
+	if (Timeline::checkAndUpdateTable() == 'created')
 		Timeline::insertTestData();
 	
 	$debugmessages = Log::getInstance()->getDebugMsg();

@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `events` (
 EOD;
 
 			Log::debug("got: '".implode(",", DB::queryAssoc($sql))."'");
-			return true;
+			return 'created';
 		}
 		else if (sizeof($tablediff) > 0) {
 			//all fields in $tablediff are missing...
@@ -54,10 +54,10 @@ EOD;
 			$sql = <<<EOD
 ALTER TABLE `events` ADD `test` TEXT NOT NULL, `testTwo` TEXT NOT NULL;
 EOD;
-			return true;
+			return 'updated';
 		}
 		else
-			return true;
+			return 'found';
 	}
 
 	static function insertTestData() {
