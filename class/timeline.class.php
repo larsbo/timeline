@@ -97,7 +97,7 @@ EOD;
 		$this->events_output = <<<EOD
 \t<table id=\"timeline\" class=\"bordered\">
 \t\t<thead>
-\t\t\t<tr>
+\t\t\t<tr>\n
 EOD;
 		for ($year = $this->start_year; $year < $this->end_year; $year++) {
 			$this->events_output .= "\t\t\t\t<th width=\"".$c->tl_column_width."\">".$year."</th>\n";
@@ -106,15 +106,15 @@ EOD;
 \t\t\t</tr>
 \t\t</thead>
 \t\t<tbody>
-\t\t\t<tr id=\"content\">
+\t\t\t<tr id=\"content\">\n
 EOD;
 		for ($year = $this->start_year; $year < $this->end_year; $year++) {
-			$this->events_output .= "\t\t\t\t<td>";
+			$this->events_output .= "\t\t\t\t<td>\n";
 			foreach ($this->events as $event) {
 				if ($event['start_year'] == $year) {
 					$event['length'] = max(1, $event['end_year'] - $event['start_year'] + 1) * $c->tl_column_width - $c->tl_event_padding_x;
 					$event['line'] = $event['line'] * $c->tl_event_padding_y;
-					$this->events_output .= "\t\t\t\t\t<span class=\"event\" style=\"width:".$event['length']."px;top:".$event['line']."px\" data-event=\"".$event['event_id']."\" data-title=\"".$event['title']."\" data-width=\"".$event['length']."\">".$event['title']."</span>";
+					$this->events_output .= "\t\t\t\t\t<span class=\"event\" style=\"width:".$event['length']."px;top:".$event['line']."px\" data-event=\"".$event['event_id']."\" data-title=\"".$event['title']."\" data-width=\"".$event['length']."\">".$event['title']."</span>\n";
 				}
 			}
 			$this->events_output .= "\t\t\t\t</td>\n";
@@ -122,7 +122,7 @@ EOD;
 		$this->events_output .= <<<EOD
 \t\t\t</tr>
 \t\t</tbody>
-\t</table>
+\t</table>\n
 EOD;
 	}
 
