@@ -362,7 +362,7 @@ body h1 {
 #mini-map #current-view:hover .line {
   border-right: 1px solid #aaa;
 }
-#mini-map #current-view div {
+#mini-map div {
   background: #EAEAEA;
   color: #333;
   font-size: 8px;
@@ -375,25 +375,25 @@ body h1 {
   -moz-user-select: none;
   -khtml-user-select: none;
 }
-#mini-map #current-view div.h1 {
+#mini-map div.h1 {
   background: #666;
 }
-#mini-map #current-view div.h2 {
+#mini-map div.h2 {
   background: #999;
 }
-#mini-map #current-view div.h3 {
+#mini-map div.h3 {
   background: #ccc;
 }
-#mini-map #current-view div.p {
+#mini-map div.p {
   background: #F9F9F9;
 }
-#mini-map #current-view div.span {
+#mini-map div.span {
   background: #06c;
 }
-#mini-map #current-view div.th {
+#mini-map div.th {
   background: #eee;
 }
-#mini-map #current-view div.pre {
+#mini-map div.pre {
   background: #0Cf;
 }
 /***** iSCROLL *****/
