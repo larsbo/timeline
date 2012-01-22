@@ -30,7 +30,6 @@ class Timeline {
 		if ($tablediff === null) {
 			//table is missing?
 			Log::debug("we have to create the table");
-			//TODO create Table...
 			$sql = <<<EOD
 CREATE TABLE IF NOT EXISTS `events` (
   `title` varchar(30) NOT NULL,
