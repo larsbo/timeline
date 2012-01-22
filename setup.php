@@ -1,7 +1,8 @@
 <?php
 	include 'class/timeline.class.php';
 
-	Timeline::checkAndUpdateTable();
+	if (Timeline::checkAndUpdateTable())
+		Timeline::insertTestData();
 	
 	$debugmessages = Log::getInstance()->getDebugMsg();
 	foreach($debugmessages as $msg) {

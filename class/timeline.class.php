@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS `events` (
 EOD;
 
 			Log::debug("got: '".implode(",", DB::queryAssoc($sql))."'");
+			return true;
 		}
 		else if (sizeof($tablediff) > 0) {
 			//all fields in $tablediff are missing...
@@ -50,11 +51,15 @@ EOD;
 			$sql = <<<EOD
 ALTER TABLE `events` ADD `test` TEXT NOT NULL, `testTwo` TEXT NOT NULL;
 EOD;
+			return true;
 		}
 		else
 			return true;
 	}
 
+	static function insertTestData() {
+		//TODO
+	}
 
 	function getEvents() {
 		$this->events = DB::queryAssoc('SELECT * FROM events');
