@@ -23,20 +23,34 @@ class Timeline {
 
 	static function checkAndUpdateTable() {
 		$tablediff = DB::checkForTable('events', 
-			array('start_year', 'end_year', 'title', 'details'));
+			array('details', 'end_year', 'start_year', 'title'));
 		
-		if ($tablediff != 0) {
-			//the table is in some wrong state .... need to update or create
-			if ($tablediff == false) {
-				//table is missing?
-			
-				//TODO create Table...
-			}
-			else {
-				//all fields in $tablediff are missing...
-				
-				//TODO alter table ....
-			}
+		//the table is in some wrong state .... need to update or create
+		
+		if ($tablediff === null) {
+			//table is missing?
+			Log::debug("we have to create the table");
+			//TODO create Table...
+			$sql = <<<EOD
+CREATE TABLE IF NOT EXISTS `events` (
+  `title` varchar(30) NOT NULL,
+  `details` text NOT NULL,
+  `start_year` int(4) NOT NULL,
+  `end_year` int(4) NOT NULL,
+  PRIMARY KEY (`title`),
+  KEY `start_year` (`start_year`,`end_year`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+EOD;
+
+			Log::debug("got: '".implode(",", DB::queryAssoc($sql))."'");
+		}
+		else if (sizeof($tablediff) > 0) {
+			//all fields in $tablediff are missing...
+			Log::debug("the table is missing these fields: ".implode(",", $tablediff));
+			//TODO alter table ....
+			$sql = <<<EOD
+ALTER TABLE `events` ADD `test` TEXT NOT NULL, `testTwo` TEXT NOT NULL;
+EOD;
 		}
 		else
 			return true;

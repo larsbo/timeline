@@ -18,11 +18,13 @@ class DB
 			if ( !$this->db_connect_id = mysql_connect($oConfig->db_host . ":" . $oConfig->db_port,
 				$oConfig->db_user,
 				$oConfig->db_passwd) ) {
+				Log::debug("could not login using ".$oConfig->db_user."@".$oConfig->db_host.":".$oConfig->db_port);
 				return false;
 			}
 
 			if ( !mysql_select_db($oConfig->db_name, $this->db_connect_id) ) {
 				$this->sql_close();
+				Log::debug("could not select database: ".$oConfig->db_name);
 				return false;
 			}
 			$this->sql_query("SET NAMES 'utf8'");
@@ -148,22 +150,23 @@ class DB
 		//assertion: expectedFields are sorted...
 
 		$results = DB::queryAssoc($sql);
-		if ($results == false)
-			return false;
-		else if ($results == null)
+		if ($results == false) {
+			Log::debug("got invalid query ... table does not exist?!");
+			return null;
+		}
+		else if ($results == null) {
+			Log::debug("got empty result ... need to insert all fields");
 			return $expectedFields;
+		}
 		else {
 			$jmax = sizeof($results);
-			Log::debug("got some results with size: ".$jmax);
-	//		if (sizeof($results) != $imax)
-	//			return true;
 
 			$fields = array();
 			foreach ($results as $r) {
 				$fields[] = $r['Field'];
 			}
 
-			Log::debug("found ".sizeof($fields)." fields, expected: ".$count);
+			Log::debug("found ".sizeof($fields)." fields, expected: ".$imax);
 			sort($fields);
 			$missingFields = array();
 			$j=0;$i=0;
@@ -183,11 +186,12 @@ class DB
 			}
 			if (sizeof($missingFields) > 0)
 				return $missingFields;
-			Log::debug("all fields match => we aint need no update...");
-			return 0;
-		}
 
-		return false;
+			else {
+				Log::debug("all fields found => we aint need no update...");
+				return array();
+			}
+		}
 	}
 
 	/** returns true or false, wether some $tablename has all $expectedFields **/
