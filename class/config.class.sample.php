@@ -27,17 +27,17 @@ class Config {
 
 		switch ($host) {
 		case 'sowas-such-ich.de':
-			$db_host = 'localhost';
-			$db_user = 'web25';
-			$db_passwd = 'borchert42';
-			$db_name = 'usr_web25_1';
+			$this->db_host = 'localhost';
+			$this->db_user = 'web25';
+			$this->db_passwd = 'borchert42';
+			$this->db_name = 'usr_web25_1';
 			break;
 
 		default:
-			$db_host = 'localhost';
-			$db_user = 'timeline_user';
-			$db_passwd = 'timeline_pass';
-			$db_name = 'timeline';
+			$this->db_host = 'localhost';
+			$this->db_user = 'timeline_user';
+			$this->db_passwd = 'timeline_pass';
+			$this->db_name = 'timeline';
 		}
 	}
 
