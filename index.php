@@ -20,8 +20,8 @@
 <body>
 <?php
 include 'class/timeline.class.php';
-
-$timeline = new Timeline(1930, 1980);
+$c = Config::getInstance();
+$timeline = new Timeline($c->startdate, $c->enddate);
 ?>
 <div id="page">
   <div id="options-container">

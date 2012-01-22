@@ -21,6 +21,8 @@ class Config {
 	public $tl_column_width = 100;
 	public $tl_event_padding_x = 26;
 	public $tl_event_padding_y = 40;
+	public $startdate = 1930;
+	public $enddate = 1980;
 
 	private function Config() {
 		$host = $_SERVER['HTTP_HOST'];
