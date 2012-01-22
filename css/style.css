@@ -460,19 +460,19 @@ body h1 {
   -webkit-animation: animate-bg 5s linear infinite;
   -moz-animation: animate-bg 5s linear infinite;
 }
-.msg .info {
+.msg.info, .msg.debug {
   background-color: #4ea5cd;
   border-color: #3b8eb5;
 }
-.msg .error {
+.msg.error {
   background-color: #de4343;
   border-color: #c43d3d;
 }
-.msg .warning {
+.msg.warning {
   background-color: #eaaf51;
   border-color: #d99a36;
 }
-.msg .success {
+.msg.success {
   background-color: #61b832;
   border-color: #55a12c;
 }

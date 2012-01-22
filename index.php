@@ -58,6 +58,13 @@ $timeline = new Timeline($c->startdate, $c->enddate);
   <div class="eventdetails">
 <?php $timeline->output('details'); ?>
   </div>
+  <div class="debug">
+<?php
+	foreach(Log::getInstance()->getDebugMsg() as $msg) { 
+		echo "<div class=\"msg debug\">".$msg."</div>\n";
+	}
+?>
+  </div>
 </div>
 </body>
 </html>
