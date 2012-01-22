@@ -50,10 +50,10 @@ jQuery(document).ready(function($){
 
 	/* show event details */
 	events.each(function(){
-		var $this = $(this);
-		var id = $this.attr('data-event');
+		var event = $(this);
+		var id = event.attr('data-event');
 
-		$this.hovercard({
+		event.hovercard({
 			detailsHTML: $('#event-' + id).html()
 		});
 	});
