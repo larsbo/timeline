@@ -37,9 +37,13 @@ jQuery(document).ready(function($){
 			switch (input.val()) {
 				case 'long':
 					event.show().width(event.attr('data-width')).html(event.attr('data-title'));
+					var id = event.attr('data-event');
+					event.next().html($('#event-' + id).html());
 					break;
 				case 'short':
 					event.show().width('').html('+');
+					var id = event.attr('data-event');
+					event.next().html("<h1>"+event.attr('data-title')+"</h1>"+ $('#event-' + id).html());
 					break;
 				case 'hidden':
 					event.hide();
