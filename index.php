@@ -22,6 +22,7 @@
 include 'class/timeline.class.php';
 $c = Config::getInstance();
 $timeline = new Timeline($c->startdate, $c->enddate);
+$width = max(1,$c->enddate - $c->startdate + 1) * $c->tl_column_width;
 ?>
 <div id="page">
   <div id="options-container">
@@ -51,7 +52,7 @@ $timeline = new Timeline($c->startdate, $c->enddate);
     </div>
   </div>
   <div id="wrapper">
-    <div id="scroller">
+<?php echo "\t<div id=\"scroller\" style=\"width: ".$width."px\">\n" ?>
 <?php $timeline->output('events'); ?>
     </div>
   </div>
