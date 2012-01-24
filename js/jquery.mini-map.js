@@ -4,7 +4,10 @@ extended for timeline use copyright Lars Borchert <borchert.lars@gmail.com>
 Licensed like jQuery - http://docs.jquery.com/License
 */
 (function($){
-	$.fn.minimap = function(timeline){
+	$.fn.minimap = function(timeline, factor){
+		if (!factor) {
+			factor = 8;
+		}
 		var el = this;
 		var years = el.find('th');
 		var events = el.find('.event');
@@ -12,11 +15,13 @@ Licensed like jQuery - http://docs.jquery.com/License
 		var miniMap = $('#mini-map');
 		var miniMapCurrentView = $('#current-view');
 
-		miniMap.height(Math.round(el.height()/8) + 10);
-		miniMap.width(Math.round(el.width()/8));
+		var height = Math.round(el.height()/factor);
+		var width = Math.round(el.width()/factor);
+		miniMap.height(height + 10);
+		miniMap.width(width);
 
-		miniMapCurrentView.height(Math.round(el.height()/8) + 12);
-		miniMapCurrentView.width(Math.round($(window).width()/8));
+		miniMapCurrentView.height(height + 12);
+		miniMapCurrentView.width(Math.round($(window).width()/factor));
 
 		// show every 5th year
 		years.each(function(i,t){
@@ -28,7 +33,7 @@ Licensed like jQuery - http://docs.jquery.com/License
 				mapIcon
 				.css({
 					'width': 18, 
-					'left': Math.round(yearCoords.left/8)
+					'left': Math.round(yearCoords.left/factor)
 				})
 				.addClass(t.tagName.toLowerCase())
 				.appendTo(miniMap);
@@ -43,10 +48,10 @@ Licensed like jQuery - http://docs.jquery.com/License
 			var mapIcon = $('<div>');
 			mapIcon
 			.css({
-				'height': Math.round(event.height()/8), 
-				'width': Math.round(event.width()/8), 
-				'left': Math.round(eventCoords.left/8),
-				'top': Math.round(eventCoords.top/8) + 3
+				'height': Math.round(event.height()/factor), 
+				'width': Math.round(event.width()/factor), 
+				'left': Math.round(eventCoords.left/factor),
+				'top': Math.round(eventCoords.top/factor) + 3
 			})
 			.addClass(t.tagName.toLowerCase())
 			.appendTo(miniMap);
@@ -128,3 +133,4 @@ Licensed like jQuery - http://docs.jquery.com/License
 		showImmediateMessage();
 	};
 })(jQuery);
+
