@@ -113,7 +113,7 @@ EOD;
 \t\t\t<tr>\n
 EOD;
 		for ($year = $this->start_year; $year < $this->end_year; $year++) {
-			$this->events_output .= "\t\t\t\t<th width=\"".$c->tl_column_width."\">".$year."</th>\n";
+			$this->events_output .= "\t\t\t\t<th class=\"date\" style=\"width: ".$c->tl_column_width."px\">".$year."</th>\n";
 		}
 		$this->events_output .= <<<EOD
 \t\t\t</tr>

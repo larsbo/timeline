@@ -9,7 +9,7 @@ Licensed like jQuery - http://docs.jquery.com/License
 			factor = 8;
 		}
 		var el = this;
-		var years = el.find('th');
+		var years = el.find('.date');
 		var events = el.find('.event');
 		var clicked = false;
 		var miniMap = $('#mini-map');
