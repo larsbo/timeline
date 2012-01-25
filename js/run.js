@@ -28,8 +28,8 @@ jQuery(document).ready(function($){
 		input.attr("checked","checked");
 
 		// change button
-		li.siblings().removeClass('selected');
-		li.addClass('selected');
+		li.siblings().find('.button').removeClass('selected');
+		li.find('a').addClass('selected');
 
 		// change events
 		events.each(function(){

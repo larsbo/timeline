@@ -29,8 +29,8 @@ $width = max(1,$c->enddate - $c->startdate + 1) * $c->tl_column_width;
     <form>
       <p>Ereignisse anzeigen:</p>
       <ul>
-        <li class="selected">
-          <a href="#" class="button" title="lange Ereignisse anzeigen">lang</a>
+        <li>
+          <a href="#" class="button selected" title="lange Ereignisse anzeigen">lang</a>
           <input name="event-style" value="long" type="radio" checked />
         </li>
         <li>
