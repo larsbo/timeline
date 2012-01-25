@@ -40,9 +40,16 @@
 				'width': Math.max(options.width, obj.width())
 			});
 			obj.siblings(".event-details").find(".stickit").click(function() {
-				$(this).addClass('selected');
+				var aobj = $(this);
 				var obj = $(this).closest(".event-preview");
-				obj.attr('hovercard-visible', !obj.attr('hovercard-visible'));
+				if (aobj.hasClass('selected')) {
+					aobj.removeClass('selected');
+					obj.attr('hovercard-visible', 'false');
+				}
+				else {
+					$(this).addClass('selected');
+					obj.attr('hovercard-visible', 'true');
+				}
 			});
 
 			//toggle hover card details on hover
