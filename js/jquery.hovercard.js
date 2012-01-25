@@ -31,22 +31,32 @@
 				img = '<img class="event-img" src="' + options.cardImgSrc + '" />';
 			}
 
+			var a = "<div style=\"float: right\"><a class=\"stickit button\" href=\"#\">+</a></div>";
+			var heading = '<h1 style="display: none;">' + obj.html() + '</h1>';
 			//append generated details element after the selected element
-			obj.after('<div class="event-details">' + img + options.detailsHTML + '</div>');
+			obj.after('<div class="event-details">' + heading + img + options.detailsHTML + a + '</div>');
 			obj.siblings(".event-details").eq(0).css({ 
 				'top': obj.css('top'), 
 				'width': Math.max(options.width, obj.width())
+			});
+			obj.siblings(".event-details").find(".stickit").click(function() {
+				$(this).addClass('selected');
+				var obj = $(this).closest(".event-preview");
+				obj.attr('hovercard-visible', !obj.attr('hovercard-visible'));
 			});
 
 			//toggle hover card details on hover
 			obj.closest(".event-preview").hover(function(){
 				var $this = $(this);
+				var val = $this.attr('hovercard-visible');
+				if (!val || val==='false') {
 
-				//Up the z index for the .event to overlay on .event-details
-				$this.css("zIndex", "200");
-				obj.css("zIndex", "100").find('.event-details').css("zIndex", "50");
+					//Up the z index for the .event to overlay on .event-details
+					$this.css("zIndex", "200");
+					obj.css("zIndex", "100").find('.event-details').css("zIndex", "50");
 
-				$this.find(".event-details").eq(0).stop(true, true).delay(options.delay).fadeIn();
+					$this.find(".event-details").eq(0).stop(true, true).delay(options.delay).fadeIn();
+				}
 
 				//Default functionality on hoverin, and also allows callback
 				if (typeof options.onHoverIn == 'function') {
@@ -58,14 +68,22 @@
 				//Undo the z indices 
 				$this = $(this);
 
-				$this.find(".event-details").eq(0).stop(true, true).fadeOut(300, function(){
-					$this.css("zIndex", "0");
-					obj.css("zIndex", "0").find('.event-details').css("zIndex", "0");
+				var val = $this.attr('hovercard-visible');
+				if (!val || val==='false') {
+					$this.find(".event-details").eq(0).stop(true, true).fadeOut(300, function(){
+						$this.css("zIndex", "0");
+						obj.css("zIndex", "0").find('.event-details').css("zIndex", "0");
 
+						if (typeof options.onHoverOut == 'function') {
+							options.onHoverOut.call(this);
+						}
+					});
+				}
+				else {
 					if (typeof options.onHoverOut == 'function') {
 						options.onHoverOut.call(this);
 					}
-				});
+				}
 			});
 		});
 	};
