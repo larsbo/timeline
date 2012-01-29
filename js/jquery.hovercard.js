@@ -23,7 +23,7 @@
 			var obj = $(this);
 
 			//wrap a parent span to the selected element
-			obj.wrap('<div class="event-preview" />');
+			obj.wrap('<div class="event-preview"  style="zIndex: 0" />');
 
 			//if card image src provided then generate the image element
 			var img = '';
@@ -32,7 +32,7 @@
 			}
 
 			//append generated details element after the selected element
-			obj.after('<div class="event-details">' + img + options.detailsHTML + '</div>');
+			obj.after('<div class="event-details" style="zIndex: 1">' + img + options.detailsHTML + '</div>');
 			obj.siblings(".event-details").eq(0).css({ 
 				'top': obj.css('top'), 
 				'width': Math.max(options.width, obj.width())
@@ -42,6 +42,7 @@
 				var selected = $(this);
 				selected.parent().toggleClass('sticky');
 			});
+			obj.css("zIndex", "2");
 
 			//toggle hover card details on hover
 			obj.closest(".event-preview").hover(function(){
@@ -50,8 +51,7 @@
 
 				if (!$this.hasClass('sticky')) {
 					//Up the z index for the .event to overlay on .event-details
-					$this.css("zIndex", "200");
-					obj.css("zIndex", "100").find('.event-details').css("zIndex", "50");
+					$this.css("zIndex", "20");
 
 					// if 'short modus' is active show title on hover
 					if ($('#options-container').find('.selected').data('type') == 'short') {
@@ -59,6 +59,9 @@
 					}
 
 					$this.find(".event-details").eq(0).stop(true, true).delay(options.delay).fadeIn();
+				}
+				else {
+					$this.css("zIndex", $this.css("zIndex") + 1);
 				}
 
 				//Default functionality on hoverin, and also allows callback
@@ -81,7 +84,6 @@
 						}
 
 						$this.css("zIndex", "0");
-						obj.css("zIndex", "0").find('.event-details').css("zIndex", "0");
 
 						if (typeof options.onHoverOut == 'function') {
 							options.onHoverOut.call(this);
