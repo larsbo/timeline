@@ -434,6 +434,9 @@ body {
   .msg.error {
     background-color: #de4343;
     border-color: #c43d3d; }
+  .msg.critical {
+    background-color: #ff0000;
+    border-color: #c43d3d; }
   .msg.warning {
     background-color: #eaaf51;
     border-color: #d99a36; }

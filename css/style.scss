@@ -409,6 +409,10 @@ body {
 		background-color: #de4343;
 		border-color: #c43d3d;
 	}
+	&.critical {
+		background-color: #ff0000;
+		border-color: #c43d3d;
+	}
 	&.warning {
 		background-color: #eaaf51;
 		border-color: #d99a36;
