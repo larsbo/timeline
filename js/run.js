@@ -20,30 +20,23 @@ jQuery(document).ready(function($){
 	/* show/hide event names */
 	var events = $('.event');
 	$('#options-container').find('.button').click(function(){
-		var elem = $(this);
-		var input = elem.next();
-		var li = elem.parent();
-
-		// check radio button
-		input.attr("checked","checked");
 
 		// change button
-		li.siblings().find('.button').removeClass('selected');
-		li.find('a').addClass('selected');
+		var button = $(this);
+		button.siblings().removeClass('selected');
+		button.addClass('selected');
 
 		// change events
 		events.each(function(){
 			var event = $(this);
-			switch (input.val()) {
+			switch (button.data('type')) {
 				case 'long':
 					event.show().width(event.attr('data-width')).html(event.attr('data-title'));
 					var id = event.attr('data-event');
-					var obj = event.find('<h1>').hide();
 					break;
 				case 'short':
 					event.show().width('').html('+');
 					var id = event.attr('data-event');
-					var obj = event.find('<h1>').show();
 					break;
 				case 'hidden':
 					event.hide();

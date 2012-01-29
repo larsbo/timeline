@@ -145,6 +145,21 @@ body h1 {
   -moz-border-radius: 0.15em 0 0 0.15em;
   -webkit-border-radius: 0.15em 0 0 0.15em;
 }
+.event.selected {
+  background-color: #3B8EB5;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#4EA5CD), to(#3B8EB5));
+  background-image: linear-gradient(top, #4EA5CD, #3B8EB5);
+  background-image: -o-linear-gradient(top, #4EA5CD, #3B8EB5);
+  background-image: -ms-linear-gradient(top, #4EA5CD, #3B8EB5);
+  background-image: -moz-linear-gradient(top, #4EA5CD, #3B8EB5);
+  background-image: -webkit-linear-gradient(top, #4EA5CD, #3B8EB5);
+  color: #fff;
+  text-shadow: 0 1px 0 #000;
+  box-shadow: none;
+  -o-box-shadow: none;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+}
 /**** EVENT DETAILS *****/
 .event-preview {
   display: block;

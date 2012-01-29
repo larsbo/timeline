@@ -31,36 +31,33 @@
 				img = '<img class="event-img" src="' + options.cardImgSrc + '" />';
 			}
 
-			var a = "<div style=\"float: right\"><a class=\"stickit button\" href=\"#\">+</a></div>";
-			var heading = '<h1 style="display: none;">' + obj.html() + '</h1>';
 			//append generated details element after the selected element
-			obj.after('<div class="event-details">' + heading + img + options.detailsHTML + a + '</div>');
+			obj.after('<div class="event-details">' + img + options.detailsHTML + '</div>');
 			obj.siblings(".event-details").eq(0).css({ 
 				'top': obj.css('top'), 
 				'width': Math.max(options.width, obj.width())
 			});
-			obj.siblings(".event-details").find(".stickit").click(function() {
-				var aobj = $(this);
-				var obj = $(this).closest(".event-preview");
-				if (aobj.hasClass('selected')) {
-					aobj.removeClass('selected');
-					obj.attr('hovercard-visible', 'false');
-				}
-				else {
-					$(this).addClass('selected');
-					obj.attr('hovercard-visible', 'true');
-				}
+			obj.click(function() {
+				// make event sticky
+				var selected = $(this);
+				selected.toggleClass('selected');
+				selected.parent().toggleClass('sticky');
 			});
 
 			//toggle hover card details on hover
 			obj.closest(".event-preview").hover(function(){
 				var $this = $(this);
-				var val = $this.attr('hovercard-visible');
-				if (!val || val==='false') {
+				var title = $this.find('.event');
 
+				if (!$this.hasClass('sticky')) {
 					//Up the z index for the .event to overlay on .event-details
 					$this.css("zIndex", "200");
 					obj.css("zIndex", "100").find('.event-details').css("zIndex", "50");
+
+					// if 'short modus' is active show title on hover
+					if ($('#options-container').find('.selected').data('type') == 'short') {
+						title.width(title.attr('data-width')).html(title.data('title'));
+					}
 
 					$this.find(".event-details").eq(0).stop(true, true).delay(options.delay).fadeIn();
 				}
@@ -74,10 +71,16 @@
 			}, function(){
 				//Undo the z indices 
 				$this = $(this);
+				var title = $this.find('.event');
 
-				var val = $this.attr('hovercard-visible');
-				if (!val || val==='false') {
+				if (!$this.hasClass('sticky')) {
+
 					$this.find(".event-details").eq(0).stop(true, true).fadeOut(300, function(){
+						// if 'short modus' is active hide title on hoverout
+						if ($('#options-container').find('.selected').data('type') == 'short') {
+							title.width('').html('+');
+						}
+
 						$this.css("zIndex", "0");
 						obj.css("zIndex", "0").find('.event-details').css("zIndex", "0");
 

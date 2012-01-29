@@ -26,23 +26,10 @@ $width = max(1,$c->enddate - $c->startdate + 1) * $c->tl_column_width;
 ?>
 <div id="page">
   <div id="options-container">
-    <form>
-      <p>Ereignisse anzeigen:</p>
-      <ul>
-        <li>
-          <a href="#" class="button selected" title="lange Ereignisse anzeigen">lang</a>
-          <input name="event-style" value="long" type="radio" checked />
-        </li>
-        <li>
-          <a href="#" class="button" title="kurze Ereignisse anzeigen">kurz</a>
-          <input name="event-style" value="short" type="radio" />
-        </li>
-        <li>
-          <a href="#" class="button" title="Ereignisse ausblenden">ausblenden</a>
-          <input name="event-style" value="hidden" type="radio" />
-        </li>
-      </ul>
-    </form>
+    <p>Ereignisse anzeigen:</p>
+    <a href="#" class="button selected" data-type="long" title="lange Ereignisse anzeigen">lang</a>
+    <a href="#" class="button" data-type="short" title="kurze Ereignisse anzeigen">kurz</a>
+    <a href="#" class="button" data-type="hidden" title="Ereignisse ausblenden">ausblenden</a>
   </div>
   <div id="map-container">
     <div id="mini-map">
