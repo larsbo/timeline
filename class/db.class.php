@@ -18,13 +18,13 @@ class DB
 			if ( !$this->db_connect_id = mysql_connect($oConfig->db_host . ":" . $oConfig->db_port,
 				$oConfig->db_user,
 				$oConfig->db_passwd) ) {
-				Log::debug("could not login using ".$oConfig->db_user."@".$oConfig->db_host.":".$oConfig->db_port);
+				Log::critical("could not login using ".$oConfig->db_user."@".$oConfig->db_host.":".$oConfig->db_port);
 				return false;
 			}
 
 			if ( !mysql_select_db($oConfig->db_name, $this->db_connect_id) ) {
 				$this->sql_close();
-				Log::debug("could not select database: ".$oConfig->db_name);
+				Log::critical("could not select database: ".$oConfig->db_name);
 				return false;
 			}
 			$this->sql_query("SET NAMES 'utf8'");

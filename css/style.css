@@ -145,11 +145,11 @@ body h1 {
 }
 .sticky .event {
   background-color: #3B8EB5;
-  background-image: linear-gradient(top, #4EA5CD, #3B8EB5);
-  background-image: -o-linear-gradient(top, #4EA5CD, #3B8EB5);
-  background-image: -ms-linear-gradient(top, #4EA5CD, #3B8EB5);
-  background-image: -moz-linear-gradient(top, #4EA5CD, #3B8EB5);
-  background-image: -webkit-linear-gradient(top, #4EA5CD, #3B8EB5);
+  background-image: linear-gradient(top, #4ea5cd, #3b8eb5);
+  background-image: -o-linear-gradient(top, #4ea5cd, #3b8eb5);
+  background-image: -ms-linear-gradient(top, #4ea5cd, #3b8eb5);
+  background-image: -moz-linear-gradient(top, #4ea5cd, #3b8eb5);
+  background-image: -webkit-linear-gradient(top, #4ea5cd, #3b8eb5);
   color: #fff;
   text-shadow: 0 1px 0 #000;
   box-shadow: none;
@@ -472,6 +472,10 @@ body h1 {
 }
 .msg.error {
   background-color: #de4343;
+  border-color: #c43d3d;
+}
+.msg.critical {
+  background-color: #ff0000;
   border-color: #c43d3d;
 }
 .msg.warning {

@@ -20,15 +20,15 @@ class Log {
 	}
 
 	public static function error($sMessage) {
-		Log::showMessage("[E] ".$sMessage);
+		Log::showMessage("[E] ".$sMessage, 'error');
 	}
 
 	public static function warn($sMessage) {
-		Log::showMessage("[W] ".$sMessage);
+		Log::showMessage("[W] ".$sMessage, 'warning');
 	}
 
 	public static function critical($sMessage, $bDie = true) {
-		Log::showMessage("[C] ".$sMessage);
+		Log::showMessage("[C] ".$sMessage, 'critical');
 		die('');
 	}
 
