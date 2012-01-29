@@ -35,7 +35,7 @@ jQuery(document).ready(function($){
 					var id = event.attr('data-event');
 					break;
 				case 'short':
-					event.show().width('').html('+');
+					event.not('.selected').show().width('').html('+');
 					var id = event.attr('data-event');
 					break;
 				case 'hidden':
