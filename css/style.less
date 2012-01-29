@@ -120,7 +120,6 @@ body {
 	cursor:pointer;
 	display:inline-block;
 	background-color:#ddd;
-	background-image:-webkit-gradient(linear, left top, left bottom, from(#eee), to(#ccc));
 	.background-gradients(top, #eee, #ccc);
 	font-family:Arial, Helvetica;
 	font-size:10px;
@@ -132,10 +131,9 @@ body {
 	text-shadow:0 1px 0 rgba(255,255,255,.8);
 	.rounded-corners(.2em);
 	.shadows(0 0 1px 1px rgba(255,255,255,.8) inset, 0 1px 0 rgba(0,0,0,.3));
-	
+
 	&:hover {
 		background-color:#eee;
-		background-image:-webkit-gradient(linear, left top, left bottom, from(#fafafa), to(#ddd));
 		.background-gradients(top, #fafafa, #ddd);
 		.shadows(none);
 	}
@@ -162,6 +160,13 @@ body {
 		.rounded-corners(.15em 0 0 .15em);
 	}
 }
+	.sticky .event {
+		background-color:#3B8EB5;
+		.background-gradients(top, #4EA5CD, #3B8EB5);
+		color:#fff;
+		text-shadow:0 1px 0 #000;
+		.shadows(none);
+	}
 
 
 /**** EVENT DETAILS *****/
@@ -204,7 +209,6 @@ body {
 	
 	th {
 		background:#eeeeee;
-		background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#cccccc));
 		.background-gradients(top, #eeeeee 0%, #cccccc 100%);
 		border-top: none;
 		padding:10px;
@@ -230,7 +234,6 @@ body {
 	display:inline-block;
 	font:bold 1em/2em Arial, Helvetica;
 	background-color:#ddd;
-	background-image:-webkit-gradient(linear, left top, left bottom, from(#eee), to(#ccc));
 	.background-gradients(top, #eee, #ccc);
 	padding:0 0.9em;
 	text-decoration:none;
@@ -241,7 +244,6 @@ body {
 	
 	&:hover {
 		background-color:#eee;
-		background-image:-webkit-gradient(linear, left top, left bottom, from(#fafafa), to(#ddd));
 		.background-gradients(top, #fafafa, #ddd);
 		color:#666;
 	}
@@ -366,7 +368,6 @@ body {
 	position:absolute;
 	z-index:100;
 	background:#258dc8;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#258dc8), color-stop(100%,#258dc8));
 	.background-gradients(top, #258dc8 0%, #258dc8 100%);
 	.background-clips(padding-box);
 	.box-sizings(border-box);
@@ -378,7 +379,6 @@ body {
 /***** MESSAGES *****/
 .msg {
 	background-size:40px 40px;
-	background-image:-webkit-gradient(linear, left top, right bottom, color-stop(.25, rgba(255, 255, 255, .05)), color-stop(.25, transparent), color-stop(.5, transparent), color-stop(.5, rgba(255, 255, 255, .05)), color-stop(.75, rgba(255, 255, 255, .05)), color-stop(.75, transparent), to(transparent));
 	background-image:-webkit-linear-gradient(135deg, rgba(255, 255, 255, .05) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .05) 50%, rgba(255, 255, 255, .05) 75%, transparent 75%, transparent);
 	background-image:-moz-linear-gradient(135deg, rgba(255, 255, 255, .05) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .05) 50%, rgba(255, 255, 255, .05) 75%, transparent 75%, transparent);
 	background-image:-ms-linear-gradient(135deg, rgba(255, 255, 255, .05) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .05) 50%, rgba(255, 255, 255, .05) 75%, transparent 75%, transparent);
