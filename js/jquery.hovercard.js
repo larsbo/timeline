@@ -61,7 +61,7 @@
 					$this.find(".event-details").eq(0).stop(true, true).delay(options.delay).fadeIn();
 				}
 				else {
-					$this.css("zIndex", $this.css("zIndex") + 1);
+					$this.css("zIndex", (parseInt($this.css("zIndex")) + 1).toString());
 				}
 
 				//Default functionality on hoverin, and also allows callback
