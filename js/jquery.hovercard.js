@@ -54,7 +54,7 @@
 					obj.css("zIndex", "100").find('.event-details').css("zIndex", "50");
 
 					// if 'short modus' is active show title on hover
-					if ($('#options-container').find('.sticky').children().data('type') == 'short') {
+					if ($('#options-container').find('.selected').data('type') == 'short') {
 						title.width(title.attr('data-width')).html(title.data('title'));
 					}
 
@@ -76,7 +76,7 @@
 
 					$this.find(".event-details").eq(0).stop(true, true).fadeOut(300, function(){
 						// if 'short modus' is active hide title on hoverout
-						if ($('#options-container').find('.sticky').children().data('type') == 'short') {
+						if ($('#options-container').find('.selected').data('type') == 'short') {
 							title.width('').html('+');
 						}
 
