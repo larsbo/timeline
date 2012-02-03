@@ -151,11 +151,11 @@ class DB
 
 		$results = DB::queryAssoc($sql);
 		if ($results == false) {
-			Log::debug("got invalid query ... table does not exist?!");
+	//		Log::debug("got invalid query ... table does not exist?!");
 			return null;
 		}
 		else if ($results == null) {
-			Log::debug("got empty result ... need to insert all fields");
+	//		Log::debug("got empty result ... need to insert all fields");
 			return $expectedFields;
 		}
 		else {
@@ -166,7 +166,7 @@ class DB
 				$fields[] = $r['Field'];
 			}
 
-			Log::debug("found ".sizeof($fields)." fields, expected: ".$imax);
+	//		Log::debug("found ".sizeof($fields)." fields, expected: ".$imax);
 			sort($fields);
 			$missingFields = array();
 			$j=0;$i=0;
@@ -188,7 +188,7 @@ class DB
 				return $missingFields;
 
 			else {
-				Log::debug("all fields found => we aint need no update...");
+	//			Log::debug("all fields found => we aint need no update...");
 				return array();
 			}
 		}
