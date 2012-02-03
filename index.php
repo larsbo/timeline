@@ -20,6 +20,7 @@
 <body>
 <?php
 include 'class/timeline.class.php';
+Timeline::checkAndUpdateTable(true); //maybe false is better?
 $c = Config::getInstance();
 $timeline = new Timeline($c->startdate, $c->enddate);
 $width = max(1,$c->enddate - $c->startdate + 1) * $c->tl_column_width;
