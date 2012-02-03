@@ -4,7 +4,29 @@
 //Website: http://designwithpc.com
 //Twitter: @chaudharyp
 
+var zIndices = [];
+
 (function ($) {
+	Array.prototype.sortNum = function() {
+		return this.sort( function (a,b) { return a-b; } );
+	}
+	Array.prototype.rmElem = function(a) {
+		var index = this.indexOf(a);
+		if (index >= 0) {
+			this.splice(index, 1);
+			return true;
+		}
+		else
+			return false;
+	}
+	Array.prototype.last = function() {
+		var length = this.length;
+		if (length > 0)
+			return this[length-1];
+		else
+			return 10; //start with 10, if no element is hovered yet
+	}
+
 	$.fn.hovercard = function (options) {
 		//Set defauls for the control
 		var defaults = {
@@ -50,8 +72,9 @@
 				var title = $this.find('.event');
 
 				if (!$this.hasClass('sticky')) {
-					//Up the z index for the .event to overlay on .event-details
-					$this.css("zIndex", "20");
+					//create new max of zIndices, so element will hover on top...
+					zIndices.push(zIndices.last()+1);
+					$this.css("zIndex", zIndices.last().toString());
 
 					// if 'short modus' is active show title on hover
 					if ($('#options-container').find('.selected').data('type') == 'short') {
@@ -61,7 +84,10 @@
 					$this.find(".event-details").eq(0).stop(true, true).delay(options.delay).fadeIn();
 				}
 				else {
-					$this.css("zIndex", (parseInt($this.css("zIndex")) + 1).toString());
+					//remove self from list, find max and set to max+1
+					zIndices.rmElem(parseInt($this.css("zIndex")));
+					zIndices.push(zIndices.last()+1);
+					$this.css("zIndex", zIndices.last().toString());
 				}
 
 				//Default functionality on hoverin, and also allows callback
@@ -83,6 +109,8 @@
 							title.width('').html('+');
 						}
 
+						//remove self from list
+						zIndices.rmElem(parseInt($this.css("zIndex")));
 						$this.css("zIndex", "0");
 
 						if (typeof options.onHoverOut == 'function') {
