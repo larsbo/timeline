@@ -134,19 +134,54 @@ body {
     -moz-border-radius: 0.15em 0 0 0.15em;
     -webkit-border-radius: 0.15em 0 0 0.15em; }
 
-.sticky .event {
-  background-color: #3B8EB5;
-  background-image: linear-gradient(top, #4ea5cd, #3b8eb5);
-  background-image: -o-linear-gradient(top, #4ea5cd, #3b8eb5);
-  background-image: -ms-linear-gradient(top, #4ea5cd, #3b8eb5);
-  background-image: -moz-linear-gradient(top, #4ea5cd, #3b8eb5);
-  background-image: -webkit-linear-gradient(top, #4ea5cd, #3b8eb5);
+.event.red {
+  background-image: linear-gradient(top, #ee0000, #aa0000);
+  background-image: -o-linear-gradient(top, #ee0000, #aa0000);
+  background-image: -ms-linear-gradient(top, #ee0000, #aa0000);
+  background-image: -moz-linear-gradient(top, #ee0000, #aa0000);
+  background-image: -webkit-linear-gradient(top, #ee0000, #aa0000);
   color: #fff;
-  text-shadow: 0 1px 0 #000;
-  box-shadow: none;
-  -o-box-shadow: none;
-  -moz-box-shadow: none;
-  -webkit-box-shadow: none; }
+  text-shadow: 0 1px 0 #000; }
+
+.event.blue {
+  background-image: linear-gradient(top, #0000ee, #0000aa);
+  background-image: -o-linear-gradient(top, #0000ee, #0000aa);
+  background-image: -ms-linear-gradient(top, #0000ee, #0000aa);
+  background-image: -moz-linear-gradient(top, #0000ee, #0000aa);
+  background-image: -webkit-linear-gradient(top, #0000ee, #0000aa);
+  color: #fff;
+  text-shadow: 0 1px 0 #000; }
+
+.event.green {
+  background-image: linear-gradient(top, #00ee00, #00aa00);
+  background-image: -o-linear-gradient(top, #00ee00, #00aa00);
+  background-image: -ms-linear-gradient(top, #00ee00, #00aa00);
+  background-image: -moz-linear-gradient(top, #00ee00, #00aa00);
+  background-image: -webkit-linear-gradient(top, #00ee00, #00aa00);
+  color: #fff;
+  text-shadow: 0 1px 0 #000; }
+
+.event.yellow {
+  background-image: linear-gradient(top, #eeee00, #aaaa00);
+  background-image: -o-linear-gradient(top, #eeee00, #aaaa00);
+  background-image: -ms-linear-gradient(top, #eeee00, #aaaa00);
+  background-image: -moz-linear-gradient(top, #eeee00, #aaaa00);
+  background-image: -webkit-linear-gradient(top, #eeee00, #aaaa00);
+  color: #fff;
+  text-shadow: 0 1px 0 #000; }
+
+.pin {
+  background: url(../images/pin.png) no-repeat;
+  display: none;
+  float: right;
+  height: 16px;
+  position: absolute;
+  right: -2px;
+  top: -3px;
+  width: 16px; }
+
+.sticky .pin {
+  display: block; }
 
 /**** EVENT DETAILS *****/
 .event-preview {
