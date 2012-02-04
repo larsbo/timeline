@@ -196,7 +196,11 @@ class DB
 
 	/** returns true or false, wether some $tablename has all $expectedFields **/
 	static function checkForTable($tablename, $expectedFields) {
-		return DB::checkForTableCont("DESCRIBE ".$tablename, $expectedFields);
+		if (DB::queryAssoc("SHOW TABLES LIKE '".$tablename."'")) {
+			return DB::checkForTableCont("DESCRIBE ".$tablename, $expectedFields);
+		} else {
+			return null;
+		}
 	}
 }
 
