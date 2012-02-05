@@ -47,9 +47,34 @@ class Admin {
 		return $output;
 	}
 
+	static function insertEvent() {
+		return "<form data-action=\"save\">
+							<input type=\"text\" name=\"title\" size=\"60\" />
+							<label for=\"start\">Start-Datum:</label>
+							<input type=\"text\" name=\"start\" id=\"start\" size=\"10\" />
+							<label for=\"end\">End-Datum:</label>
+							<input type=\"text\" name=\"end\" id=\"end\" size=\"10\" />
+							<label for=\"colorclass\">Kategorie:</label>
+							<input type=\"text\" name=\"colorclass\" id=\"colorclass\" size=\"10\" />
+							<textarea name=\"details\" rows=\"10\" cols=\"45\"></textarea>
+							<input type=\"submit\" value=\"Speichern\" />
+						</form>";
+	}
+
+	static function saveEvent() {
+		$title = mysql_real_escape_string($_GET['title']);
+		$start = mysql_real_escape_string($_GET['start']);
+		$end = mysql_real_escape_string($_GET['end']);
+		$details = mysql_real_escape_string($_GET['details']);
+		$colorclass = mysql_real_escape_string($_GET['colorclass']);
+		$result = DB::execute("INSERT INTO `events` (title, start, end, details, colorclass), 
+														VALUES ('".$title."', '".$start."', '".$end."', '".$details."', '".$colorclass."')");
+		return "Ereignis erfolgreich eingetragen!";
+	}
+
 	static function editEvent($id) {
 		$event = DB::queryAssocAtom("SELECT * FROM `events` WHERE `event_id` = '".$id."'");
-		return "<form name=\"edit_event\">
+		return "<form data-action=\"update\">
 							<input type=\"hidden\" name=\"id\" value=\"".$event['event_id']."\" />
 							<input type=\"text\" name=\"title\" value=\"".$event['title']."\" size=\"60\" />
 							<label for=\"start\">Start-Datum:</label>
@@ -76,9 +101,22 @@ class Admin {
 																	`details` = '".$details."', 
 																	`colorclass` = '".$colorclass."' 
 														WHERE `event_id` = '".$id."'");
-		if ($result) {
-			return "Ereignis ".$id." erfolgreich bearbeitet!";
-		}
+		return "Ereignis ".$id." erfolgreich bearbeitet!";
+	}
+
+	static function deleteEvent($id) {
+		return "<p>Soll das Ereignis ".$id." wirklich gel&ouml;scht werden?</p>
+						<p>
+							<form data-id=\"".$id."\">
+								<input name=\"no\" type=\"button\" value=\"abbrechen\" />
+								<input name=\"yes\" type=\"button\" value=\"l&ouml;schen\" />
+							</form>
+						</p>";
+	}
+
+	static function deleteEventConfirmation($id) {
+		$result = DB::execute("DELETE FROM `events` WHERE `event_id` = '".$id."'");
+		return "Ereignis ".$id." erfolgreich gel&ouml;scht!";
 	}
 
 }
