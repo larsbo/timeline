@@ -496,3 +496,37 @@ body {
 
   to {
     background-position: -80px 0; } }
+
+/***** ADMIN *****/
+.adminContent {
+  margin: 15px;
+  padding: 5px; }
+  .adminContent h2 {
+    padding: 5px; }
+  .adminContent input, .adminContent textarea {
+    margin: 5px; }
+  .adminContent .bordered {
+    float: left;
+    margin-right: 20px;
+    padding: 5px;
+    width: 40%; }
+  .adminContent .eventContainer {
+    display: block; }
+  .adminContent .event {
+    margin: 0;
+    position: relative;
+    width: 85%; }
+
+.button.edit {
+  background: url(../images/edit.png) no-repeat center center;
+  float: right;
+  height: 16px;
+  padding: 1px;
+  width: 16px; }
+
+.button.delete {
+  background: url(../images/delete.png) no-repeat center center;
+  float: right;
+  height: 16px;
+  padding: 1px;
+  width: 16px; }
