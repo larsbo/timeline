@@ -110,9 +110,35 @@ EOD;
 	
 	static function insertColorClassTestData() {
 		$sql = <<<EOD
-INSERT INTO `colorclasses` (`color_id`, `color`) VALUES
-('colorOne', CONV('FF00FF', 16, 10)),
-('colorTwo', CONV('00FFFF', 16, 10));
+INSERT INTO `colorclasses` (`color_id`, `css_code`) VALUES
+('red', 'background-image: linear-gradient(top, #ee0000, #aa0000);
+  background-image: -o-linear-gradient(top, #ee0000, #aa0000);
+  background-image: -ms-linear-gradient(top, #ee0000, #aa0000);
+  background-image: -moz-linear-gradient(top, #ee0000, #aa0000);
+  background-image: -webkit-linear-gradient(top, #ee0000, #aa0000);
+  color: #fff;
+  text-shadow: 0 1px 0 #000;'),
+('yellow', 'background-image: linear-gradient(top, #eeee00, #aaaa00);
+  background-image: -o-linear-gradient(top, #eeee00, #aaaa00);
+  background-image: -ms-linear-gradient(top, #eeee00, #aaaa00);
+  background-image: -moz-linear-gradient(top, #eeee00, #aaaa00);
+  background-image: -webkit-linear-gradient(top, #eeee00, #aaaa00);
+  color: #fff;
+  text-shadow: 0 1px 0 #000;'),
+('green', 'background-image: linear-gradient(top, #00ee00, #00aa00);
+  background-image: -o-linear-gradient(top, #00ee00, #00aa00);
+  background-image: -ms-linear-gradient(top, #00ee00, #00aa00);
+  background-image: -moz-linear-gradient(top, #00ee00, #00aa00);
+  background-image: -webkit-linear-gradient(top, #00ee00, #00aa00);
+  color: #fff;
+  text-shadow: 0 1px 0 #000;'),
+('blue', 'background-image: linear-gradient(top, #0000ee, #0000aa);
+  background-image: -o-linear-gradient(top, #0000ee, #0000aa);
+  background-image: -ms-linear-gradient(top, #0000ee, #0000aa);
+  background-image: -moz-linear-gradient(top, #0000ee, #0000aa);
+  background-image: -webkit-linear-gradient(top, #0000ee, #0000aa);
+  color: #fff;
+  text-shadow: 0 1px 0 #000;');
 EOD;
 		Log::debug("got: '".implode(",", DB::execute($sql))."'");
 	}
