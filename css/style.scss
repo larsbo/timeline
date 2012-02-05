@@ -160,39 +160,19 @@ body {
 		@include rounded-corners(.15em 0 0 .15em);
 	}
 }
-.event.red {
-	@include background-gradients(top, #e00, #a00);
-	color:#fff;
-	text-shadow:0 1px 0 #000;
-}
-.event.blue {
-	@include background-gradients(top, #00e, #00a);
-	color:#fff;
-	text-shadow:0 1px 0 #000;
-}
-.event.green {
-	@include background-gradients(top, #0e0, #0a0);
-	color:#fff;
-	text-shadow:0 1px 0 #000;
-}
-.event.yellow {
-	@include background-gradients(top, #ee0, #aa0);
-	color:#fff;
-	text-shadow:0 1px 0 #000;
-}
 .pin {
 	background:url(../images/pin.png) no-repeat;
 	display:none;
 	float:right;
-	height:16px;
 	position:absolute;
 	right:-2px;
 	top:-3px;
+	height:16px;
 	width:16px;
-}
-	.sticky .pin {
+	.sticky & {
 		display:block;
 	}
+}
 
 /**** EVENT DETAILS *****/
 .event-preview {

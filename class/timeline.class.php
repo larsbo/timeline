@@ -10,12 +10,14 @@ class Timeline {
 	private $end_year;
 	private $events_output;
 	private $details_output;
+	private $css_output;
 
 	function __Construct($start, $end) {
 		$this->start_year = $start;
 		$this->end_year = $end;
 		$this->getEvents();
 		$this->alignEvents();
+		$this->css_output = $this->getColorclasses();
 		$this->createEventsOutput();
 		$this->createDetailsOutput();
 	}
@@ -28,7 +30,7 @@ class Timeline {
 
 	static function checkAndUpdateTableColorClasses($insertData) {
 		$tablediff = DB::checkForTable('colorclasses', 
-			array('color', 'color_id'));
+			array('color_id', 'css_code'));
 			//this has to be sorted ...
 		
 		//the table is in some wrong state .... need to update or create
@@ -38,7 +40,7 @@ class Timeline {
 			$sql = <<<EOD
 CREATE TABLE IF NOT EXISTS `colorclasses` (
   `color_id` VARCHAR(10) NOT NULL,
-  `color` int(8) NOT NULL,
+  `css_code` TEXT NOT NULL,
   PRIMARY KEY (`color_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 EOD;
@@ -52,8 +54,8 @@ EOD;
 			//all fields in $tablediff are missing...
 			Log::debug("the table is missing these fields: ".implode(",", $tablediff));
 			$sql = "";
-			if (in_array('color', $tablediff))
-				$sql .= "ALTER TABLE `colorclasses` ADD `color` int(8) NOT NULL;";
+			if (in_array('css_code', $tablediff))
+				$sql .= "ALTER TABLE `colorclasses` ADD `css_code` TEXT NOT NULL;";
 
 			return DB::execute($sql);
 		}
@@ -140,6 +142,22 @@ EOD;
 		usort($this->events, array($this, 'custom_sort'));
 		// count events
 		$this->counter = sizeof($this->events);
+	
+	function getColorClasses() {
+		$sql = <<<EOD
+SELECT DISTINCT c.color_id, c.css_code AS css FROM `colorclasses` AS c
+RIGHT JOIN events AS e ON e.colorclass = c.color_id;
+EOD;
+
+		$htmlcode = '<style type="text/css">';
+		foreach (DB::queryAssoc($sql) as $colorclass) {
+			if(!empty($colorclass['color_id']) && !empty($colorclass['css'])) {
+				$htmlcode .= ".".$colorclass['color_id']." { \n";
+				$htmlcode .= $colorclass['css']." }\n";
+			}
+		}
+		$htmlcode .= '</style>';
+		return $htmlcode;
 	}
 
 
@@ -213,6 +231,7 @@ EOD;
 	function output($data) {
 		if ($data == 'events') echo $this->events_output;
 		if ($data == 'details') echo $this->details_output;
+		if ($data == 'css') echo $this->css_output;
 	}
 
 
