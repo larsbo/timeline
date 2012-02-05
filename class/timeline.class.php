@@ -5,7 +5,6 @@ require_once('db.class.php');
 class Timeline {
 	private $events;
 	private $matrix;
-	private $counter;
 	private $start_year;
 	private $end_year;
 	private $events_output;
@@ -15,8 +14,9 @@ class Timeline {
 	function __Construct($start, $end) {
 		$this->start_year = $start;
 		$this->end_year = $end;
-		$this->getEvents();
+		$this->events = $this->getEvents();
 		$this->alignEvents();
+
 		$this->css_output = $this->getColorclasses();
 		$this->createEventsOutput();
 		$this->createDetailsOutput();
@@ -135,13 +135,14 @@ EOD;
 
 	function getEvents() {
 		$sql = <<<EOD
-SELECT event_id, title, details, start_year, end_year, colorclass FROM events 
+SELECT e.event_id, e.title, e.details, e.start_year, e.end_year, e.colorclass
+FROM events AS e;
 EOD;
-		$this->events = DB::queryAssoc($sql);
+		$events = DB::queryAssoc($sql);
 		// sort events by start_year
-		usort($this->events, array($this, 'custom_sort'));
-		// count events
-		$this->counter = sizeof($this->events);
+		usort($events, array($this, 'custom_sort'));
+		return $events;
+	}
 	
 	function getColorClasses() {
 		$sql = <<<EOD
@@ -162,8 +163,9 @@ EOD;
 
 
 	function alignEvents() {
+		$counter = sizeof($this->events);
 		$this->matrix = array();
-		for ($i=0; $i<$this->counter; $i++) {
+		for ($i=0; $i<$counter; $i++) {
 			$year = $this->events[$i]['start_year'];
 			$line = 0;
 			// search for the first free row
