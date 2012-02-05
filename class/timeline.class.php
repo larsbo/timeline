@@ -5,17 +5,19 @@ require_once('db.class.php');
 class Timeline {
 	private $events;
 	private $matrix;
-	private $counter;
 	private $start_year;
 	private $end_year;
 	private $events_output;
 	private $details_output;
+	private $css_output;
 
 	function __Construct($start, $end) {
 		$this->start_year = $start;
 		$this->end_year = $end;
-		$this->getEvents();
+		$this->events = $this->getEvents();
 		$this->alignEvents();
+
+		$this->css_output = $this->getColorclasses();
 		$this->createEventsOutput();
 		$this->createDetailsOutput();
 	}
@@ -28,7 +30,7 @@ class Timeline {
 
 	static function checkAndUpdateTableColorClasses($insertData) {
 		$tablediff = DB::checkForTable('colorclasses', 
-			array('color', 'color_id'));
+			array('color_id', 'css_code'));
 			//this has to be sorted ...
 		
 		//the table is in some wrong state .... need to update or create
@@ -38,11 +40,11 @@ class Timeline {
 			$sql = <<<EOD
 CREATE TABLE IF NOT EXISTS `colorclasses` (
   `color_id` VARCHAR(10) NOT NULL,
-  `color` int(8) NOT NULL,
+  `css_code` TEXT NOT NULL,
   PRIMARY KEY (`color_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 EOD;
-			$result = DB::queryAssoc($sql);		// produce Warning: mysql_fetch_assoc(): supplied argument is not a valid MySQL result resource
+			$result = DB::execute($sql);		// produce Warning: mysql_fetch_assoc(): supplied argument is not a valid MySQL result resource
 			if ($result && $insertData) {
 				Timeline::insertColorClassTestData();
 			}
@@ -52,10 +54,10 @@ EOD;
 			//all fields in $tablediff are missing...
 			Log::debug("the table is missing these fields: ".implode(",", $tablediff));
 			$sql = "";
-			if (in_array('color', $tablediff))
-				$sql .= "ALTER TABLE `colorclasses` ADD `color` int(8) NOT NULL;";
+			if (in_array('css_code', $tablediff))
+				$sql .= "ALTER TABLE `colorclasses` ADD `css_code` TEXT NOT NULL;";
 
-			return DB::queryAssoc($sql);
+			return DB::execute($sql);
 		}
 		else
 			return true;
@@ -83,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `events` (
   KEY `end_year` (`end_year`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 EOD;
-			$result = DB::queryAssoc($sql);
+			$result = DB::execute($sql);
 			if ($result && $insertData) {
 				Timeline::insertEventTestData();
 			}
@@ -100,7 +102,7 @@ EOD;
 			if (in_array('title', $tablediff))
 				$sql .= "ALTER TABLE `events` ADD `title` varchar(30) NOT NULL;";
 
-			return DB::queryAssoc($sql);
+			return DB::execute($sql);
 		}
 		else
 			return true;
@@ -108,11 +110,37 @@ EOD;
 	
 	static function insertColorClassTestData() {
 		$sql = <<<EOD
-INSERT INTO `colorclasses` (`color_id`, `color`) VALUES
-('colorOne', CONV('FF00FF', 16, 10)),
-('colorTwo', CONV('00FFFF', 16, 10));
+INSERT INTO `colorclasses` (`color_id`, `css_code`) VALUES
+('red', 'background-image: linear-gradient(top, #ee0000, #aa0000);
+  background-image: -o-linear-gradient(top, #ee0000, #aa0000);
+  background-image: -ms-linear-gradient(top, #ee0000, #aa0000);
+  background-image: -moz-linear-gradient(top, #ee0000, #aa0000);
+  background-image: -webkit-linear-gradient(top, #ee0000, #aa0000);
+  color: #fff;
+  text-shadow: 0 1px 0 #000;'),
+('yellow', 'background-image: linear-gradient(top, #eeee00, #aaaa00);
+  background-image: -o-linear-gradient(top, #eeee00, #aaaa00);
+  background-image: -ms-linear-gradient(top, #eeee00, #aaaa00);
+  background-image: -moz-linear-gradient(top, #eeee00, #aaaa00);
+  background-image: -webkit-linear-gradient(top, #eeee00, #aaaa00);
+  color: #fff;
+  text-shadow: 0 1px 0 #000;'),
+('green', 'background-image: linear-gradient(top, #00ee00, #00aa00);
+  background-image: -o-linear-gradient(top, #00ee00, #00aa00);
+  background-image: -ms-linear-gradient(top, #00ee00, #00aa00);
+  background-image: -moz-linear-gradient(top, #00ee00, #00aa00);
+  background-image: -webkit-linear-gradient(top, #00ee00, #00aa00);
+  color: #fff;
+  text-shadow: 0 1px 0 #000;'),
+('blue', 'background-image: linear-gradient(top, #0000ee, #0000aa);
+  background-image: -o-linear-gradient(top, #0000ee, #0000aa);
+  background-image: -ms-linear-gradient(top, #0000ee, #0000aa);
+  background-image: -moz-linear-gradient(top, #0000ee, #0000aa);
+  background-image: -webkit-linear-gradient(top, #0000ee, #0000aa);
+  color: #fff;
+  text-shadow: 0 1px 0 #000;');
 EOD;
-		Log::debug("got: '".implode(",", DB::queryAssoc($sql))."'");
+		Log::debug("got: '".implode(",", DB::execute($sql))."'");
 	}
 
 	static function insertEventTestData() {
@@ -128,24 +156,42 @@ INSERT INTO `events` (`title`, `start_year`, `end_year`, `details`, `colorclass`
 ('wo ist der bus', 1941, 1943, 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.', 'red'),
 ('tralalala', 1936, 1939, 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.', 'yellow');
 EOD;
-		Log::debug("got: '".implode(",", DB::queryAssoc($sql))."'");
+		Log::debug("got: '".implode(",", DB::execute($sql))."'");
 	}
 
 	function getEvents() {
 		$sql = <<<EOD
-SELECT event_id, title, details, start_year, end_year, colorclass FROM events 
+SELECT e.event_id, e.title, e.details, e.start_year, e.end_year, e.colorclass
+FROM events AS e;
 EOD;
-		$this->events = DB::queryAssoc($sql);
+		$events = DB::queryAssoc($sql);
 		// sort events by start_year
-		usort($this->events, array($this, 'custom_sort'));
-		// count events
-		$this->counter = sizeof($this->events);
+		usort($events, array($this, 'custom_sort'));
+		return $events;
+	}
+	
+	function getColorClasses() {
+		$sql = <<<EOD
+SELECT DISTINCT c.color_id, c.css_code AS css FROM `colorclasses` AS c
+RIGHT JOIN events AS e ON e.colorclass = c.color_id;
+EOD;
+
+		$htmlcode = '<style type="text/css">';
+		foreach (DB::queryAssoc($sql) as $colorclass) {
+			if(!empty($colorclass['color_id']) && !empty($colorclass['css'])) {
+				$htmlcode .= ".".$colorclass['color_id']." { \n";
+				$htmlcode .= $colorclass['css']." }\n";
+			}
+		}
+		$htmlcode .= '</style>';
+		return $htmlcode;
 	}
 
 
 	function alignEvents() {
+		$counter = sizeof($this->events);
 		$this->matrix = array();
-		for ($i=0; $i<$this->counter; $i++) {
+		for ($i=0; $i<$counter; $i++) {
 			$year = $this->events[$i]['start_year'];
 			$line = 0;
 			// search for the first free row
@@ -213,6 +259,7 @@ EOD;
 	function output($data) {
 		if ($data == 'events') echo $this->events_output;
 		if ($data == 'details') echo $this->details_output;
+		if ($data == 'css') echo $this->css_output;
 	}
 
 

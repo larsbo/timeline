@@ -80,6 +80,18 @@ class DB
 		return $aRows;
 	}
 
+	public static function execute($sSql) {
+		$db = DB::getInstance();
+
+		$oResult = $db->sql_query($sSql);
+		if( $oResult == null) {
+			Log::debug("Cannot execute query! ($sSql)");
+			return false;
+		}
+		else
+			return true;
+	}
+
 	function sql_close() {
 		if ( $this->db_connect_id )
 			return mysql_close($this->db_connect_id);
@@ -166,7 +178,7 @@ class DB
 				$fields[] = $r['Field'];
 			}
 
-	//		Log::debug("found ".sizeof($fields)." fields, expected: ".$imax);
+	//		Log::debug("found ".implode(',',$fields)." fields, expected: ".implode(',',$expectedFields));
 			sort($fields);
 			$missingFields = array();
 			$j=0;$i=0;
@@ -183,6 +195,10 @@ class DB
 					$i++;
 					$j++;
 				}
+			}
+			while ($i<$imax) {
+				$missingFields[] = $expectedFields[$i];
+				$i++;
 			}
 			if (sizeof($missingFields) > 0)
 				return $missingFields;

@@ -16,15 +16,16 @@
   <script type="text/javascript" src="js/jquery.hovercard.js"></script>
   <script type="text/javascript" src="js/jquery.mini-map.js"></script>
   <script type="text/javascript" src="js/run.js"></script>
-</head>
-<body>
 <?php
 include 'class/timeline.class.php';
 Timeline::checkAndUpdateTable(true); //maybe false is better?
 $c = Config::getInstance();
 $timeline = new Timeline($c->startdate, $c->enddate);
 $width = max(1,$c->enddate - $c->startdate + 1) * $c->tl_column_width;
+$timeline->output('css');
 ?>
+</head>
+<body>
 <div id="page">
   <div id="options-container">
     <p>Ereignisse anzeigen:</p>
