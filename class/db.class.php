@@ -80,6 +80,18 @@ class DB
 		return $aRows;
 	}
 
+	public static function execute($sSql) {
+		$db = DB::getInstance();
+
+		$oResult = $db->sql_query($sSql);
+		if( $oResult == null) {
+			Log::debug("Cannot execute query! ($sSql)");
+			return false;
+		}
+		else
+			return true;
+	}
+
 	function sql_close() {
 		if ( $this->db_connect_id )
 			return mysql_close($this->db_connect_id);

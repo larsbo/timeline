@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `colorclasses` (
   PRIMARY KEY (`color_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 EOD;
-			$result = DB::queryAssoc($sql);		// produce Warning: mysql_fetch_assoc(): supplied argument is not a valid MySQL result resource
+			$result = DB::execute($sql);		// produce Warning: mysql_fetch_assoc(): supplied argument is not a valid MySQL result resource
 			if ($result && $insertData) {
 				Timeline::insertColorClassTestData();
 			}
@@ -55,7 +55,7 @@ EOD;
 			if (in_array('color', $tablediff))
 				$sql .= "ALTER TABLE `colorclasses` ADD `color` int(8) NOT NULL;";
 
-			return DB::queryAssoc($sql);
+			return DB::execute($sql);
 		}
 		else
 			return true;
@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `events` (
   KEY `end_year` (`end_year`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 EOD;
-			$result = DB::queryAssoc($sql);
+			$result = DB::execute($sql);
 			if ($result && $insertData) {
 				Timeline::insertEventTestData();
 			}
@@ -100,7 +100,7 @@ EOD;
 			if (in_array('title', $tablediff))
 				$sql .= "ALTER TABLE `events` ADD `title` varchar(30) NOT NULL;";
 
-			return DB::queryAssoc($sql);
+			return DB::execute($sql);
 		}
 		else
 			return true;
@@ -112,7 +112,7 @@ INSERT INTO `colorclasses` (`color_id`, `color`) VALUES
 ('colorOne', CONV('FF00FF', 16, 10)),
 ('colorTwo', CONV('00FFFF', 16, 10));
 EOD;
-		Log::debug("got: '".implode(",", DB::queryAssoc($sql))."'");
+		Log::debug("got: '".implode(",", DB::execute($sql))."'");
 	}
 
 	static function insertEventTestData() {
@@ -128,7 +128,7 @@ INSERT INTO `events` (`title`, `start_year`, `end_year`, `details`, `colorclass`
 ('wo ist der bus', 1941, 1943, 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.', 'red'),
 ('tralalala', 1936, 1939, 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.', 'yellow');
 EOD;
-		Log::debug("got: '".implode(",", DB::queryAssoc($sql))."'");
+		Log::debug("got: '".implode(",", DB::execute($sql))."'");
 	}
 
 	function getEvents() {
