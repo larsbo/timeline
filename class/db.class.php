@@ -166,7 +166,7 @@ class DB
 				$fields[] = $r['Field'];
 			}
 
-	//		Log::debug("found ".sizeof($fields)." fields, expected: ".$imax);
+	//		Log::debug("found ".implode(',',$fields)." fields, expected: ".implode(',',$expectedFields));
 			sort($fields);
 			$missingFields = array();
 			$j=0;$i=0;
@@ -183,6 +183,10 @@ class DB
 					$i++;
 					$j++;
 				}
+			}
+			while ($i<$imax) {
+				$missingFields[] = $expectedFields[$i];
+				$i++;
 			}
 			if (sizeof($missingFields) > 0)
 				return $missingFields;
