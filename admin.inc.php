@@ -5,8 +5,9 @@ require_once 'class/admin.class.php';
 
 if (!Admin::loggedIn()) die('not logged in!');
 
-$id = mysql_real_escape_string($_GET['id']);
-$action = mysql_real_escape_string($_GET['action']);
+
+$id = DB::escape($_GET['id']);
+$action = DB::escape($_GET['action']);
 
 switch ($action) {
 	case 'show':
