@@ -33,11 +33,6 @@ if ($_POST['username'] && $_POST['password']) {
 <?php
 // logged in
 if (Admin::loggedIn()) {
-
-	// update database
-	if ($_GET['action'] == 'update-db') {
-		Admin::checkAndUpdateTable(true);
-	}
 ?>
 		<h2>Ereignisse</h2>
 		<div class="bordered" id="eventList">
@@ -48,7 +43,7 @@ if (Admin::loggedIn()) {
 	<div class="config">
 		<h2>Konfiguration</h2>
 		<div class="bordered">
-			<a href="?action=update-db" class="event">Datenbank Update</a>
+			<span id="databaseUpdate" class="event">Datenbank Update</a>
 		</div>
 <?php
 } else {

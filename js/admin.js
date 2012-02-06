@@ -64,4 +64,12 @@ jQuery(document).ready(function($){
 			eventDetails.html('Ereignis ' + id + ' wurde nicht geloescht.');
 		}
 	});
+	
+		// databaseupdate
+	$('#databaseUpdate').click(function() {
+		$.get('admin.inc.php?action=databaseRefresh', function(data){
+			eventDetails.html(data);
+		});
+	});
+
 });
