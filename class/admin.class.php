@@ -1,11 +1,12 @@
 <?php
 require_once 'db.class.php';
+require_once 'timeline.class.php';
 
 class Admin {
 	private $user;
 
 	static function login($name, $pass) {
-		$result = DB::queryAssocAtom("SELECT name FROM `users` WHERE `name` = '".$name."' AND `pass` = '".md5($pass)."' LIMIT 1");
+		$result = DB::queryAssocAtom("SELECT name FROM `users` WHERE `name` = '".$name."' AND `pass` = '".md5($pass)."' LIMIT 1;");
 
 		if ($result) {
 			Admin::setSession('admin', $result['name']);
@@ -32,11 +33,10 @@ class Admin {
 	}
 
 
-	static function showEvents() {
-		$result = DB::queryAssoc("SELECT * FROM `events` ORDER BY `start_year`");
+	static function getEvents() {
+		$result = Timeline::getEvents($start, $end);
 
-		$output = "<span class=\"new event\">Neues Ereignis eintragen</span><br /><br />
-							 <ul>";
+		$output = "<ul>\n";
 		foreach ($result as $event) {
 			$output .= "<li class=\"eventContainer\" data-id=\"".$event['event_id']."\">
 										<span title=\"anzeigen\" class=\"event ".$event['colorclass']."\">".$event['title']."</span>

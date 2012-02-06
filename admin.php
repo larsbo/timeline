@@ -6,7 +6,7 @@ require_once 'class/timeline.class.php';
 
 // prechecking users table
 Admin::checkAndUpdateTableUsers();
-$timeline = new Timeline(0, 0);
+$timeline = new Timeline(0, 0);	//0,0 ???
 
 // submit form
 if ($_POST['username'] && $_POST['password']) {
@@ -24,7 +24,7 @@ if ($_POST['username'] && $_POST['password']) {
   <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
   <script type="text/javascript" src="js/jquery.message.js"></script>
   <script type="text/javascript" src="js/admin.js"></script>
-<?php $timeline->output('css'); ?>
+<?php echo $timeline->getColorClassesHTML(false); ?>
 </head>
 <body>
 <?php Log::output(); ?>
@@ -36,7 +36,10 @@ if (Admin::loggedIn()) {
 ?>
 		<h2>Ereignisse</h2>
 		<div class="bordered" id="eventList">
-<?php echo Admin::showEvents(); ?>
+			<span id="new" class="event">Neues Ereignis eintragen</span>
+			<div>
+<?php echo Admin::getEvents(); ?>
+			</div>
 		</div>
 		<div class="bordered" id="eventDetails"></div>
 	</div>
