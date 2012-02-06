@@ -36,8 +36,10 @@ class Log {
 		Log::getInstance()->debug_msg[] = $sMessage;
 	}
 
-	public function getDebugMsg() {
-		return $this->debug_msg;
+	public static function output() {
+		foreach(Log::getInstance()->debug_msg as $msg) { 
+			echo "<div class=\"msg debug\"><b>".$msg."</b></div>\n";
+		}
 	}
 
 	private static function showMessage($msg, $t = "error") {

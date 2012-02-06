@@ -447,6 +447,7 @@ body {
 
 
 /***** ADMIN *****/
+
 @mixin admin-button($image) {
 	background:$image;
 	float:right;
@@ -456,22 +457,24 @@ body {
 }
 
 .adminContent {
-	margin:15px;
-	padding:5px;
+	padding:50px 10px;
 
 	& h2 { padding:5px; }
 	& input, select, textarea {
 		margin:5px;
 		padding:2px 3px;
 	}
-	& p {
-		padding:2px 5px;
+	& p { padding:2px 5px; }
+	& .content {
+		float:left;
+	}
+	& .config {
+		float:right;
 	}
 	& .bordered {
 		float:left;
 		margin-right:20px;
 		padding:5px;
-		width:450px;
 	}
 	& .eventContainer {
 		display:block;
@@ -479,7 +482,10 @@ body {
 	& .event {
 		margin:0;
 		position:relative;
-		width:395px;
+		width:400px;
+	}
+	& #eventDetails {
+		width:440px;
 	}
 }
 .button.edit {

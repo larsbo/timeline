@@ -463,8 +463,7 @@ body {
 
 /***** ADMIN *****/
 .adminContent {
-  margin: 15px;
-  padding: 5px; }
+  padding: 50px 10px; }
   .adminContent h2 {
     padding: 5px; }
   .adminContent input, .adminContent select, .adminContent textarea {
@@ -472,17 +471,22 @@ body {
     padding: 2px 3px; }
   .adminContent p {
     padding: 2px 5px; }
+  .adminContent .content {
+    float: left; }
+  .adminContent .config {
+    float: right; }
   .adminContent .bordered {
     float: left;
     margin-right: 20px;
-    padding: 5px;
-    width: 450px; }
+    padding: 5px; }
   .adminContent .eventContainer {
     display: block; }
   .adminContent .event {
     margin: 0;
     position: relative;
-    width: 395px; }
+    width: 400px; }
+  .adminContent #eventDetails {
+    width: 440px; }
 
 .button.edit {
   background: url(../images/edit.png) no-repeat center center;

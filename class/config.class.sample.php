@@ -24,25 +24,6 @@ class Config {
 	public $startdate = 1930;
 	public $enddate = 1980;
 
-	private function Config() {
-		$host = $_SERVER['HTTP_HOST'];
-
-		switch ($host) {
-		case 'sowas-such-ich.de':
-			$this->db_host = 'localhost';
-			$this->db_user = 'web25';
-			$this->db_passwd = 'borchert42';
-			$this->db_name = 'usr_web25_1';
-			break;
-
-		default:
-			$this->db_host = 'localhost';
-			$this->db_user = 'timeline_user';
-			$this->db_passwd = 'timeline_pass';
-			$this->db_name = 'timeline';
-		}
-	}
-
 	static function getInstance() {
 		if( !Config::$oInstance ) {
 			Config::$oInstance = new Config();
@@ -50,10 +31,7 @@ class Config {
 		if( !Config::$oInstance ) {
 			Log::critical('Could not create Config singleton.');
 		}
-
 		return Config::$oInstance;
 	}
-
 }
-
 ?>

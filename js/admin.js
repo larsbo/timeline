@@ -1,5 +1,8 @@
 jQuery(document).ready(function($){
 
+	/* messages */
+	$().message();
+
 	var eventList = $('#eventList');
 	var eventDetails = $('#eventDetails');
 

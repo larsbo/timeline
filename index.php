@@ -14,11 +14,11 @@
   <script type="text/javascript" src="js/iscroll.js"></script>
   <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
   <script type="text/javascript" src="js/jquery.hovercard.js"></script>
+  <script type="text/javascript" src="js/jquery.message.js"></script>
   <script type="text/javascript" src="js/jquery.mini-map.js"></script>
   <script type="text/javascript" src="js/run.js"></script>
 <?php
 include 'class/timeline.class.php';
-Timeline::checkAndUpdateTable(true); //maybe false is better?
 $c = Config::getInstance();
 $timeline = new Timeline($c->startdate, $c->enddate);
 $width = max(1,$c->enddate - $c->startdate + 1) * $c->tl_column_width;
@@ -48,13 +48,7 @@ $timeline->output('css');
   <div class="eventbox">
 <?php $timeline->output('details'); ?>
   </div>
-  <div class="debug">
-<?php
-	foreach(Log::getInstance()->getDebugMsg() as $msg) { 
-		echo "<div class=\"msg debug\">".$msg."</div>\n";
-	}
-?>
-  </div>
+<?php Log::output(); ?>
 </div>
 </body>
 </html>

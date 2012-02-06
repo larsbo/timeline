@@ -2,6 +2,11 @@
 session_start();
 
 require_once 'class/admin.class.php';
+require_once 'class/timeline.class.php';
+
+// prechecking users table
+Admin::checkAndUpdateTableUsers();
+$timeline = new Timeline(0, 0);
 
 // submit form
 if ($_POST['username'] && $_POST['password']) {
@@ -17,19 +22,34 @@ if ($_POST['username'] && $_POST['password']) {
   <title>Timeline - Admin</title>
   <link rel="stylesheet" type="text/css" href="css/style.css" />
   <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+  <script type="text/javascript" src="js/jquery.message.js"></script>
   <script type="text/javascript" src="js/admin.js"></script>
+<?php $timeline->output('css'); ?>
 </head>
-<body class="adminContent">
+<body>
+<?php Log::output(); ?>
+<div class="adminContent">
+	<div class="content">
 <?php
+// logged in
 if (Admin::loggedIn()) {
-	// logged in
 
+	// update database
+	if ($_GET['action'] == 'update-db') {
+		Admin::checkAndUpdateTable(true);
+	}
 ?>
-<h2>Ereignisse</h2>
-<div class="bordered" id="eventList">
+		<h2>Ereignisse</h2>
+		<div class="bordered" id="eventList">
 <?php echo Admin::showEvents(); ?>
-</div>
-<div class="bordered" id="eventDetails"></div>
+		</div>
+		<div class="bordered" id="eventDetails"></div>
+	</div>
+	<div class="config">
+		<h2>Konfiguration</h2>
+		<div class="bordered">
+			<a href="?action=update-db" class="event">Datenbank Update</a>
+		</div>
 <?php
 } else {
 	// show login form
@@ -48,5 +68,6 @@ if (Admin::loggedIn()) {
 <?php
 }
 ?>
+</div>
 </body>
 </html>
