@@ -92,6 +92,12 @@ class DB
 			return true;
 	}
 
+	static function escape($string) {
+		$db = DB::getInstance();
+
+		return mysql_real_escape_string($string, $db->db_connect_id);
+	}
+
 	function sql_close() {
 		if ( $this->db_connect_id )
 			return mysql_close($this->db_connect_id);
@@ -159,6 +165,8 @@ class DB
 
 	static function checkForTableCont($sql, $expectedFields) {
 		$imax = sizeof($expectedFields);
+
+		sort($expectedFields);
 		//assertion: expectedFields are sorted...
 
 		$results = DB::queryAssoc($sql);
