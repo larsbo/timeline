@@ -23,7 +23,7 @@ class Timeline {
 		$html = '<style type="text/css">';
 		foreach (Timeline::getColorClasses() as $colorclass) {
 			if(!empty($colorclass['color_id']) && !empty($colorclass['css'])) {
-				$html .= ".".$colorclass['color_id']." { \n";
+				$html .= ".colorclass_".$colorclass['color_id']." { \n";
 				$html .= $colorclass['css']." }\n";
 			}
 		}
@@ -70,7 +70,7 @@ EOD;
 					$event['line'] = $event['line'] * $c->tl_event_padding_y;
 					$html .= <<<EOD
 \t\t\t\t\t<span 
-\t\t\t\t\t	class="event {$event['colorclass']}" 
+\t\t\t\t\t	class="event colorclass_{$event['colorclass']}" 
 \t\t\t\t\t	style="width:{$event['length']}px;top:{$event['line']}px"
 \t\t\t\t\t	data-event="{$event['event_id']}"
 \t\t\t\t\t	data-title="{$event['title']}"
