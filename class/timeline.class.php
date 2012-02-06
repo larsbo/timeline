@@ -140,7 +140,7 @@ INSERT INTO `colorclasses` (`color_id`, `css_code`) VALUES
   color: #fff;
   text-shadow: 0 1px 0 #000;');
 EOD;
-		Log::debug("got: '".implode(",", DB::execute($sql))."'");
+		Log::debug("got: '".DB::execute($sql)."'");
 	}
 
 	static function insertEventTestData() {
@@ -156,7 +156,7 @@ INSERT INTO `events` (`title`, `start_year`, `end_year`, `details`, `colorclass`
 ('wo ist der bus', 1941, 1943, 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.', 'red'),
 ('tralalala', 1936, 1939, 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.', 'yellow');
 EOD;
-		Log::debug("got: '".implode(",", DB::execute($sql))."'");
+		Log::debug("got: '".DB::execute($sql)."'");
 	}
 
 	function getEvents() {
