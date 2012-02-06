@@ -78,7 +78,7 @@ var zIndices = [];
 
 					// if 'short modus' is active show title on hover
 					if ($('#options-container').find('.selected').data('type') == 'short') {
-						title.width(title.attr('data-width')).html(title.data('title'));
+						title.width(title.attr('data-width')).html(title.data('title') + '<span class="pin"></span>');
 					}
 
 					$this.find(".event-details").eq(0).stop(true, true).delay(options.delay).fadeIn();

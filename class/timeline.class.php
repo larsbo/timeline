@@ -132,11 +132,11 @@ INSERT INTO `colorclasses` (`color_id`, `css_code`) VALUES
   background-image: -webkit-linear-gradient(top, #00ee00, #00aa00);
   color: #fff;
   text-shadow: 0 1px 0 #000;'),
-('blue', 'background-image: linear-gradient(top, #0000ee, #0000aa);
-  background-image: -o-linear-gradient(top, #0000ee, #0000aa);
-  background-image: -ms-linear-gradient(top, #0000ee, #0000aa);
-  background-image: -moz-linear-gradient(top, #0000ee, #0000aa);
-  background-image: -webkit-linear-gradient(top, #0000ee, #0000aa);
+('blue', 'background-image: linear-gradient(top, #0066ee, #0033aa);
+  background-image: -o-linear-gradient(top, #0066ee, #0033aa);
+  background-image: -ms-linear-gradient(top, #0066ee, #0033aa);
+  background-image: -moz-linear-gradient(top, #0066ee, #0033aa);
+  background-image: -webkit-linear-gradient(top, #0066ee, #0033aa);
   color: #fff;
   text-shadow: 0 1px 0 #000;');
 EOD;

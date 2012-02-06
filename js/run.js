@@ -31,7 +31,7 @@ jQuery(document).ready(function($){
 			var event = $(this);
 			switch (button.data('type')) {
 				case 'long':
-					event.show().width(event.attr('data-width')).html(event.attr('data-title'));
+					event.show().width(event.attr('data-width')).html(event.attr('data-title') + '<span class="pin"></span>');
 					var id = event.attr('data-event');
 					break;
 				case 'short':

@@ -132,9 +132,11 @@ body {
 	@include rounded-corners(.2em);
 	@include shadows(0 0 1px 1px rgba(255,255,255,.8) inset);
 
-	&:hover {
+	&:hover:not(.red):not(.blue):not(.green):not(.yellow) {
 		background-color:#eee;
 		@include background-gradients(top, #fafafa, #ddd);
+	}
+	&:hover {
 		@include shadows(none);
 	}
 	&:active {
