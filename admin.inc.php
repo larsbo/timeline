@@ -9,6 +9,10 @@ $id = mysql_real_escape_string($_GET['id']);
 $action = mysql_real_escape_string($_GET['action']);
 
 switch ($action) {
+	case 'show':
+	echo Admin::showEvent($id);
+	break;
+
 	case 'insert':
 	echo Admin::insertEvent();
 	break;
@@ -31,6 +35,10 @@ switch ($action) {
 
 	case 'deleteconfirmation':
 	echo Admin::deleteEventConfirmation($id);
+	break;
+
+	case 'refresh':
+	echo Admin::showEvents();
 	break;
 
 	default:

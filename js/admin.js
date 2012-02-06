@@ -1,32 +1,35 @@
 jQuery(document).ready(function($){
 
-	// event list
 	var eventList = $('#eventList');
 	var eventDetails = $('#eventDetails');
-	var events = eventList.find('.eventContainer');
-	var insert = eventList.find('.new');
 
-	events.each(function(){
-		var event = $(this);
-		var id = event.data('id');
-		var edit = event.find('.edit');
-		var del = event.find('.delete');
-
-		edit.click(function(){
-			$.get('admin.inc.php?action=edit&id=' + id, function(data){
-				eventDetails.html(data);
-			});
-		});
-
-		del.click(function(){
-			$.get('admin.inc.php?action=delete&id=' + id, function(data){
-				eventDetails.html(data);
-			});
+	// insert event
+	eventList.on('click', '.new', function(){
+		$.get('admin.inc.php?action=insert', function(data){
+			eventDetails.html(data);
 		});
 	});
 
-	insert.click(function(){
-		$.get('admin.inc.php?action=insert', function(data){
+	// show event
+	eventList.on('click', '.event:not(.new)', function(){
+		var id = $(this).parent().data('id');
+		$.get('admin.inc.php?action=show&id=' + id, function(data){
+			eventDetails.html(data);
+		});
+	});
+
+	// edit event
+	eventList.on('click', '.edit', function(){
+		var id = $(this).parent().data('id');
+		$.get('admin.inc.php?action=edit&id=' + id, function(data){
+			eventDetails.html(data);
+		});
+	});
+
+	// delete event
+	eventList.on('click', '.delete', function(){
+		var id = $(this).parent().data('id');
+		$.get('admin.inc.php?action=delete&id=' + id, function(data){
 			eventDetails.html(data);
 		});
 	});
@@ -39,9 +42,13 @@ jQuery(document).ready(function($){
 
 		$.get('admin.inc.php?action=' + action + '&' + form.serialize(), function(data){
 			eventDetails.html(data);
+			$.get('admin.inc.php?action=refresh', function(data){
+				eventList.html(data);
+			});
 		});
 	});
-	// button click >> yes or no?
+
+	// confirmation >> yes or no?
 	eventDetails.on('click', 'input[type="button"]', function(e){
 		var button = $(this);
 		var id = button.parent().data('id');

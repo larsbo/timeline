@@ -466,19 +466,22 @@ body {
   padding: 5px; }
   .adminContent h2 {
     padding: 5px; }
-  .adminContent input, .adminContent textarea {
-    margin: 5px; }
+  .adminContent input, .adminContent select, .adminContent textarea {
+    margin: 5px;
+    padding: 2px 3px; }
+  .adminContent p {
+    padding: 2px 5px; }
   .adminContent .bordered {
     float: left;
     margin-right: 20px;
     padding: 5px;
-    width: 40%; }
+    width: 450px; }
   .adminContent .eventContainer {
     display: block; }
   .adminContent .event {
     margin: 0;
     position: relative;
-    width: 85%; }
+    width: 395px; }
 
 .button.edit {
   background: url(../images/edit.png) no-repeat center center;

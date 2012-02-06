@@ -25,9 +25,8 @@ if (Admin::loggedIn()) {
 	// logged in
 
 ?>
-<h2>Eingetragene Ereignisse</h2>
+<h2>Ereignisse</h2>
 <div class="bordered" id="eventList">
-  <span class="new event">Neues Ereignis einf&uuml;gen</span><br /><br />
 <?php echo Admin::showEvents(); ?>
 </div>
 <div class="bordered" id="eventDetails"></div>
