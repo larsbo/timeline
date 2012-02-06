@@ -43,7 +43,7 @@ switch ($action) {
 	break;
 
 	case 'refresh':
-	echo Admin::showEvents();
+	echo Admin::getEvents();
 	break;
 
 	case 'databaseRefresh':
