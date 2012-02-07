@@ -7,7 +7,7 @@ jQuery(document).ready(function($){
 	var eventDetails = $('#eventDetails');
 
 	// insert event
-	eventList.on('click', '.new', function(){
+	$('#new').click(function(){
 		$.get('admin.inc.php?action=insert', function(data){
 			eventDetails.html(data);
 		});
@@ -46,7 +46,7 @@ jQuery(document).ready(function($){
 		$.get('admin.inc.php?action=' + action + '&' + form.serialize(), function(data){
 			eventDetails.html(data);
 			$.get('admin.inc.php?action=refresh', function(data){
-				eventList.html(data);
+				eventList.find('div:first').html(data);
 			});
 		});
 	});
@@ -64,4 +64,12 @@ jQuery(document).ready(function($){
 			eventDetails.html('Ereignis ' + id + ' wurde nicht geloescht.');
 		}
 	});
+	
+		// databaseupdate
+	$('#databaseUpdate').click(function() {
+		$.get('admin.inc.php?action=databaseRefresh', function(data){
+			eventDetails.html(data);
+		});
+	});
+
 });
