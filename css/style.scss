@@ -194,6 +194,9 @@ body {
 	top:0;
 	@include rounded-corners(3px);
 	@include shadows(5px 5px 5px #888);
+	.sticky & {
+		cursor:move;
+	}
 }
 .event-img {
 	float:right;

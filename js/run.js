@@ -5,7 +5,7 @@ jQuery(document).ready(function($){
 
 	/* iScroll */
 	var timeline = new iScroll('wrapper',{
-		checkDOMChanges: true,
+		bounce: false,
 		scrollbarClass: 'scrollbar',
 		vScroll: false,
 		vScrollbar: false,
@@ -20,9 +20,9 @@ jQuery(document).ready(function($){
 	/* show/hide event names */
 	var events = $('.event');
 	$('#options-container').find('.button').click(function(){
+		var button = $(this);
 
 		// change button
-		var button = $(this);
 		button.siblings().removeClass('selected');
 		button.addClass('selected');
 
@@ -31,16 +31,20 @@ jQuery(document).ready(function($){
 			var event = $(this);
 			switch (button.data('type')) {
 				case 'long':
-					event.show().width(event.attr('data-width')).html(event.attr('data-title') + '<span class="pin"></span>');
-					var id = event.attr('data-event');
-					break;
+				event
+					.show()
+					.width(event.data('width'))
+					.html(event.data('title') + '<span class="pin"></span>');
+				break;
 				case 'short':
-					event.parent().not('.sticky').find('.event').show().width('').html('+');
-					var id = event.attr('data-event');
-					break;
+				event.parent().not('.sticky').find('.event')
+					.show()
+					.width('')
+					.html('+');
+				break;
 				case 'hidden':
-					event.hide();
-					break;
+				event.hide();
+				break;
 			}
 		});
 	});
@@ -48,10 +52,24 @@ jQuery(document).ready(function($){
 	/* show event details */
 	events.each(function(){
 		var event = $(this);
-		var id = event.attr('data-event');
 
-		event.hovercard({
-			detailsHTML: $('#event-' + id).html()
+		event.hovercard();
+		event.parent().draggable({
+			axis: 'y',
+			handle: 'div',
+			/*snap: true,*/
+			start: function(){
+				var current = $(this);
+				if (!current.data('origleft') && !current.data('origtop')) {
+					current.attr('data-origleft', current.position().left);
+					current.attr('data-origtop', current.position().top);
+				}
+				timeline.disable();
+			},
+			stop: function(){
+				timeline.enable();
+			}
 		});
+		event.parent().draggable('disable');
 	});
 });

@@ -13,6 +13,7 @@
 <![endif]-->
   <script type="text/javascript" src="js/iscroll.js"></script>
   <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+  <script type="text/javascript" src="js/jquery-ui-1.8.17.min.js"></script>
   <script type="text/javascript" src="js/jquery.hovercard.js"></script>
   <script type="text/javascript" src="js/jquery.message.js"></script>
   <script type="text/javascript" src="js/jquery.mini-map.js"></script>
@@ -44,9 +45,6 @@ $timeline->output('css');
 <?php echo "\t<div id=\"scroller\" style=\"width: ".$width."px\">\n" ?>
 <?php $timeline->output('events'); ?>
     </div>
-  </div>
-  <div class="eventbox">
-<?php $timeline->output('details'); ?>
   </div>
 <?php Log::output(); ?>
 </div>

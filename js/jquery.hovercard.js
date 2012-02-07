@@ -27,103 +27,101 @@ var zIndices = [];
 			return 10; //start with 10, if no element is hovered yet
 	}
 
-	$.fn.hovercard = function (options) {
+	$.fn.hovercard = function(){
 		//Set defauls for the control
-		var defaults = {
+		var event = $(this);
+		var options = {
 			width: 400,
-			cardImgSrc: "",
-			detailsHTML: "",
+			detailsHTML: $('#event-' + event.data('event')).html(),
 			delay: 0,
 			onHoverIn: function() { },
 			onHoverOut: function() { }
 		};
-		//Update unset options with defaults if needed
-		var options = $.extend(defaults, options);
 
-		//Executing functionality on all selected elements
-		return this.each(function(){
-			var obj = $(this);
+		shortModus = function(){
+			return $('#options-container').find('.selected').data('type') == 'short';
+		},
 
-			//wrap a parent span to the selected element
-			obj.wrap('<div class="event-preview"  style="zIndex: 0" />');
+		// align event details container
+		event.next().css({ 
+			'top': event.css('top'), 
+			'width': Math.max(options.width, event.width())
+		});
 
-			//if card image src provided then generate the image element
-			var img = '';
-			if (options.cardImgSrc.length > 0) {
-				img = '<img class="event-img" src="' + options.cardImgSrc + '" />';
+		// make event sticky
+		event.click(function() {
+			var eventContainer =  $(this).parent();
+			eventContainer.toggleClass('sticky');
+
+			// move event back to original position
+			if (!eventContainer.hasClass('sticky')) {
+				eventContainer.draggable('disable');
+				eventContainer.animate({
+					top: eventContainer.data('origtop'),
+					left: eventContainer.data('origleft'),
+					duration: 'slow'
+				});
+			} else {
+				eventContainer.draggable('enable');
+			}
+		});
+
+		// show event details on hover
+		event.parent().hover(function(){
+			var $this = $(this);
+
+			if (!$this.hasClass('sticky')) {
+				//create new max of zIndices, so element will hover on top...
+				zIndices.push(zIndices.last()+1);
+				$this.css("zIndex", zIndices.last().toString());
+
+				if (shortModus()) {
+					// show title on hover
+					event
+						.width(event.attr('data-width'))
+						.html(event.data('title') + '<span class="pin"></span>');
+				}
+				event.next().stop(true, true).delay(options.delay).fadeIn();
+			}
+			else {
+				//remove self from list, find max and set to max+1
+				zIndices.rmElem(parseInt($this.css("zIndex")));
+				zIndices.push(zIndices.last()+1);
+				$this.css("zIndex", zIndices.last().toString());
 			}
 
-			//append generated details element after the selected element
-			obj.after('<div class="event-details" style="zIndex: 1">' + img + options.detailsHTML + '</div>');
-			obj.siblings(".event-details").eq(0).css({ 
-				'top': obj.css('top'), 
-				'width': Math.max(options.width, obj.width())
-			});
-			obj.click(function() {
-				// make event sticky
-				var selected = $(this);
-				selected.parent().toggleClass('sticky');
-			});
-			obj.css("zIndex", "2");
+			//Default functionality on hoverin, and also allows callback
+			if (typeof options.onHoverIn == 'function') {
+				//Callback function
+				options.onHoverIn.call(this);
+			}
 
-			//toggle hover card details on hover
-			obj.closest(".event-preview").hover(function(){
-				var $this = $(this);
-				var title = $this.find('.event');
+		},
+		// hode event details on hover out
+		function(){
+			$this = $(this);
 
-				if (!$this.hasClass('sticky')) {
-					//create new max of zIndices, so element will hover on top...
-					zIndices.push(zIndices.last()+1);
-					$this.css("zIndex", zIndices.last().toString());
+			if (!$this.hasClass('sticky')) {
+				event.next().stop(true, true).fadeOut(300, function(){
 
-					// if 'short modus' is active show title on hover
-					if ($('#options-container').find('.selected').data('type') == 'short') {
-						title.width(title.attr('data-width')).html(title.data('title') + '<span class="pin"></span>');
+					if (shortModus()) {
+						event.width('').html('+');
 					}
 
-					$this.find(".event-details").eq(0).stop(true, true).delay(options.delay).fadeIn();
-				}
-				else {
-					//remove self from list, find max and set to max+1
+					//remove self from list
 					zIndices.rmElem(parseInt($this.css("zIndex")));
-					zIndices.push(zIndices.last()+1);
-					$this.css("zIndex", zIndices.last().toString());
-				}
+					$this.css("zIndex", "0");
 
-				//Default functionality on hoverin, and also allows callback
-				if (typeof options.onHoverIn == 'function') {
-					//Callback function
-					options.onHoverIn.call(this);
-				}
-
-			}, function(){
-				//Undo the z indices 
-				$this = $(this);
-				var title = $this.find('.event');
-
-				if (!$this.hasClass('sticky')) {
-
-					$this.find(".event-details").eq(0).stop(true, true).fadeOut(300, function(){
-						// if 'short modus' is active hide title on hoverout
-						if ($('#options-container').find('.selected').data('type') == 'short') {
-							title.width('').html('+');
-						}
-
-						//remove self from list
-						zIndices.rmElem(parseInt($this.css("zIndex")));
-						$this.css("zIndex", "0");
-
-						if (typeof options.onHoverOut == 'function') {
-							options.onHoverOut.call(this);
-						}
-					});
-				}
-				else {
 					if (typeof options.onHoverOut == 'function') {
 						options.onHoverOut.call(this);
 					}
+				});
+			}
+			else {
+				if (typeof options.onHoverOut == 'function') {
+					options.onHoverOut.call(this);
 				}
-			});
+			}
 		});
 	};
 })(jQuery);

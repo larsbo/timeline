@@ -8,7 +8,6 @@ class Timeline {
 	private $start_year;
 	private $end_year;
 	private $events_output;
-	private $details_output;
 	private $css_output;
 
 	function __Construct($start, $end) {
@@ -19,7 +18,6 @@ class Timeline {
 
 		$this->css_output = $this->getColorclasses();
 		$this->createEventsOutput();
-		$this->createDetailsOutput();
 	}
 
 	function getEvents() {
@@ -92,13 +90,19 @@ EOD;
 				if ($event['start_year'] == $year) {
 					$event['length'] = max(1, $event['end_year'] - $event['start_year'] + 1) * $c->tl_column_width - $c->tl_event_padding_x;
 					$event['line'] = $event['line'] * $c->tl_event_padding_y;
-					$this->events_output .= "\t\t\t\t\t<span class=\"event ".$event['colorclass']."\" ".
-						"style=\"width:".$event['length']."px;".
-							"top:".$event['line']."px\" ".
-						"data-event=\"".$event['event_id']."\" ".
-						"data-title=\"".$event['title']."\" ".
-						"data-width=\"".$event['length']."\"".
-						">".$event['title']."<span class=\"pin\"></span></span>\n";
+					$this->events_output .= <<<EOD
+\t\t\t\t\t<div class="event-preview" style="zIndex: 0">
+						<span class="event $event[colorclass]" 
+									style="width:$event[length]px;top:$event[line]px;z-index:2;" 
+									data-event="$event[event_id]" 
+									data-title="$event[title]" 
+									data-width="$event[length]">
+							$event[title]
+							<span class="pin"></span>
+						</span>
+						<div class="event-details" style="zIndex: 1">$event[details]</div>
+					</div>\n
+EOD;
 				}
 			}
 			$this->events_output .= "\t\t\t\t</td>\n";
@@ -110,15 +114,8 @@ EOD;
 EOD;
 	}
 
-	function createDetailsOutput() {
-		foreach ($this->events as $event) {
-			$this->details_output .= "\t<div id=\"event-".$event['event_id']."\" class=\"event-details\">".$event['details']."</div>\n";
-		}
-	}
-
 	function output($data) {
 		if ($data == 'events') echo $this->events_output;
-		if ($data == 'details') echo $this->details_output;
 		if ($data == 'css') echo $this->css_output;
 	}
 
