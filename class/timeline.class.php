@@ -67,10 +67,11 @@ EOD;
 				if ($event['start_year'] == $year) {
 					$event['length'] = max(1, $event['end_year'] - $event['start_year'] + 1) * $c->tl_column_width - $c->tl_event_padding_x;
 					$event['line'] = $event['line'] * $c->tl_event_padding_y;
+					$colorclass = $event['colorclass'] != "" ? " custom colorclass_".$event['colorclass'] : "";
 					$html .= <<<EOD
 \t\t\t\t<div class="event-preview" style="zIndex: 0">
 \t\t\t\t\t<span 
-\t\t\t\t\t	class="event colorclass_{$event['colorclass']}" 
+\t\t\t\t\t	class="event{$colorclass}" 
 \t\t\t\t\t	style="width:{$event[length]}px;top:{$event[line]}px;z-index:2;" 
 \t\t\t\t\t	data-event="{$event[event_id]}" 
 \t\t\t\t\t	data-title="{$event[title]}" 

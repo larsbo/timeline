@@ -94,7 +94,7 @@ body {
   -o-box-shadow: 0 0 1px 1px rgba(255, 255, 255, 0.8) inset;
   -moz-box-shadow: 0 0 1px 1px rgba(255, 255, 255, 0.8) inset;
   -webkit-box-shadow: 0 0 1px 1px rgba(255, 255, 255, 0.8) inset; }
-  .event:hover:not(.red):not(.blue):not(.green):not(.yellow) {
+  .event:hover:not(.custom) {
     background-color: #eee;
     background-image: linear-gradient(top, #fafafa, #dddddd);
     background-image: -o-linear-gradient(top, #fafafa, #dddddd);
