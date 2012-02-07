@@ -27,7 +27,6 @@ if ($_POST['username'] && $_POST['password']) {
 <?php echo $timeline->getColorClassesHTML(false); ?>
 </head>
 <body>
-<?php Log::output(); ?>
 <div class="adminContent">
 	<div class="content">
 <?php
@@ -67,5 +66,8 @@ if (Admin::loggedIn()) {
 }
 ?>
 </div>
+</div>
+
+<?php Log::output(); ?>
 </body>
 </html>

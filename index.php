@@ -46,7 +46,7 @@ echo $timeline->getColorClassesHTML(false);
 <?php echo $timeline->getEventsOutput(); ?>
     </div>
   </div>
-<?php Log::output(); ?>
+<?php //Log::output(); ?>
 </div>
 </body>
 </html>
