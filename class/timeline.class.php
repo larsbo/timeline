@@ -34,7 +34,7 @@ class Timeline {
 		$counter = sizeof($this->events);
 		$matrix = array();
 		for ($i=0; $i<$counter; $i++) {
-			$year = $this->events[$i]['start_year'];
+			$year = $this->events[$i]['startdate'];	//TODO needs fixing
 			$line = 0;
 			// search for the first free row
 			while ($matrix[$year][$line]) {
@@ -42,7 +42,7 @@ class Timeline {
 				$line++;
 			}
 			// found free row -> mark columns (=years) of this row in matrix
-			for ($j = $year; $j <= $this->events[$i]['end_year']; $j++) {
+			for ($j = $year; $j <= $this->events[$i]['enddate']; $j++) {
 				$matrix[$j][$line] = true;
 			}
 		}
@@ -65,7 +65,7 @@ EOD;
 			$html .= "\t\t\t\t<td>\n";
 			foreach ($this->events as $event) {
 				if ($event['start_year'] == $year) {
-					$event['length'] = max(1, $event['end_year'] - $event['start_year'] + 1) * $c->tl_column_width - $c->tl_event_padding_x;
+					$event['length'] = max(1, $event['enddate'] - $event['startdate'] + 1) * $c->tl_column_width - $c->tl_event_padding_x;
 					$event['line'] = $event['line'] * $c->tl_event_padding_y;
 					$colorclass = $event['colorclass'] != "" ? " custom colorclass_".$event['colorclass'] : "";
 					$html .= <<<EOD
@@ -93,16 +93,16 @@ EOD;
 	/********** FACTORY **********/
 	static function getEvents($start = 0, $end = 0) {
 		$sql = <<<EOD
-SELECT e.event_id, e.title, e.details, e.start_year, e.end_year, e.colorclass
+SELECT e.event_id, e.title, e.details, e.startdate, e.enddate, e.colorclass
 FROM events AS e
 EOD;
 		if ($start != 0 && $end != 0)
-			$sql .= " WHERE e.start_year >= $start AND e.end_year <= $end";
+			$sql .= " WHERE e.startdate >= $start AND e.enddate <= $end";
 		else if ($start != 0)
-			$sql .= " WHERE e.start_year >= $start";
+			$sql .= " WHERE e.startdate >= $start";
 		else if ($end != 0)
-			$sql .= " WHERE e.end_year <= $end";
-		$sql .= " ORDER BY e.start_year ASC";
+			$sql .= " WHERE e.enddate <= $end";
+		$sql .= " ORDER BY e.startdate ASC";
 		$events = DB::queryAssoc($sql);
 		// sort events by start_year
 		return $events;
