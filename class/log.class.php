@@ -38,13 +38,13 @@ class Log {
 
 	public static function output() {
 		foreach(Log::getInstance()->debug_msg as $msg) { 
-			echo "<div class=\"msg debug\"><b>".$msg."</b></div>\n";
+			Log::showMessage($msg, "debug");
 		}
 	}
 
 	private static function showMessage($msg, $t = "error") {
 		echo '<div class="msg '.$t.' immediate">'
-			.'<h3>Fehler!</h3><p>'.$msg.'</p></div>\n';
+			."<h3>".$t."!</h3><p>".$msg."</p></div>\n";
 	}
 }
 ?>
