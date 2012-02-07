@@ -161,18 +161,18 @@ body {
 		@include shadows(1px 0 0 rgba(0,0,0,.5));
 		@include rounded-corners(.15em 0 0 .15em);
 	}
-}
-.pin {
-	background:url(../images/pin.png) no-repeat;
-	display:none;
-	float:right;
-	position:absolute;
-	right:-2px;
-	top:-3px;
-	height:16px;
-	width:16px;
-	.sticky & {
-		display:block;
+	.pin {
+		background:url(../images/pin.png) no-repeat;
+		display:none;
+		float:right;
+		position:relative;
+		right:-2px;
+		top:-3px;
+		height:16px;
+		width:16px;
+		.sticky & {
+			display:block;
+		}
 	}
 }
 
@@ -180,29 +180,25 @@ body {
 .event-preview {
 	display:block;
 	position:absolute;
-}
-.event-details {
-	background:#fff;
-	border:solid 1px #ddd;
-	cursor:default;
-	display:none;
-	line-height:1.5em;
-	margin-right:80px;
-	padding:3em 10px 10px;
-	position:absolute;
-	text-align:left;
-	top:0;
-	@include rounded-corners(3px);
-	@include shadows(5px 5px 5px #888);
-	.sticky & {
-		cursor:move;
+	.event-details {
+		background:#fff;
+		border:solid 1px #ddd;
+		cursor:default;
+		display:none;
+		line-height:1.5em;
+		margin-right:80px;
+		padding:3em 10px 10px;
+		position:absolute;
+		text-align:left;
+		top:0;
+		@include rounded-corners(3px);
+		@include shadows(5px 5px 5px #888);
+		.sticky & {
+			cursor:move;
+		}
 	}
 }
-.event-img {
-	float:right;
-	margin-top:-1em;
-	width:70px;
-}
+
 
 /***** TABLE *****/
 .bordered {
@@ -490,10 +486,13 @@ body {
 	& #eventDetails {
 		width:440px;
 	}
+	.button {
+		&.edit {
+			@include admin-button(url(../images/edit.png) no-repeat center center);
+		}
+		&.delete {
+			@include admin-button(url(../images/delete.png) no-repeat center center);
+		}
+	}
 }
-.button.edit {
-	@include admin-button(url(../images/edit.png) no-repeat center center);
-}
-.button.delete {
-	@include admin-button(url(../images/delete.png) no-repeat center center);
-}
+

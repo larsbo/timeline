@@ -134,50 +134,43 @@ body {
     -o-border-radius: 0.15em 0 0 0.15em;
     -moz-border-radius: 0.15em 0 0 0.15em;
     -webkit-border-radius: 0.15em 0 0 0.15em; }
-
-.pin {
-  background: url(../images/pin.png) no-repeat;
-  display: none;
-  float: right;
-  position: absolute;
-  right: -2px;
-  top: -3px;
-  height: 16px;
-  width: 16px; }
-  .sticky .pin {
-    display: block; }
+  .event .pin {
+    background: url(../images/pin.png) no-repeat;
+    display: none;
+    float: right;
+    position: relative;
+    right: -2px;
+    top: -3px;
+    height: 16px;
+    width: 16px; }
+    .sticky .event .pin {
+      display: block; }
 
 /**** EVENT DETAILS *****/
 .event-preview {
   display: block;
   position: absolute; }
-
-.event-details {
-  background: #fff;
-  border: solid 1px #ddd;
-  cursor: default;
-  display: none;
-  line-height: 1.5em;
-  margin-right: 80px;
-  padding: 3em 10px 10px;
-  position: absolute;
-  text-align: left;
-  top: 0;
-  border-radius: 3px;
-  -o-border-radius: 3px;
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
-  box-shadow: 5px 5px 5px #888888;
-  -o-box-shadow: 5px 5px 5px #888888;
-  -moz-box-shadow: 5px 5px 5px #888888;
-  -webkit-box-shadow: 5px 5px 5px #888888; }
-  .sticky .event-details {
-    cursor: move; }
-
-.event-img {
-  float: right;
-  margin-top: -1em;
-  width: 70px; }
+  .event-preview .event-details {
+    background: #fff;
+    border: solid 1px #ddd;
+    cursor: default;
+    display: none;
+    line-height: 1.5em;
+    margin-right: 80px;
+    padding: 3em 10px 10px;
+    position: absolute;
+    text-align: left;
+    top: 0;
+    border-radius: 3px;
+    -o-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    box-shadow: 5px 5px 5px #888888;
+    -o-box-shadow: 5px 5px 5px #888888;
+    -moz-box-shadow: 5px 5px 5px #888888;
+    -webkit-box-shadow: 5px 5px 5px #888888; }
+    .sticky .event-preview .event-details {
+      cursor: move; }
 
 /***** TABLE *****/
 .bordered {
@@ -489,17 +482,15 @@ body {
     width: 400px; }
   .adminContent #eventDetails {
     width: 440px; }
-
-.button.edit {
-  background: url(../images/edit.png) no-repeat center center;
-  float: right;
-  height: 16px;
-  padding: 1px;
-  width: 16px; }
-
-.button.delete {
-  background: url(../images/delete.png) no-repeat center center;
-  float: right;
-  height: 16px;
-  padding: 1px;
-  width: 16px; }
+  .adminContent .button.edit {
+    background: url(../images/edit.png) no-repeat center center;
+    float: right;
+    height: 16px;
+    padding: 1px;
+    width: 16px; }
+  .adminContent .button.delete {
+    background: url(../images/delete.png) no-repeat center center;
+    float: right;
+    height: 16px;
+    padding: 1px;
+    width: 16px; }
