@@ -32,11 +32,6 @@ switch ($action) {
 	echo Admin::updateEvent($id);
 	break;
 
-	case 'delete':	//TODO wofür? reicht doch ne clientseitige abfrage, muss kein query zum server oO
-	$id = DB::escape($_GET['id']);
-	echo Admin::deleteEvent($id);
-	break;
-
 	case 'deleteconfirmation':
 	$id = DB::escape($_GET['id']);
 	echo Admin::deleteEventConfirmation($id);

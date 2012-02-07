@@ -128,16 +128,6 @@ VALUES ('".$title."', '".$start."', '".$end."', '".$details."', '".$colorclass."
 		return "Ereignis ".$id." erfolgreich bearbeitet!";
 	}
 
-	static function deleteEvent($id) {
-		return "<p>Soll das Ereignis ".$id." wirklich gel&ouml;scht werden?</p>
-						<p>
-							<form data-id=\"".$id."\">
-								<input name=\"no\" type=\"button\" value=\"abbrechen\" />
-								<input name=\"yes\" type=\"button\" value=\"l&ouml;schen\" />
-							</form>
-						</p>";
-	}
-
 	static function deleteEventConfirmation($id) {
 		$result = DB::execute("DELETE FROM `events` WHERE `event_id` = '".$id."'");
 		return "Ereignis ".$id." erfolgreich gel&ouml;scht!";

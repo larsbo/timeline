@@ -32,9 +32,14 @@ jQuery(document).ready(function($){
 	// delete event
 	eventList.on('click', '.delete', function(){
 		var id = $(this).parent().data('id');
-		$.get('admin.inc.php?action=delete&id=' + id, function(data){
-			eventDetails.html(data);
-		});
+		var data = "<p>Soll das Ereignis " +  id + " wirklich gel&ouml;scht werden?</p>\
+						<p>\
+							<form data-id=\"" + id + "\">\
+								<input name=\"no\" type=\"button\" value=\"abbrechen\" />\
+								<input name=\"yes\" type=\"button\" value=\"loeschen\" />\
+							</form>\
+						</p>";
+		eventDetails.html(data);
 	});
 
 	// looking for form submits...
