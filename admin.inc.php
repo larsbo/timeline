@@ -15,7 +15,7 @@ switch ($action) {
 	break;
 
 	case 'insert':
-	echo Admin::insertEvent();
+	echo Admin::getInsertEventForm();
 	break;
 
 	case 'save':

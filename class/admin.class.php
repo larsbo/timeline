@@ -57,7 +57,7 @@ class Admin {
 						<p>".$event['details']."</p>";
 	}
 
-	static function insertEvent() {
+	static function getInsertEventForm() {
 		$html = "<form data-action=\"save\">
 							<label for=\"title\">Titel:</label>
 							<input type=\"text\" name=\"title\" id=\"title\" size=\"62\" />
@@ -84,8 +84,10 @@ class Admin {
 		$colorclass = mysql_real_escape_string($_GET['colorclass']);
 		$sql = "INSERT INTO `events` (`title`, `start_year`, `end_year`, `details`, `colorclass`) 
 VALUES ('".$title."', '".$start."', '".$end."', '".$details."', '".$colorclass."')";
-		DB::execute($sql);
-		return "Ereignis erfolgreich eingetragen!";
+		if (DB::execute($sql))
+			return "Ereignis erfolgreich eingetragen!";
+		else
+			return "Ereignis konnte nicht gespeichert werden!";
 	}
 
 	static function editEvent($id) {
@@ -113,11 +115,11 @@ VALUES ('".$title."', '".$start."', '".$end."', '".$details."', '".$colorclass."
 	}
 
 	static function updateEvent($id) {
-		$title = mysql_real_escape_string($_GET['title']);
+		$title = mysql_real_escape_string(trim($_GET['title']));
 		$start = mysql_real_escape_string($_GET['start']);
 		$end = mysql_real_escape_string($_GET['end']);
-		$details = mysql_real_escape_string($_GET['details']);
-		$colorclass = mysql_real_escape_string($_GET['colorclass']);
+		$details = mysql_real_escape_string(trim($_GET['details']));
+		$colorclass = mysql_real_escape_string(trim($_GET['colorclass']));
 		$result = DB::execute("UPDATE `events` 
 															SET `title` = '".$title."', 
 																	`start_year` = '".$start."',
@@ -125,12 +127,18 @@ VALUES ('".$title."', '".$start."', '".$end."', '".$details."', '".$colorclass."
 																	`details` = '".$details."', 
 																	`colorclass` = '".$colorclass."' 
 														WHERE `event_id` = '".$id."'");
-		return "Ereignis ".$id." erfolgreich bearbeitet!";
+		if ($result)
+			return "Ereignis ".$id." erfolgreich bearbeitet!";
+		else
+			return "Ereignis ".$id." konnte nicht bearbeitet werden!";
 	}
 
 	static function deleteEventConfirmation($id) {
-		$result = DB::execute("DELETE FROM `events` WHERE `event_id` = '".$id."'");
-		return "Ereignis ".$id." erfolgreich gel&ouml;scht!";
+		$result = DB::execute("DELETE FROM `events` WHERE `event_id` = '".$id."' LIMIT 1;");
+		if ($result)
+			return "Ereignis ".$id." erfolgreich gel&ouml;scht!";
+		else
+			return "Ereignis ".$id." konnte nicht gel&ouml;scht werden!";
 	}
 
 /************ DATABASE FUNCTIONS ****************/
