@@ -20,7 +20,7 @@ class Timeline {
 			$this->colorclasses = Timeline::getColorClasses($activeOnly);
 		
 		$html = '<style type="text/css">';
-		foreach (Timeline::getColorClasses() as $colorclass) {
+		foreach ($this->colorclasses as $colorclass) {
 			if(!empty($colorclass['color_id']) && !empty($colorclass['css'])) {
 				$html .= ".colorclass_".$colorclass['color_id']." { \n";
 				$html .= $colorclass['css']." }\n";
