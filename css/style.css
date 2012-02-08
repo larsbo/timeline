@@ -177,6 +177,8 @@ body {
     -webkit-box-shadow: 5px 5px 5px #888888; }
     .sticky .event-preview .event-details {
       cursor: move; }
+  .event-preview.ui-state-disabled, .event-preview.ui-widget-content .event-preview.ui-state-disabled, .event-preview.ui-widget-header .event-preview.ui-state-disabled {
+    opacity: 1 !important; }
 
 /***** TABLE *****/
 .bordered {
