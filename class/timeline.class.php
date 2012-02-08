@@ -1,6 +1,7 @@
 <?php
 
 require_once('db.class.php');
+require_once('event.class.php');
 
 class Timeline {
 	private $events;
@@ -11,7 +12,8 @@ class Timeline {
 	function __Construct($start, $end) {
 		$this->start_year = $start;
 		$this->end_year = $end;
-		$this->events = Timeline::getEvents($start, $end);
+		foreach (Events::getEvents($start, $end) as $event)
+			$this->events[] = array('event' => $event, 'line' => 0);
 		$this->alignEvents();
 	}
 
@@ -31,19 +33,17 @@ class Timeline {
 	}
 
 	function alignEvents() {
-		$counter = sizeof($this->events);
 		$matrix = array();
-		for ($i=0; $i<$counter; $i++) {
-			$year = $this->events[$i]['startdate'];	//TODO needs fixing
-			$line = 0;
+		foreach ($this->events as &$e) {
+			$year = $e['event']->getStartYear();
 			// search for the first free row
-			while ($matrix[$year][$line]) {
-				$this->events[$i]['line']++;
-				$line++;
+			while ($matrix[$year][$e['line']]) {
+				$e['line']++;
 			}
+			Log::debug("marking everything used on line: ".$e['line']." from year: ".$year." until ".$e['event']->getEndYear());
 			// found free row -> mark columns (=years) of this row in matrix
-			for ($j = $year; $j <= $this->events[$i]['enddate']; $j++) {
-				$matrix[$j][$line] = true;
+			for ($j = $year; $j <= $e['event']->getEndYear(); $j++) {
+				$matrix[$j][$e['line']] = true;
 			}
 		}
 	}
@@ -63,25 +63,9 @@ EOD;
 		$html .= "\t\t\t</tr>\n\t\t</thead>\n\t\t<tbody>\n\t\t\t<tr id='content'>\n";
 		for ($year = $this->start_year; $year < $this->end_year; $year++) {
 			$html .= "\t\t\t\t<td>\n";
-			foreach ($this->events as $event) {
-				if ($event['start_year'] == $year) {
-					$event['length'] = max(1, $event['enddate'] - $event['startdate'] + 1) * $c->tl_column_width - $c->tl_event_padding_x;
-					$event['line'] = $event['line'] * $c->tl_event_padding_y;
-					$colorclass = $event['colorclass'] != "" ? " custom colorclass_".$event['colorclass'] : "";
-					$html .= <<<EOD
-\t\t\t\t<div class="event-preview" style="zIndex: 0">
-\t\t\t\t\t<span 
-\t\t\t\t\t	class="event{$colorclass}" 
-\t\t\t\t\t	style="width:{$event[length]}px;top:{$event[line]}px;z-index:2;" 
-\t\t\t\t\t	data-event="{$event[event_id]}" 
-\t\t\t\t\t	data-title="{$event[title]}" 
-\t\t\t\t\t	data-width="{$event[length]}"
-\t\t\t\t\t>{$event[title]}
-\t\t\t\t\t\t<span class="pin"></span>
-\t\t\t\t\t</span>
-\t\t\t\t\t<div class="event-details" style="zIndex: 1">{$event[details]}</div>
-\t\t\t\t</div>
-EOD;
+			foreach ($this->events as $e) {
+				if ($e['event']->getStartYear() == $year) {
+					$html .= $e['event']->toTimelineRepresentation($e['line']);
 				}
 			}
 			$html .= "\t\t\t\t</td>\n";
@@ -91,23 +75,6 @@ EOD;
 	}
 
 	/********** FACTORY **********/
-	static function getEvents($start = 0, $end = 0) {
-		$sql = <<<EOD
-SELECT e.event_id, e.title, e.details, e.startdate, e.enddate, e.colorclass
-FROM events AS e
-EOD;
-		if ($start != 0 && $end != 0)
-			$sql .= " WHERE e.startdate >= $start AND e.enddate <= $end";
-		else if ($start != 0)
-			$sql .= " WHERE e.startdate >= $start";
-		else if ($end != 0)
-			$sql .= " WHERE e.enddate <= $end";
-		$sql .= " ORDER BY e.startdate ASC";
-		$events = DB::queryAssoc($sql);
-		// sort events by start_year
-		return $events;
-	}
-
 	static function getColorClasses($activeOnly = true) {
 		$sql = "SELECT DISTINCT c.color_id, c.css_code AS css FROM `colorclasses` AS c";
 		if ($activeOnly)

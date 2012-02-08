@@ -1,6 +1,7 @@
 <?php
 require_once 'db.class.php';
 require_once 'timeline.class.php';
+require_once 'event.class.php';
 
 class Admin {
 	private $user;
@@ -34,12 +35,12 @@ class Admin {
 
 
 	static function getEvents() {
-		$result = Timeline::getEvents($start, $end);
+		$events = Events::getEvents($start, $end);
 
 		$output = "<ul>\n";
-		foreach ($result as $event) {
-			$output .= "<li class=\"eventContainer\" data-id=\"".$event['event_id']."\">
-										<span title=\"anzeigen\" class=\"event colorclass_".$event['colorclass']."\">".$event['title']."</span>
+		foreach ($events as $event) {
+			$output .= "<li class=\"eventContainer\" data-id=\"".$event->getId()."\">
+										<span title=\"anzeigen\" class=\"event colorclass_".$event->getColorclass()."\">".$event->getTitle()."</span>
 										<span title=\"bearbeiten\" class=\"button edit\"></span>
 										<span title=\"l&ouml;schen\" class=\"button delete\"></span>
 									</li>";
