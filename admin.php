@@ -24,6 +24,7 @@ if ($_POST['username'] && $_POST['password']) {
   <link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/themes/flick/jquery-ui.css" rel="stylesheet" />	
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="js/jquery.ui.datepicker-de.js"></script>
   <script type="text/javascript" src="js/jquery.message.js"></script>
   <script type="text/javascript" src="js/admin.js"></script>
 <?php echo $timeline->getColorClassesHTML(false); ?>

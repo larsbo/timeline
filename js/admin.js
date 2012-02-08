@@ -3,6 +3,15 @@ jQuery(document).ready(function($){
 	/* messages */
 	$().message();
 
+	/* datepicker options */
+	$.datepicker.setDefaults($.datepicker.regional['de']); // make it german
+	$.datepicker.setDefaults({
+			dateFormat: 'yy-mm-dd', 
+			showOtherMonths: true,
+			selectOtherMonths: true,
+			changeMonth: true,
+			changeYear: true });
+
 	var eventList = $('#eventList');
 	var eventDetails = $('#eventDetails');
 
@@ -10,6 +19,7 @@ jQuery(document).ready(function($){
 	$('#new').click(function(){
 		$.get('admin.inc.php?action=insert', function(data){
 			eventDetails.html(data);
+			eventDetails.find('.dateentry').datepicker();
 		});
 	});
 
@@ -26,6 +36,7 @@ jQuery(document).ready(function($){
 		var id = $(this).parent().data('id');
 		$.get('admin.inc.php?action=edit&id=' + id, function(data){
 			eventDetails.html(data);
+			eventDetails.find('.dateentry').datepicker();
 		});
 	});
 
