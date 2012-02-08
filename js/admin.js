@@ -43,14 +43,30 @@ jQuery(document).ready(function($){
 	// delete event
 	eventList.on('click', '.delete', function(){
 		var id = $(this).parent().data('id');
-		var data = "<p>Soll das Ereignis " +  id + " wirklich gel&ouml;scht werden?</p>\
-						<p>\
-							<form data-id=\"" + id + "\">\
-								<input name=\"no\" type=\"button\" value=\"abbrechen\" />\
-								<input name=\"yes\" type=\"button\" value=\"loeschen\" />\
-							</form>\
-						</p>";
-		eventDetails.html(data);
+		$(this).after("<p id=\"dialogConfirm\">Soll das Ereignis " +  id + " wirklich gel&ouml;scht werden?</p>");
+		$('#dialogConfirm').dialog({
+			resizable: false,
+			height:140,
+			modal: true,
+			buttons: {
+				Confirm: function() {
+					//do deletion
+					$.get('admin.inc.php?action=deleteconfirmation&id=' + id, function(data){
+						eventDetails.html(data);
+						$('#eventList').find('[data-id="' + id + '"]').fadeOut('slow');
+					});
+					$( this ).dialog( "close" );
+					$('#dialogConfirm').remove();
+				},
+				Cancel: function() {
+				//do nothing
+					eventDetails.html('Ereignis ' + id + ' wurde nicht geloescht.');
+					$( this ).dialog( "close" );
+					$('#dialogConfirm').remove();
+				}
+			}
+		});
+
 	});
 
 	// looking for form submits...
@@ -67,20 +83,6 @@ jQuery(document).ready(function($){
 		});
 	});
 
-	// confirmation >> yes or no?
-	eventDetails.on('click', 'input[type="button"]', function(e){
-		var button = $(this);
-		var id = button.parent().data('id');
-		if (button.attr('name') == 'yes') {
-			$.get('admin.inc.php?action=deleteconfirmation&id=' + id, function(data){
-				eventDetails.html(data);
-				$('#eventList').find('[data-id="' + id + '"]').fadeOut('slow');
-			});
-		} else {
-			eventDetails.html('Ereignis ' + id + ' wurde nicht geloescht.');
-		}
-	});
-	
 		// databaseupdate
 	$('#databaseUpdate').click(function() {
 		$.get('admin.inc.php?action=databaseRefresh', function(data){
