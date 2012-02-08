@@ -1,6 +1,6 @@
 <?php
 require_once 'db.class.php';
-require_once 'timeline.class.php';
+require_once 'colorclasses.class.php';
 require_once 'event.class.php';
 
 class Admin {
@@ -66,12 +66,9 @@ class Admin {
 							<input type=\"text\" name=\"start\" class=\"dateentry\" id=\"start\" size=\"10\" />
 							<label for=\"end\">Ende:</label>
 							<input type=\"text\" name=\"end\" class=\"dateentry\" id=\"end\" size=\"10\" />
-							<label for=\"colorclass\">Kategorie:</label>
-							<select name=\"colorclass\" id=\"colorclass\">";
-		foreach (Timeline::getColorClasses(false) as $colorclass)
-			$html .= "<option>".$colorclass['color_id']."</option>\n";
-		$html .= "</select>
-							<textarea name=\"details\" rows=\"10\" cols=\"50\"></textarea>
+							<label for=\"colorclass\">Kategorie:</label>";
+		$html .= ColorClasses::getColorClasses(false)->toSelectField();
+		$html .= "<textarea name=\"details\" rows=\"10\" cols=\"50\"></textarea>
 							<input type=\"submit\" value=\"Speichern\" />
 						</form>";
 		return $html;
@@ -101,15 +98,9 @@ class Admin {
 							<input type=\"text\" name=\"start\" class=\"dateentry\" id=\"start\" value=\"".$event['startdate']."\" size=\"10\" />
 							<label for=\"end\">Ende:</label>
 							<input type=\"text\" name=\"end\" class=\"dateentry\" id=\"end\" value=\"".$event['enddate']."\" size=\"10\" />
-							<label for=\"colorclass\">Kategorie:</label>
-							<select name=\"colorclass\" id=\"colorclass\">";
-		foreach (Timeline::getColorClasses(false) as $colorclass)
-			if ($event['colorclass'] == $colorclass['color_id'])
-				$html .= "<option selected=\"selected\">".$colorclass['color_id']."</option>\n";
-			else
-				$html .= "<option selected=\"selected\">".$colorclass['color_id']."</option>\n";
-		$html .= "</select>
-							<textarea name=\"details\" rows=\"10\" cols=\"50\">".$event['details']."</textarea>
+							<label for=\"colorclass\">Kategorie:</label>";
+		$html .= ColorClasses::getColorClasses(false)->toSelectField($event['colorclass']);
+		$html .= "<textarea name=\"details\" rows=\"10\" cols=\"50\">".$event['details']."</textarea>
 							<input type=\"submit\" value=\"Speichern\" />
 						</form>";
 		return $html;

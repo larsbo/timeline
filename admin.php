@@ -2,11 +2,9 @@
 session_start();
 
 require_once 'class/admin.class.php';
-require_once 'class/timeline.class.php';
 
 // prechecking users table
 Admin::checkAndUpdateTableUsers();
-$timeline = new Timeline(0, 0);	//0,0 ???
 
 // submit form
 if ($_POST['username'] && $_POST['password']) {
@@ -27,7 +25,7 @@ if ($_POST['username'] && $_POST['password']) {
   <script type="text/javascript" src="js/jquery.ui.datepicker-de.js"></script>
   <script type="text/javascript" src="js/jquery.message.js"></script>
   <script type="text/javascript" src="js/admin.js"></script>
-<?php echo $timeline->getColorClassesHTML(false); ?>
+<?php echo ColorClasses::getColorClasses(false)->toStyleDefinition(); ?>
 </head>
 <body>
 <div class="adminContent">

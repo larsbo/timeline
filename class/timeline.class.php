@@ -2,12 +2,13 @@
 
 require_once('db.class.php');
 require_once('event.class.php');
+require_once('colorclasses.class.php');
 
 class Timeline {
 	private $events;
 	private $start_year;
 	private $end_year;
-	private $colorclasses = null;	//this is only cache
+	private $colorclasses;	//this is only cache
 
 	function __Construct($start, $end) {
 		$this->start_year = $start;
@@ -15,21 +16,11 @@ class Timeline {
 		foreach (Events::getEvents($start, $end) as $event)
 			$this->events[] = array('event' => $event, 'line' => 0);
 		$this->alignEvents();
+		$this->colorclasses = ColorClasses::getColorClasses(true);
 	}
-
-	function getColorClassesHTML($activeOnly = true) {
-		if ($this->colorclasses == null)	//simple cache
-			$this->colorclasses = Timeline::getColorClasses($activeOnly);
-		
-		$html = '<style type="text/css">';
-		foreach ($this->colorclasses as $colorclass) {
-			if(!empty($colorclass['color_id']) && !empty($colorclass['css'])) {
-				$html .= ".colorclass_".$colorclass['color_id']." { \n";
-				$html .= $colorclass['css']." }\n";
-			}
-		}
-		$html .= '</style>';
-		return $html;
+	
+	function getColorClassesHTML() {
+		return $this->colorclasses->toStyleDefinition();
 	}
 
 	function alignEvents() {
@@ -72,16 +63,6 @@ EOD;
 		}
 		$html .= "\t\t\t</tr>\n\t\t</tbody>\n\t</table>";
 		return $html;
-	}
-
-	/********** FACTORY **********/
-	static function getColorClasses($activeOnly = true) {
-		$sql = "SELECT DISTINCT c.color_id, c.css_code AS css FROM `colorclasses` AS c";
-		if ($activeOnly)
-			$sql .= " RIGHT JOIN events AS e ON e.colorclass = c.color_id;";
-		else
-			$sql .= ";";
-		return DB::queryAssoc($sql);
 	}
 }
 ?>
