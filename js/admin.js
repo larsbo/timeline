@@ -89,5 +89,30 @@ jQuery(document).ready(function($){
 			eventDetails.html(data);
 		});
 	});
+	
+	//dropAllTables And restart with testdata
+	$('#databaseRestart').click(function() {
+		$('#databaseRestart').after("<p id=\"dialogConfirm\">Wirklich?</p>");
+		$('#dialogConfirm').dialog({
+			resizable: false,
+			height:140,
+			modal: true,
+			buttons: {
+				Confirm: function() {
+					//do deletion
+					$.get('admin.inc.php?action=dropAndInsertTestData', function(data){
+						eventDetails.html(data);
+					});
+					$( this ).dialog( "close" );
+					$('#dialogConfirm').remove();
+				},
+				Cancel: function() {
+				//do nothing
+					$( this ).dialog( "close" );
+					$('#dialogConfirm').remove();
+				}
+			}
+		});
+	});
 
 });

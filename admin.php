@@ -45,9 +45,10 @@ if (Admin::loggedIn()) {
 	</div>
 	<div class="config">
 		<h2>Konfiguration</h2>
-		<div class="bordered">
-			<span id="databaseUpdate" class="button">Datenbank Update</a>
-		</div>
+		<ul class="bordered">
+			<li id="databaseUpdate" class="button">Datenbank Update</a></li>
+			<li id="databaseRestart" class="button">Datenbanken neu anlegen und Testdaten einfügen</a></li>
+		</ul>
 <?php
 } else {
 	// show login form

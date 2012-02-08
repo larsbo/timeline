@@ -262,6 +262,16 @@ EOD;
 		return true;
 	}
 
+	static function dropTables() {
+		$sql = "DROP TABLE `colorclasses`, `events`;";
+		if (DB::execute($sql)) {
+			Log::debug("insert data into '<em>".$table."</em>' successful!");
+			return true;
+		} else {
+			Log::error("insert data into '<em>".$table."</em>' failed!");
+			return false;
+		}
+	}
 
 	static function insertTestData($table) {
 		switch ($table) {
@@ -318,8 +328,10 @@ EOD;
 
 		if (DB::execute($sql)) {
 			Log::debug("insert data into '<em>".$table."</em>' successful!");
+			return true;
 		} else {
 			Log::error("insert data into '<em>".$table."</em>' failed!");
+			return false;
 		}
 	}
 

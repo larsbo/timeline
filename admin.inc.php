@@ -46,6 +46,11 @@ switch ($action) {
 	echo Admin::checkAndUpdateTable($insertdata?true:false);
 	break;
 
+	case 'dropAndInsertTestData':
+	echo Admin::dropTables();
+	echo Admin::checkAndUpdateTable(true);
+	break;
+
 	default:
 	echo false;
 	break;
