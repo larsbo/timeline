@@ -17,17 +17,66 @@ jQuery(document).ready(function($){
 	/* show mini map of the timeline */
 	$('#timeline').minimap(timeline);
 
-	/* show/hide event names */
 	var events = $('.event');
+
+	/* show event details */
+	events.each(function(){
+		var event = $(this);
+
+		// clone events
+		var clone = event.parent().clone().css({
+			'opacity': 0.2,
+			'z-Index': 0
+		});
+		clone.find('.event').addClass('clone');
+		clone.find('.event-details, .pin').remove(); // remove unneeded elements
+		clone.attr('id', 'clone-' + clone.find('.event').attr('data-event'));
+		event.parent().after(clone);	// insert clone after original event
+
+		event.hovercard();
+		event.parent().draggable({
+			/*axis: 'y',*/
+			/*handle: 'div',*/
+			start: function(){
+				var current = $(this);
+
+				if (!current.data('origleft') && !current.data('origtop')) {
+					current.attr('data-origleft', current.position().left);
+					current.attr('data-origtop', current.position().top);
+				}
+				timeline.disable();
+			},
+			stop: function(){
+				timeline.enable();
+			}
+		});
+		event.parent().draggable('disable');	// disable on startup
+	});
+
+	// highlight event clone
+	events.parent().hover(function() {
+		var event = $(this).find('.event');
+		var clone = $('#clone-' + event.data('event'));
+		clone.stop().animate({'opacity': '1'}, 'slow');
+	}, function() {
+		var event = $(this).find('.event');
+		var clone = $('#clone-' + event.data('event'));
+		clone.stop().animate({'opacity': '0.3'}, 'slow');
+	});
+
+
+	/* toggle long event names */
+	var eventsAndClones = $('.event');	// new selection of .events (with clones)
 	$('#options-container').find('.button').click(function(){
 		var button = $(this);
+		var clones = $('.clones');
 
 		// change button
 		button.siblings().removeClass('selected');
 		button.addClass('selected');
 
 		// change events
-		events.each(function(){
+		eventsAndClones.each(function(){
 			var event = $(this);
 			switch (button.data('type')) {
 				case 'long':
@@ -49,27 +98,4 @@ jQuery(document).ready(function($){
 		});
 	});
 
-	/* show event details */
-	events.each(function(){
-		var event = $(this);
-
-		event.hovercard();
-		event.parent().draggable({
-			axis: 'y',
-			handle: 'div',
-			/*snap: true,*/
-			start: function(){
-				var current = $(this);
-				if (!current.data('origleft') && !current.data('origtop')) {
-					current.attr('data-origleft', current.position().left);
-					current.attr('data-origtop', current.position().top);
-				}
-				timeline.disable();
-			},
-			stop: function(){
-				timeline.enable();
-			}
-		});
-		event.parent().draggable('disable');
-	});
 });

@@ -48,21 +48,34 @@ var zIndices = [];
 			'width': Math.max(options.width, event.width())
 		});
 
-		// make event sticky
-		event.click(function() {
-			var eventContainer =  $(this).parent();
-			eventContainer.toggleClass('sticky');
 
-			// move event back to original position
-			if (!eventContainer.hasClass('sticky')) {
-				eventContainer.draggable('disable');
-				eventContainer.animate({
-					top: eventContainer.data('origtop'),
-					left: eventContainer.data('origleft'),
-					duration: 'slow'
-				});
-			} else {
-				eventContainer.draggable('enable');
+		var isDragging = false;
+		event.mousedown(function() {
+			$(window).mousemove(function() {
+				isDragging = true;
+				$(window).unbind("mousemove");
+			});
+		})
+		event.mouseup(function() {
+			var wasDragging = isDragging;
+			isDragging = false;
+			$(window).unbind("mousemove");
+			if (!wasDragging) {
+				// make event sticky
+				var eventContainer =  $(this).parent();
+				eventContainer.toggleClass('sticky');
+	
+				// move event back to original position
+				if (!eventContainer.hasClass('sticky')) {
+					eventContainer.draggable('disable');
+					eventContainer.animate({
+						top: eventContainer.data('origtop'),
+						left: eventContainer.data('origleft'),
+						duration: 'slow'
+					});
+				} else {
+					eventContainer.draggable('enable');
+				}
 			}
 		});
 
@@ -110,7 +123,7 @@ var zIndices = [];
 
 					//remove self from list
 					zIndices.rmElem(parseInt($this.css("zIndex")));
-					$this.css("zIndex", "0");
+					$this.css("zIndex", "1");
 
 					if (typeof options.onHoverOut == 'function') {
 						options.onHoverOut.call(this);
