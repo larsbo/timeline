@@ -134,6 +134,11 @@ body {
     -o-border-radius: 0.15em 0 0 0.15em;
     -moz-border-radius: 0.15em 0 0 0.15em;
     -webkit-border-radius: 0.15em 0 0 0.15em; }
+  .sticky .event {
+    cursor: move; }
+
+.clone {
+  cursor: inherit; }
 
 .pin {
   background: url(../images/pin.png) no-repeat;

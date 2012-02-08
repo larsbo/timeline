@@ -161,6 +161,12 @@ body {
 		@include shadows(1px 0 0 rgba(0,0,0,.5));
 		@include rounded-corners(.15em 0 0 .15em);
 	}
+	.sticky & {
+		cursor:move;
+	}
+}
+.clone {
+	cursor:inherit;
 }
 .pin {
 	background:url(../images/pin.png) no-repeat;
