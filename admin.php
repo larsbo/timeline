@@ -36,7 +36,7 @@ if (Admin::loggedIn()) {
 ?>
 		<h2>Ereignisse</h2>
 		<div class="bordered" id="eventList">
-			<span id="new" class="event">Neues Ereignis eintragen</span>
+			<span id="new" class="button">Neues Ereignis eintragen</span>
 			<div>
 <?php echo Admin::getEvents(); ?>
 			</div>
@@ -46,7 +46,7 @@ if (Admin::loggedIn()) {
 	<div class="config">
 		<h2>Konfiguration</h2>
 		<div class="bordered">
-			<span id="databaseUpdate" class="event">Datenbank Update</a>
+			<span id="databaseUpdate" class="button">Datenbank Update</a>
 		</div>
 <?php
 } else {
