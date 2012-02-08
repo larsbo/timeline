@@ -49,7 +49,7 @@ class Admin {
 	}
 
 	static function showEvent($id) {
-		$event = DB::queryAssocAtom("SELECT * FROM `events` WHERE `event_id` = '".$id."'");
+		$event = DB::queryAssocAtom("SELECT * FROM `events` WHERE `event_id` = '".$id."';");
 		return "<p><b>Titel:</b> ".$event['title']."</p>
 						<p><b>Start:</b> ".$event['startdate']."</p>
 						<p><b>Ende:</b> ".$event['enddate']."</p>
