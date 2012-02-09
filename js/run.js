@@ -57,11 +57,13 @@ jQuery(document).ready(function($){
 	events.parent().hover(function() {
 		var event = $(this).find('.event');
 		var clone = $('#clone-' + event.data('event'));
+		$('.event').not(event).not(clone.find('.clone')).stop().animate({'opacity': '0.2'}, 'slow');
 		clone.stop().animate({'opacity': '1'}, 'slow');
 	}, function() {
 		var event = $(this).find('.event');
 		var clone = $('#clone-' + event.data('event'));
-		clone.stop().animate({'opacity': '0.3'}, 'slow');
+		$('.event').not(event).not(clone.find('.clone')).stop().animate({'opacity': '1'}, 'slow');
+		clone.stop().animate({'opacity': '0.2'}, 'slow');
 	});
 
 

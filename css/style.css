@@ -33,6 +33,7 @@ body {
 /***** TIMELINE *****/
 #wrapper {
   bottom: 0;
+  cursor: ew-resize;
   left: 0;
   overflow: auto;
   position: absolute;
@@ -63,7 +64,6 @@ body {
   #timeline td {
     border-left: 1px solid #ccc;
     border-right: 1px solid #fff;
-    cursor: ew-resize;
     vertical-align: top; }
 
 /***** EVENT *****/
@@ -175,10 +175,11 @@ body {
     -o-box-shadow: 5px 5px 5px #888888;
     -moz-box-shadow: 5px 5px 5px #888888;
     -webkit-box-shadow: 5px 5px 5px #888888; }
-    .sticky .event-preview .event-details {
-      cursor: move; }
   .event-preview.ui-state-disabled, .event-preview.ui-widget-content .event-preview.ui-state-disabled, .event-preview.ui-widget-header .event-preview.ui-state-disabled {
     opacity: 1 !important; }
+
+.sticky .event-details {
+  cursor: move; }
 
 /***** TABLE *****/
 .bordered {

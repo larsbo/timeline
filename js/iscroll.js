@@ -633,7 +633,7 @@ iScroll.prototype = {
 			wheelDeltaX = e.wheelDeltaX / 12;
 			wheelDeltaY = e.wheelDeltaY / 12;
 		} else if ('detail' in e) {
-			wheelDeltaX = wheelDeltaY = -e.detail * 3;
+			wheelDeltaX = wheelDeltaY = -e.detail * 30;
 		} else {
 			wheelDeltaX = wheelDeltaY = -e.wheelDelta;
 		}
