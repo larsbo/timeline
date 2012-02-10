@@ -213,6 +213,9 @@ body {
 .event-preview {
 	display:block;
 	position:absolute;
+	&.sticky .event-details {
+		cursor:move;
+	}
 	.event-details {
 		background:#fff;
 		border:solid 1px #ddd;
@@ -248,9 +251,7 @@ body {
 		opacity: 1 !important;
 	}
 }
-.sticky .event-details {
-	cursor:move;
-}
+
 
 
 /***** TABLE *****/

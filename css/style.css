@@ -179,6 +179,8 @@ body {
 .event-preview {
   display: block;
   position: absolute; }
+  .event-preview.sticky .event-details {
+    cursor: move; }
   .event-preview .event-details {
     background: #fff;
     border: solid 1px #ddd;
@@ -217,9 +219,6 @@ body {
       text-align: center; }
   .event-preview.ui-state-disabled, .event-preview.ui-widget-content .event-preview.ui-state-disabled, .event-preview.ui-widget-header .event-preview.ui-state-disabled {
     opacity: 1 !important; }
-
-.sticky .event-details {
-  cursor: move; }
 
 /***** TABLE *****/
 .bordered {
