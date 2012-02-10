@@ -41,7 +41,10 @@ class Event {
 		return $this->type;
 	}
 	function getImage() {
-		return $this->image;
+		if (!empty($this->image) && file_exists("data/".$this->image))
+			return "data/".$this->image;
+		else
+			return false;
 	}
 	
 	function getStartYear() {
@@ -122,7 +125,7 @@ EOD;
 	}
 
 	function getImageRepresentation() {
-		$image = $this->getImage() ? "<img src=\"data/".$this->getImage()."\" alt=\"".$this->details."\" />" : "";
+		$image = $this->getImage() ? "<img src=\"".$this->getImage()."\" alt=\"".$this->details."\" />" : "";
 		return <<<EOD
 \t\t\t\t\t<div class="event-details" style="zIndex: 1">
 \t\t\t\t\t\t<div class="big-img">{$image}</div>
