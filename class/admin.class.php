@@ -55,6 +55,8 @@ class Admin {
 						<p><b>Start:</b> ".$event['startdate']."</p>
 						<p><b>Ende:</b> ".$event['enddate']."</p>
 						<p><b>Kategorie:</b> ".$event['colorclass']."</p>
+						<p><b>Typ:</b> ".$event['type']."</p>
+						<p><b>Bild:</b> ".$event['image']."</p>
 						<p>".$event['details']."</p>";
 	}
 
@@ -68,20 +70,26 @@ class Admin {
 							<input type=\"text\" name=\"end\" class=\"dateentry\" id=\"end\" size=\"10\" />
 							<label for=\"colorclass\">Kategorie:</label>";
 		$html .= ColorClasses::getColorClasses(false)->toSelectField();
-		$html .= "<textarea name=\"details\" rows=\"10\" cols=\"50\"></textarea>
+		$html .= "<label for=\"type\">Typ:</label>
+							<input type=\"text\" name=\"type\" id=\"type\" size=\"10\" />
+							<label for=\"image\">Bild:</label>
+							<input type=\"text\" name=\"image\" id=\"image\" size=\"10\" />
+							<textarea name=\"details\" rows=\"10\" cols=\"50\"></textarea>
 							<input type=\"submit\" value=\"Speichern\" />
 						</form>";
 		return $html;
 	}
 
 	static function saveEvent() {
-		$title = mysql_real_escape_string($_GET['title']);
-		$start = mysql_real_escape_string($_GET['start']);
-		$end = mysql_real_escape_string($_GET['end']);
-		$details = mysql_real_escape_string($_GET['details']);
-		$colorclass = mysql_real_escape_string($_GET['colorclass']);
-		$sql = "INSERT INTO `events` (`title`, `startdate`, `enddate`, `details`, `colorclass`) 
-							VALUES ('".$title."', '".$start."', '".$end."', '".$details."', '".$colorclass."');";
+		$title = DB::escape($_GET['title']);
+		$start = DB::escape($_GET['start']);
+		$end = DB::escape($_GET['end']);
+		$details = DB::escape($_GET['details']);
+		$colorclass = DB::escape($_GET['colorclass']);
+		$type = DB::escape($_GET['type']);
+		$image = DB::escape($_GET['image']);
+		$sql = "INSERT INTO `events` (`title`, `startdate`, `enddate`, `details`, `colorclass`, `type`, `image`) 
+							VALUES ('".$title."', '".$start."', '".$end."', '".$details."', '".$colorclass."', '".$type."', '".$image."');";
 		if (DB::execute($sql))
 			return "Ereignis erfolgreich eingetragen!";
 		else
@@ -100,24 +108,32 @@ class Admin {
 							<input type=\"text\" name=\"end\" class=\"dateentry\" id=\"end\" value=\"".$event['enddate']."\" size=\"10\" />
 							<label for=\"colorclass\">Kategorie:</label>";
 		$html .= ColorClasses::getColorClasses(false)->toSelectField($event['colorclass']);
-		$html .= "<textarea name=\"details\" rows=\"10\" cols=\"50\">".$event['details']."</textarea>
+		$html .= "<label for=\"type\">Typ:</label>
+							<input type=\"text\" name=\"type\" id=\"type\" value=\"".$event['type']."\" size=\"10\" />
+							<label for=\"image\">Bild:</label>
+							<input type=\"text\" name=\"image\" id=\"image\" value=\"".$event['image']."\" size=\"10\" />
+							<textarea name=\"details\" rows=\"10\" cols=\"50\">".$event['details']."</textarea>
 							<input type=\"submit\" value=\"Speichern\" />
 						</form>";
 		return $html;
 	}
 
 	static function updateEvent($id) {
-		$title = mysql_real_escape_string(trim($_GET['title']));
-		$start = mysql_real_escape_string($_GET['start']);
-		$end = mysql_real_escape_string($_GET['end']);
-		$details = mysql_real_escape_string(trim($_GET['details']));
-		$colorclass = mysql_real_escape_string(trim($_GET['colorclass']));
+		$title = DB::escape($_GET['title']);
+		$start = DB::escape($_GET['start']);
+		$end = DB::escape($_GET['end']);
+		$details = DB::escape($_GET['details']);
+		$colorclass = DB::escape($_GET['colorclass']);
+		$type = DB::escape($_GET['type']);
+		$image = DB::escape($_GET['image']);
 		$result = DB::execute("UPDATE `events` 
 															SET `title` = '".$title."', 
 																	`startdate` = '".$start."',
 																	`enddate` = '".$end."',
 																	`details` = '".$details."', 
-																	`colorclass` = '".$colorclass."' 
+																	`colorclass` = '".$colorclass."', 
+																	`type` = '".$type."', 
+																	`image` = '".$image."' 
 														WHERE `event_id` = '".$id."';");
 		if ($result)
 			return "Ereignis ".$id." erfolgreich bearbeitet!";
@@ -178,7 +194,7 @@ EOD;
 	}
 
 	static function checkAndUpdateTableEvents($insertData) {
-		$tablediff = DB::checkForTable('events', array('colorclass', 'details', 'enddate', 'event_id', 'startdate', 'title'));
+		$tablediff = DB::checkForTable('events', array('colorclass', 'details', 'enddate', 'event_id', 'startdate', 'title', 'type', 'image'));
 
 		//the table is in some wrong state .... need to update or create
 		if ($tablediff === null) {
@@ -192,6 +208,8 @@ CREATE TABLE IF NOT EXISTS `events` (
   `startdate` DATE NOT NULL,
   `enddate` DATE NOT NULL,
   `colorclass` varchar(10) NOT NULL,
+  `type` VARCHAR(10) NOT NULL,
+  `image` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`event_id`),
   INDEX `startdate` (`startdate`),
   INDEX `enddate` (`enddate`)
@@ -219,6 +237,10 @@ EOD;
 				$sql .= "ALTER TABLE `events` ADD `startdate` DATE NOT NULL , ADD INDEX ( `startdate` );";
 			if (in_array('enddate', $tablediff))
 				$sql .= "ALTER TABLE `events` ADD `enddate` DATE NOT NULL , ADD INDEX ( `enddate` );";
+			if (in_array('type', $tablediff))
+				$sql .= "ALTER TABLE `events` ADD `type` varchar(10) NOT NULL;";
+			if (in_array('image', $tablediff))
+				$sql .= "ALTER TABLE `events` ADD `image` varchar(100) NOT NULL;";
 
 			return DB::execute($sql);
 		}
@@ -311,17 +333,17 @@ EOD;
 
 			case 'events':
 			$sql = <<<EOD
-INSERT INTO `events` (`title`, `startdate`, `enddate`, `details`, `colorclass`) VALUES
-('noch ein langes Ereignis &uuml;ber mehrere Jahre', '1940-03-01', '1944-03-01', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Loremclita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.', 'Religion'),
-('Test-Event', '1952-03-01', '0000-00-00', 'dieses event hat kein enddatum', 'Politik'),
-('aufregend', '1942-00-00', '1942-00-00', 'Dieses Event hört im gleichen jahr auf, wie es anfängt. es hat zudem keine moats angabe, bzw. tages angabe', 'Wissenschaft'),
-('ein event und so', '1938-03-01', '1943-03-01', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.', 'Religion'),
-('das kanns nicht sein', '1940-03-01', '1941-03-01', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.', 'Religion'),
-('wer das liest ist doof', '1936-03-01', '1941-03-01', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.', 'Politik'),
-('party', '1940-03-01', '1940-03-01', 'Dieses Event ist nur einen Tag lang', 'Gesellschaft'),
-('partylong', '1941-03-00', '1940-03-00', 'Dieses Event ist nur einen Monat lang', 'Gesellschaft'),
-('wo ist der bus', '1941-03-01', '1943-03-01', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.', 'Religion'),
-('tralalala', '1936-03-01', '1939-03-01', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.', 'Wissenschaft');
+INSERT INTO `events` (`title`, `startdate`, `enddate`, `details`, `colorclass`,  `type`,  `image`) VALUES
+('noch ein langes Ereignis &uuml;ber mehrere Jahre', '1940-03-01', '1944-03-01', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Loremclita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.', 'Religion', 'text', 'bild'),
+('Test-Event', '1952-03-01', '0000-00-00', 'dieses event hat kein enddatum', 'Politik', 'image', 'test.jpg'),
+('aufregend', '1942-00-00', '1942-00-00', 'Dieses Event hört im gleichen jahr auf, wie es anfängt. es hat zudem keine moats angabe, bzw. tages angabe', 'Wissenschaft', 'quote', ''),
+('ein event und so', '1938-03-01', '1943-03-01', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.', 'Religion', 'quote', ''),
+('das kanns nicht sein', '1940-03-01', '1941-03-01', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.', 'Religion', 'text', 'bild'),
+('wer das liest ist doof', '1936-03-01', '1941-03-01', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.', 'Politik', 'text', 'bild'),
+('party', '1940-03-01', '1940-03-01', 'Dieses Event ist nur einen Tag lang', 'Gesellschaft', 'image', 'test.jpg'),
+('partylong', '1941-03-00', '1940-03-00', 'Dieses Event ist nur einen Monat lang', 'Gesellschaft', 'quote', ''),
+('wo ist der bus', '1941-03-01', '1943-03-01', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.', 'Religion', 'text', ''),
+('tralalala', '1936-03-01', '1939-03-01', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.', 'Wissenschaft', 'quote', 'bild');
 EOD;
 			break;
 		}

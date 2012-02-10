@@ -60,6 +60,33 @@ body {
 		@include transitions(0.5s);
 		&:hover, &.selected { color:#06a; }
 	}
+	blockquote {
+		display:block;
+		font-size:17px;
+		font-style:italic;
+		line-height:24px;
+		margin-left:5%;
+		quotes:"\201C" "\201D";
+		width:90%;
+		&:before, &:after {
+			color:#999;
+			display:block;
+			font-size:400%;
+		}
+		&:before {
+			content:open-quote;
+			margin-left:-5%;
+			position:relative;
+			top:15px;
+		}
+		&:after {
+			content:close-quote;
+			margin-left:100%;
+			position:relative;
+			right:5px;
+			top:15px;
+		}
+	}
 	h1 {
 		margin-bottom:5px;
 		text-shadow:0 1px 0 rgba(255, 255, 255, 0.9);
@@ -199,6 +226,23 @@ body {
 		top:0;
 		@include rounded-corners(3px);
 		@include shadows(5px 5px 5px #888);
+		& .img {
+			border:1px solid #ccc;
+			float:left;
+			height:60px;
+			margin-right:10px;
+			padding:1px;
+			width:60px;
+		}
+		& .big-img {
+			@include shadows(5px 5px 5px #888);
+		}
+		& .img-text {
+			color:#666;
+			font-size:11px;
+			font-style:italic;
+			text-align:center;
+		}
 	}
 	&.ui-state-disabled, &.ui-widget-content &.ui-state-disabled, &.ui-widget-header &.ui-state-disabled {
 		opacity: 1 !important;

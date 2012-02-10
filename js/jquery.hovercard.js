@@ -45,7 +45,7 @@ var zIndices = [];
 		// align event details container
 		event.next().css({ 
 			'top': event.css('top'), 
-			'width': Math.max(options.width, event.width())
+			'min-width': Math.max(options.width, event.width())
 		});
 
 

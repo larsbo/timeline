@@ -20,6 +20,29 @@ body {
     -webkit-transition: 0.5s; }
     body a:hover, body a.selected {
       color: #06a; }
+  body blockquote {
+    display: block;
+    font-size: 17px;
+    font-style: italic;
+    line-height: 24px;
+    margin-left: 5%;
+    quotes: "\201C" "\201D";
+    width: 90%; }
+    body blockquote:before, body blockquote:after {
+      color: #999;
+      display: block;
+      font-size: 400%; }
+    body blockquote:before {
+      content: open-quote;
+      margin-left: -5%;
+      position: relative;
+      top: 15px; }
+    body blockquote:after {
+      content: close-quote;
+      margin-left: 100%;
+      position: relative;
+      right: 5px;
+      top: 15px; }
   body h1 {
     margin-bottom: 5px;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9); }
@@ -175,6 +198,23 @@ body {
     -o-box-shadow: 5px 5px 5px #888888;
     -moz-box-shadow: 5px 5px 5px #888888;
     -webkit-box-shadow: 5px 5px 5px #888888; }
+    .event-preview .event-details .img {
+      border: 1px solid #ccc;
+      float: left;
+      height: 60px;
+      margin-right: 10px;
+      padding: 1px;
+      width: 60px; }
+    .event-preview .event-details .big-img {
+      box-shadow: 5px 5px 5px #888888;
+      -o-box-shadow: 5px 5px 5px #888888;
+      -moz-box-shadow: 5px 5px 5px #888888;
+      -webkit-box-shadow: 5px 5px 5px #888888; }
+    .event-preview .event-details .img-text {
+      color: #666;
+      font-size: 11px;
+      font-style: italic;
+      text-align: center; }
   .event-preview.ui-state-disabled, .event-preview.ui-widget-content .event-preview.ui-state-disabled, .event-preview.ui-widget-header .event-preview.ui-state-disabled {
     opacity: 1 !important; }
 
