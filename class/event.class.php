@@ -48,10 +48,12 @@ class Event {
 		return intval(substr($this->startdate, 0, 4));
 	}
 	function getEndYear() {	//FIXME, should returns tartdate, if invalid enddate is given...
-		if (substr($this->enddate, 0, 4))
-			return intval(substr($this->enddate, 0, 4));
+		$startyear = $this->getStartYear();
+		$endyear = intval(substr($this->enddate, 0, 4));
+		if ($endyear < $startyear) //this can happen, if the enddate is not properly entered 0000-... or if lies before its startingdate
+			return $startyear;
 		else
-			return intval(substr($this->startdate, 0, 4));
+			return $endyear;
 	}
 	
 	function getPixelWidth() {
