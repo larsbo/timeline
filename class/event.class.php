@@ -104,6 +104,7 @@ EOD;
 			$html .= $this->getTextRepresentation();
 			break;
 		}
+		$html .= "\t\t\t\t</div>";
 		return $html;
 	}
 
@@ -111,7 +112,6 @@ EOD;
 		$image = $this->getImage() ? "<span class=\"img\">".$this->getImage()."</span>" : "";
 		return <<<EOD
 \t\t\t\t\t<div class="event-details" style="zIndex: 1">{$image}{$this->details}</div>
-\t\t\t\t</div>
 EOD;
 	}
 
@@ -120,7 +120,6 @@ EOD;
 \t\t\t\t\t<div class="event-details" style="zIndex: 1">
 \t\t\t\t\t\t<blockquote>{$this->details}</blockquote>
 \t\t\t\t\t</div>
-\t\t\t\t</div>
 EOD;
 	}
 
@@ -131,7 +130,6 @@ EOD;
 \t\t\t\t\t\t<div class="big-img">{$image}</div>
 \t\t\t\t\t\t<div class="img-text">{$this->details}</div>
 \t\t\t\t\t</div>
-\t\t\t\t</div>
 EOD;
 	}
 
