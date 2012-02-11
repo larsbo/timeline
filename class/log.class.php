@@ -35,6 +35,10 @@ class Log {
 	public static function debug($sMessage) {
 		Log::getInstance()->debug_msg[] = $sMessage;
 	}
+	
+	public static function getDebugMsg() {
+		return Log::getInstance()->debug_msg;
+	}
 
 	public static function output() {
 		foreach(Log::getInstance()->debug_msg as $msg) { 

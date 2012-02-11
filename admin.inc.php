@@ -7,52 +7,55 @@ if (!Admin::loggedIn()) die('not logged in!');
 
 
 $action = DB::escape($_GET['action']);
+$log = array();
 
 switch ($action) {
 	case 'show':
 	$id = DB::escape($_GET['id']);
-	echo Admin::showEvent($id);
+	$log['result'] = Admin::showEvent($id);
 	break;
 
 	case 'insert':
-	echo Admin::getInsertEventForm();
+	$log['result'] = Admin::getInsertEventForm();
 	break;
 
 	case 'save':
-	echo Admin::saveEvent();
+	$log['result'] = Admin::saveEvent();
 	break;
 
 	case 'edit':
 	$id = DB::escape($_GET['id']);
-	echo Admin::editEvent($id);
+	$log['result'] = Admin::editEvent($id);
 	break;
 
 	case 'update':
 	$id = DB::escape($_GET['id']);
-	echo Admin::updateEvent($id);
+	$log['result'] = Admin::updateEvent($id);
 	break;
 
 	case 'deleteconfirmation':
 	$id = DB::escape($_GET['id']);
-	echo Admin::deleteEventConfirmation($id);
+	$log['result'] = Admin::deleteEventConfirmation($id);
 	break;
 
 	case 'refresh':
-	echo Admin::getEvents();
+	$log['result'] = Admin::getEvents();
 	break;
 
 	case 'databaseRefresh':
 	$insertdata = trim($_GET['insert']);
-	echo Admin::checkAndUpdateTable($insertdata?true:false);
+	$log['result'] = Admin::checkAndUpdateTable($insertdata?true:false);
 	break;
 
 	case 'dropAndInsertTestData':
-	echo Admin::dropTables();
-	echo Admin::checkAndUpdateTable(true);
+	$log['result'] = Admin::dropTables() && Admin::checkAndUpdateTable(true);
 	break;
 
 	default:
-	echo false;
+	$log['result'] = false;
 	break;
+	
 }
+$log['debug'] = Log::getDebugMsg();
+echo json_encode($log);
 ?>

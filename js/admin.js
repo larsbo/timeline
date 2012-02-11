@@ -17,8 +17,8 @@ jQuery(document).ready(function($){
 
 	// insert event
 	$('#new').click(function(){
-		$.get('admin.inc.php?action=insert', function(data){
-			eventDetails.html(data);
+		$.getJSON('admin.inc.php?action=insert', function(data){
+			eventDetails.html(data.result);
 			eventDetails.find('.dateentry').datepicker();
 		});
 	});
@@ -26,16 +26,16 @@ jQuery(document).ready(function($){
 	// show event
 	eventList.on('click', '.event:not(.new)', function(){
 		var id = $(this).parent().data('id');
-		$.get('admin.inc.php?action=show&id=' + id, function(data){
-			eventDetails.html(data);
+		$.getJSON('admin.inc.php?action=show&id=' + id, function(data){
+			eventDetails.html(data.result);
 		});
 	});
 
 	// edit event
 	eventList.on('click', '.edit', function(){
 		var id = $(this).parent().data('id');
-		$.get('admin.inc.php?action=edit&id=' + id, function(data){
-			eventDetails.html(data);
+		$.getJSON('admin.inc.php?action=edit&id=' + id, function(data){
+			eventDetails.html(data.result);
 			eventDetails.find('.dateentry').datepicker();
 		});
 	});
@@ -51,8 +51,8 @@ jQuery(document).ready(function($){
 			buttons: {
 				Confirm: function() {
 					//do deletion
-					$.get('admin.inc.php?action=deleteconfirmation&id=' + id, function(data){
-						eventDetails.html(data);
+					$.getJSON('admin.inc.php?action=deleteconfirmation&id=' + id, function(data){
+						eventDetails.html(data.result);
 						$('#eventList').find('[data-id="' + id + '"]').fadeOut('slow');
 					});
 					$( this ).dialog( "close" );
@@ -75,18 +75,22 @@ jQuery(document).ready(function($){
 		var form = $(this);
 		var action = form.data('action');
 
-		$.get('admin.inc.php?action=' + action + '&' + form.serialize(), function(data){
-			eventDetails.html(data);
-			$.get('admin.inc.php?action=refresh', function(data){
-				eventList.find('div:first').html(data);
+		$.getJSON('admin.inc.php?action=' + action + '&' + form.serialize(), function(data){
+			eventDetails.html(data.result);
+			$.getJSON('admin.inc.php?action=refresh', function(data){
+				eventList.find('div:first').html(data.result);
 			});
 		});
 	});
 
 		// databaseupdate
 	$('#databaseUpdate').click(function() {
-		$.get('admin.inc.php?action=databaseRefresh', function(data){
-			eventDetails.html(data);
+		$.getJSON('admin.inc.php?action=databaseRefresh', function(data) {
+			if (data.result)
+				eventDetails.html("Datenbank Update war erfolgreich.");
+			else {
+				eventDetails.html("Das Datenbank Update ist fehlgeschlagen!");
+			}
 		});
 	});
 	
@@ -100,8 +104,16 @@ jQuery(document).ready(function($){
 			buttons: {
 				Confirm: function() {
 					//do deletion
-					$.get('admin.inc.php?action=dropAndInsertTestData', function(data){
-						eventDetails.html(data);
+					$.getJSON('admin.inc.php?action=dropAndInsertTestData', function(data){
+						if (data.result) {
+							eventDetails.html("Datenbank Reset war erfolgreich.");
+							$.getJSON('admin.inc.php?action=refresh', function(data){
+								eventList.find('div:first').html(data.result);
+							});
+						}
+						else {
+							eventDetails.html("Das Datenbank Reset ist fehlgeschlagen!");
+						}
 					});
 					$( this ).dialog( "close" );
 					$('#dialogConfirm').remove();
