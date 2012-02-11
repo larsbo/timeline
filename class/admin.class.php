@@ -130,7 +130,7 @@ EOD;
 			Log::debug("table '<em>colorclasses</em>' doesn't exist -> creating table ...");
 			$sql = <<<EOD
 CREATE TABLE IF NOT EXISTS `colorclasses` (
-  `color_id` VARCHAR(10) NOT NULL,
+  `color_id` VARCHAR(14) NOT NULL,
   `css_code` TEXT NOT NULL,
   PRIMARY KEY (`color_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
