@@ -55,23 +55,7 @@ class Admin {
 	}
 
 	static function getInsertEventForm() {
-		$html = "<form data-action=\"save\">
-							<label for=\"title\">Titel:</label>
-							<input type=\"text\" name=\"title\" id=\"title\" size=\"62\" />
-							<label for=\"start\">Start:</label>
-							<input type=\"text\" name=\"start\" class=\"dateentry\" id=\"start\" size=\"10\" />
-							<label for=\"end\">Ende:</label>
-							<input type=\"text\" name=\"end\" class=\"dateentry\" id=\"end\" size=\"10\" />
-							<label for=\"colorclass\">Kategorie:</label>";
-		$html .= ColorClasses::getColorClasses(false)->toSelectField();
-		$html .= "<label for=\"type\">Typ:</label>
-							<input type=\"text\" name=\"type\" id=\"type\" size=\"10\" />
-							<label for=\"image\">Bild:</label>
-							<input type=\"text\" name=\"image\" id=\"image\" size=\"10\" />
-							<textarea name=\"details\" rows=\"10\" cols=\"50\"></textarea>
-							<input type=\"submit\" value=\"Speichern\" />
-						</form>";
-		return $html;
+		return Event::getForm();
 	}
 
 	static function saveEvent() {
@@ -82,8 +66,10 @@ class Admin {
 		$colorclass = DB::escape($_GET['colorclass']);
 		$type = DB::escape($_GET['type']);
 		$image = DB::escape($_GET['image']);
-		$sql = "INSERT INTO `events` (`title`, `startdate`, `enddate`, `details`, `colorclass`, `type`, `image`) 
-							VALUES ('".$title."', '".$start."', '".$end."', '".$details."', '".$colorclass."', '".$type."', '".$image."');";
+		$sql = <<<EOD
+INSERT INTO `events` (`title`, `startdate`, `enddate`, `details`, `colorclass`, `type`, `image`) 
+VALUES ('$title', '$start', '$end', '$details', '$colorclass', '$type', '$image');
+EOD;
 		if (DB::execute($sql))
 			return "Ereignis erfolgreich eingetragen!";
 		else
@@ -91,25 +77,8 @@ class Admin {
 	}
 
 	static function editEvent($id) {
-		$event = DB::queryAssocAtom("SELECT * FROM `events` WHERE `event_id` = '".$id."'");
-		$html = "<form data-action=\"update\">
-							<input type=\"hidden\" name=\"id\" value=\"".$event['event_id']."\" />
-							<label for=\"title\">Titel:</label>
-							<input type=\"text\" name=\"title\" id=\"title\" value=\"".$event['title']."\" size=\"62\" />
-							<label for=\"start\">Start:</label>
-							<input type=\"text\" name=\"start\" class=\"dateentry\" id=\"start\" value=\"".$event['startdate']."\" size=\"10\" />
-							<label for=\"end\">Ende:</label>
-							<input type=\"text\" name=\"end\" class=\"dateentry\" id=\"end\" value=\"".$event['enddate']."\" size=\"10\" />
-							<label for=\"colorclass\">Kategorie:</label>";
-		$html .= ColorClasses::getColorClasses(false)->toSelectField($event['colorclass']);
-		$html .= "<label for=\"type\">Typ:</label>";
-		$html .= Util::ArrayToSelect(Event::getTypes(), 'type', null, $event['type']);
-		$html .= "<label for=\"image\">Bild:</label>
-							<input type=\"text\" name=\"image\" id=\"image\" value=\"".$event['image']."\" size=\"10\" />
-							<textarea name=\"details\" rows=\"10\" cols=\"50\">".$event['details']."</textarea>
-							<input type=\"submit\" value=\"Speichern\" />
-						</form>";
-		return $html;
+		$event = Event::getEventFromId($id);
+		return Event::getForm($event);
 	}
 
 	static function updateEvent($id) {

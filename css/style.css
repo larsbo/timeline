@@ -542,3 +542,18 @@ body {
     height: 16px;
     padding: 1px;
     width: 16px; }
+
+form table {
+  width: 99%; }
+  form table, form table tr, form table tr td {
+    border: 0 !important; }
+  form table input, form table select, form table textarea {
+    width: 95%; }
+  form table input.submit {
+    float: right;
+    width: 100px; }
+  form table tr td div {
+    width: 50%;
+    display: inline-block; }
+    form table tr td div input {
+      width: 90%; }

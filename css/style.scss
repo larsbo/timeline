@@ -550,3 +550,24 @@ body {
 	}
 }
 
+form table {
+	width: 99%;
+	&, & tr, & tr td {
+		border: 0 !important;
+	}
+	& input, & select, & textarea {
+		width: 95%;
+	}
+	& input.submit {
+		float: right;
+		width: 100px;
+	}
+	& tr td div {
+		width: 50%;
+		display: inline-block;
+		& input {
+			width: 90%;
+		}
+	}
+}
+

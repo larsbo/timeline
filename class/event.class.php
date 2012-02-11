@@ -139,7 +139,7 @@ EOD;
 
 	function toAdminRepresentation() {
 		return <<<EOD
-<p><b>Titel:</b> {$this->title}."</p>
+<p><b>Titel:</b> {$this->title}</p>
 <p><b>Start:</b> {$this->startdate}</p>
 <p><b>Ende:</b> {$this->enddate}</p>
 <p><b>Kategorie:</b> {$this->colorclass}</p>
@@ -149,6 +149,50 @@ EOD;
 EOD;
 	}
 
+
+	static function getForm($e = null) {
+		$colorclassesSelectField = ColorClasses::getColorClasses(false)->toSelectField($e===null?null:$e->colorclass);
+		$typeSelectField = Util::ArrayToSelect(Event::getTypes(), 'type', null, $e===null?null:$e->type);
+		$title = $e===null?"":$e->title;
+		$startdate = $e===null?"":$e->startdate;
+		$enddate = $e===null?"":$e->enddate;
+		$image = $e===null?"":$e->image;
+		$details = $e===null?"":$e->details;
+		$action = $e===null?"save":"update";
+		$eventIdInput = $e===null?"":"<input type=\"hidden\" name=\"id\" value=\"".$e->event_id."\" />";
+		$html = <<<EOD
+<form data-action="$action">$eventIdInput<table><tr>
+	<td><label for="title">Titel:</label></td>
+	<td><input type="text" name="title" id="title" maxlength="30" value="{$title}" /></td>
+</tr><tr>
+	<td colspan="2"><div>
+		<table><tr>
+			<td><label for="start">Start:</label></td>
+			<td><input type="text" name="start" class="dateentry" id="start" maxlength="10" value="{$startdate}" /></td>
+		</tr></table>
+		</div><div>
+		<table><tr>
+			<td><label for="end">Ende:</label></td>
+			<td><input type="text" name="end" class="dateentry" id="end" maxlength="10" value="{$enddate}" /></td>
+		</tr></table>
+	</div></td>
+</tr><tr>
+	<td><label for="colorclass">Kategorie:</label></td>
+	<td>{$colorclassesSelectField}</td>
+</tr><tr>
+	<td><label for="type">Typ:</label></td>
+	<td>{$typeSelectField}</td>
+</tr><tr>
+	<td><label for="image">Bild:</label></td>
+	<td><input type="text" name="image" id="image" maxlength="100" value="{$image}" /></td>
+</tr><tr>
+	<td colspan="2"><textarea name="details" rows="10" cols="50">{$details}</textarea></td>
+</tr><tr>
+	<td colspan="2"><input class="submit" type="submit" value="Speichern" /></td>
+</tr></table></form>
+EOD;
+		return $html;
+	}
 
 	/** FACTORY **/
 	static function getEventFromId($id) {
