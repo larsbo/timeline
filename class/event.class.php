@@ -68,6 +68,10 @@ class Event {
 		return $this->width;
 	}
 	
+	static function getTypes() {
+		return array('text', 'quote', 'image');
+	}
+	
 	/** representations **/
 	function toTimelineRepresentation($line) {
 		$c = Config::getInstance();
@@ -87,7 +91,7 @@ class Event {
 \t\t\t\t\t\t<span class="pin"></span>
 \t\t\t\t\t</span>
 EOD;
-		switch ($this->getType()) {
+		switch ($this->type) {
 			case 'text':
 			$html .= $this->getTextRepresentation();
 			break;
@@ -108,14 +112,14 @@ EOD;
 		return $html;
 	}
 
-	function getTextRepresentation() {
+	private function getTextRepresentation() {
 		$image = $this->getImage() ? "<span class=\"img\">".$this->getImage()."</span>" : "";
 		return <<<EOD
 \t\t\t\t\t<div class="event-details" style="zIndex: 1">{$image}{$this->details}</div>
 EOD;
 	}
 
-	function getQuoteRepresentation() {
+	private function getQuoteRepresentation() {
 		return <<<EOD
 \t\t\t\t\t<div class="event-details" style="zIndex: 1">
 \t\t\t\t\t\t<blockquote>{$this->details}</blockquote>
@@ -123,13 +127,25 @@ EOD;
 EOD;
 	}
 
-	function getImageRepresentation() {
+	private function getImageRepresentation() {
 		$image = $this->getImage() ? "<img src=\"".$this->getImage()."\" alt=\"".$this->details."\" />" : "";
 		return <<<EOD
 \t\t\t\t\t<div class="event-details" style="zIndex: 1">
 \t\t\t\t\t\t<div class="big-img">{$image}</div>
 \t\t\t\t\t\t<div class="img-text">{$this->details}</div>
 \t\t\t\t\t</div>
+EOD;
+	}
+
+	function toAdminRepresentation() {
+		return <<<EOD
+<p><b>Titel:</b> {$this->title}."</p>
+<p><b>Start:</b> {$this->startdate}</p>
+<p><b>Ende:</b> {$this->enddate}</p>
+<p><b>Kategorie:</b> {$this->colorclass}</p>
+<p><b>Typ:</b> {$this->type}</p>
+<p><b>Bild:</b> {$this->image}</p>
+<p>{$this->details}</p>
 EOD;
 	}
 

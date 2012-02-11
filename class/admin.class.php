@@ -2,6 +2,7 @@
 require_once 'db.class.php';
 require_once 'colorclasses.class.php';
 require_once 'event.class.php';
+require_once 'util.class.php';
 
 class Admin {
 	private $user;
@@ -50,14 +51,7 @@ class Admin {
 	}
 
 	static function showEvent($id) {
-		$event = DB::queryAssocAtom("SELECT * FROM `events` WHERE `event_id` = '".$id."';");
-		return "<p><b>Titel:</b> ".$event['title']."</p>
-						<p><b>Start:</b> ".$event['startdate']."</p>
-						<p><b>Ende:</b> ".$event['enddate']."</p>
-						<p><b>Kategorie:</b> ".$event['colorclass']."</p>
-						<p><b>Typ:</b> ".$event['type']."</p>
-						<p><b>Bild:</b> ".$event['image']."</p>
-						<p>".$event['details']."</p>";
+		return Event::getEventFromId($id)->toAdminRepresentation();
 	}
 
 	static function getInsertEventForm() {
@@ -108,9 +102,9 @@ class Admin {
 							<input type=\"text\" name=\"end\" class=\"dateentry\" id=\"end\" value=\"".$event['enddate']."\" size=\"10\" />
 							<label for=\"colorclass\">Kategorie:</label>";
 		$html .= ColorClasses::getColorClasses(false)->toSelectField($event['colorclass']);
-		$html .= "<label for=\"type\">Typ:</label>
-							<input type=\"text\" name=\"type\" id=\"type\" value=\"".$event['type']."\" size=\"10\" />
-							<label for=\"image\">Bild:</label>
+		$html .= "<label for=\"type\">Typ:</label>";
+		$html .= Util::ArrayToSelect(Event::getTypes(), 'type', null, $event['type']);
+		$html .= "<label for=\"image\">Bild:</label>
 							<input type=\"text\" name=\"image\" id=\"image\" value=\"".$event['image']."\" size=\"10\" />
 							<textarea name=\"details\" rows=\"10\" cols=\"50\">".$event['details']."</textarea>
 							<input type=\"submit\" value=\"Speichern\" />
@@ -203,11 +197,11 @@ EOD;
 			$sql = <<<EOD
 CREATE TABLE IF NOT EXISTS `events` (
   `event_id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(80) NOT NULL,
+  `title` varchar(30) NOT NULL,
   `details` text NOT NULL,
   `startdate` DATE NOT NULL,
   `enddate` DATE NOT NULL,
-  `colorclass` varchar(10) NOT NULL,
+  `colorclass` varchar(14) NOT NULL,
   `type` VARCHAR(10) NOT NULL,
   `image` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`event_id`),
@@ -228,7 +222,7 @@ EOD;
 
 			$sql = "";
 			if (in_array('colorclass', $tablediff))
-				$sql .= "ALTER TABLE `events` ADD `colorclass` varchar(10) NOT NULL;";
+				$sql .= "ALTER TABLE `events` ADD `colorclass` varchar(14) NOT NULL;";
 			if (in_array('details', $tablediff))
 				$sql .= "ALTER TABLE `events` ADD `details` text NOT NULL;";
 			if (in_array('title', $tablediff))
