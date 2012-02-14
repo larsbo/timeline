@@ -68,7 +68,6 @@ jQuery(document).ready(function($){
 
 
 	/* toggle long event names */
-	var eventsAndClones = $('.event');	// new selection of .events (with clones)
 	$('#options-container').find('.button').click(function(){
 		var button = $(this);
 		var clones = $('.clones');
@@ -78,26 +77,41 @@ jQuery(document).ready(function($){
 		button.addClass('selected');
 
 		// change events
-		eventsAndClones.each(function(){
-			var event = $(this);
-			switch (button.data('type')) {
-				case 'long':
-				event
-					.show()
-					.width(event.data('width'))
-					.html(event.data('title') + '<span class="pin"></span>');
-				break;
-				case 'short':
-				event.parent().not('.sticky').find('.event')
-					.show()
-					.width('')
-					.html('+');
-				break;
-				case 'hidden':
-				event.hide();
-				break;
-			}
-		});
+		if (button.data('type') == 'hidden') {
+			var events = $('.event').not('.clone');
+			events.each(function() {
+				var event = $(this);
+				var id = event.data('event');
+				if (event.parent().hasClass('sticky')) {
+					event.parent().next().find('.event').show();
+					event.show();
+				}
+				else {
+					event.hide();
+					event.parent().next().find('.event').hide();
+				}
+			});
+		}
+		else {
+			// new selection of .events (with clones)
+			$('.event').each(function(){
+				var event = $(this);
+				switch (button.data('type')) {
+					case 'long':
+					event
+						.show()
+						.width(event.data('width'))
+						.html(event.data('title') + '<span class="pin"></span>');
+					break;
+					case 'short':
+					event.parent().not('.sticky').find('.event')
+						.show()
+						.width('')
+						.html('+');
+					break;
+				}
+			});
+		}
 	});
 
 });

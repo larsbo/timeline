@@ -33,7 +33,7 @@ echo $timeline->getColorClassesHTML();
     <p>Ereignisse anzeigen:</p>
     <a href="#" class="button selected" data-type="long" title="lange Ereignisse anzeigen">lang</a>
     <a href="#" class="button" data-type="short" title="kurze Ereignisse anzeigen">kurz</a>
-    <a href="#" class="button" data-type="hidden" title="Ereignisse ausblenden">ausblenden</a>
+    <a href="#" class="button" data-type="hidden" title="Ereignisse ausblenden">gefiltert</a>
   </div>
   <div id="map-container">
     <div id="mini-map">
