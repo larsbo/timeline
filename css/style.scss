@@ -229,7 +229,7 @@ body {
 		top:0;
 		@include rounded-corners(3px);
 		@include shadows(5px 5px 5px #888);
-		& .img {
+		.img {
 			border:1px solid #ccc;
 			float:left;
 			height:60px;
@@ -237,10 +237,10 @@ body {
 			padding:1px;
 			width:60px;
 		}
-		& .big-img {
+		.big-img {
 			@include shadows(5px 5px 5px #888);
 		}
-		& .img-text {
+		.img-text {
 			color:#666;
 			font-size:11px;
 			font-style:italic;
@@ -324,26 +324,22 @@ body {
 #options-container {
 	float:left;
 	margin:10px;
-
 	p {
 		color:#333;
 		display:inline-block;
 		font-weight:bold;
 		margin-right:5px;
 	}
-
 	ul {
 		display:inline-block;
 		height:27px;
 		list-style:none;
 		vertical-align:middle;
-
 		li {
 			float:left;
 			height:27px;
 		}
 	}
-	
 	input[type=radio] {
 		display:none;
 	}
@@ -355,7 +351,6 @@ body {
 	float:left;
 	margin:10px 20px;
 	position:relative;
-
 	p {
 		color:#333;
 		display:inline-block;
@@ -369,14 +364,12 @@ body {
 	@include rounded-corners(4px);
 	-moz-user-select:none;
 	-khtml-user-select: none;
-
 	#current-view {
 		border:1px solid #333;
 		background:none;
 		margin:-2px;
 		position:absolute;
 		@include rounded-corners(2px);
-
 		.line {
 			background:none;
 			height:100%;
@@ -384,17 +377,14 @@ body {
 			position:relative;
 			width:50%;
 		}
-
 		&:hover {
 			border:1px solid #04a;
 			cursor:pointer;
-
 			.line {
 				border-right:1px solid #aaa;
 			}
 		}
 	}
-
 	div {
 		background:#EAEAEA;
 		color:#333;
@@ -404,7 +394,6 @@ body {
 		@include rounded-corners(.2em);
 		-moz-user-select:none;
 		-khtml-user-select: none;
-
 		&.h1 { background: #666; }
 		&.h2 { background: #999; }
 		&.h3 { background: #ccc; }
@@ -460,7 +449,6 @@ body {
 	-moz-background-size:40px 40px;
 	-webkit-animation:animate-bg 5s linear infinite;
 	-moz-animation:animate-bg 5s linear infinite;
-	
 	&.info, &.debug {
 		background-color: #4ea5cd;
 		border-color: #3b8eb5;
@@ -481,12 +469,8 @@ body {
 		background-color: #61b832;
 		border-color: #55a12c;
 	}
-	h3 {
-		margin: 0 0 5px 0;
-	}
-	p {
-		margin: 0;
-	}
+	h3 { margin: 0 0 5px 0; }
+	p { margin: 0; }
 }
 
 @-webkit-keyframes animate-bg {
@@ -511,35 +495,26 @@ body {
 
 .adminContent {
 	padding:50px 10px;
-
-	& h2 { padding:5px; }
-	& input, select, textarea {
+	h2 { padding:5px; }
+	input, select, textarea {
 		margin:5px;
 		padding:2px 3px;
 	}
-	& p { padding:2px 5px; }
-	& .content {
-		float:left;
-	}
-	& .config {
-		float:right;
-	}
-	& .bordered {
+	p { padding:2px 5px; }
+	.content { float:left; }
+	.config { float:right; }
+	.bordered {
 		float:left;
 		margin-right:20px;
 		padding:5px;
 	}
-	& .eventContainer {
-		display:block;
-	}
-	& .event {
+	.eventContainer { display:block; }
+	.event {
 		margin:0;
 		position:relative;
 		width:400px;
 	}
-	& #eventDetails {
-		width:440px;
-	}
+	#eventDetails { width:440px; }
 	.button {
 		&.edit {
 			@include admin-button(url(../images/edit.png) no-repeat center center);
