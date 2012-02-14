@@ -114,4 +114,11 @@ jQuery(document).ready(function($){
 		}
 	});
 
+	// highlight timeline column on hover
+	$('#content').find('td').hover(function(){
+		$(this).parents('table').find('th:nth-child(' + ($(this).index() + 1) + ')').addClass("hover");
+	}, function(){
+		$(this).parents('table').find('th:nth-child(' + ($(this).index() + 1) + ')').removeClass("hover");
+ });
+
 });

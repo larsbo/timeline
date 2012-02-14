@@ -283,6 +283,9 @@ body {
 		td:first-child { @include rounded-corners(0 0 0 6px); }
 		td:last-child {	@include rounded-corners(0 0 6px 0); }
 	}
+	.hover {
+		@include background-gradients(top, #cccccc 0%, #aaaaaa 100%);
+	}
 }
 
 
