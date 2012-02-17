@@ -1,8 +1,5 @@
 jQuery(document).ready(function($){
 
-	/* messages */
-	$().message();
-
 	/* iScroll */
 	var timeline = new iScroll('wrapper',{
 		bounce: false,

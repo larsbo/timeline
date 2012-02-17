@@ -53,43 +53,53 @@ body {
 	color:#000;
 	font-family:Arial;
 	font-size:12px;
-	a {
-		color:#000;
-		outline:none;
-		text-decoration:none;
-		@include transitions(0.5s);
-		&:hover, &.selected { color:#06a; }
-	}
-	blockquote {
+}
+a {
+	color:#000;
+	outline:none;
+	text-decoration:none;
+	@include transitions(0.5s);
+	&:hover, &.selected { color:#06a; }
+}
+blockquote {
+	display:block;
+	font-size:17px;
+	font-style:italic;
+	line-height:24px;
+	margin-left:5%;
+	quotes:"\201C" "\201D";
+	width:90%;
+	&:before, &:after {
+		color:#999;
 		display:block;
-		font-size:17px;
-		font-style:italic;
-		line-height:24px;
-		margin-left:5%;
-		quotes:"\201C" "\201D";
-		width:90%;
-		&:before, &:after {
-			color:#999;
-			display:block;
-			font-size:400%;
-		}
-		&:before {
-			content:open-quote;
-			margin-left:-5%;
-			position:relative;
-			top:15px;
-		}
-		&:after {
-			content:close-quote;
-			margin-left:100%;
-			position:relative;
-			right:5px;
-			top:15px;
-		}
+		font-size:400%;
 	}
-	h1 {
-		margin-bottom:5px;
-		text-shadow:0 1px 0 rgba(255, 255, 255, 0.9);
+	&:before {
+		content:open-quote;
+		margin-left:-5%;
+		position:relative;
+		top:15px;
+	}
+	&:after {
+		content:close-quote;
+		margin-left:100%;
+		position:relative;
+		right:5px;
+		top:15px;
+	}
+}
+h1 {
+	margin-bottom:5px;
+	text-shadow:0 1px 0 rgba(255, 255, 255, 0.9);
+}
+input {
+	width: 350px;
+}
+table {
+	*border-collapse: collapse;
+	border-spacing: 0;
+	td {
+		border: none;
 	}
 }
 
@@ -118,9 +128,7 @@ body {
 	padding:0;
 }
 #timeline {
-	*border-collapse:collapse;
 	background:#fff url(../images/bg.png);
-	border-spacing:0;
 	margin:10px;
 	height:350px;
 	overflow:hidden;
@@ -253,14 +261,13 @@ body {
 }
 
 
-
 /***** TABLE *****/
 .bordered {
 	border:solid #ccc 1px;
 	@include rounded-corners(6px);
 	@include shadows(0 1px 1px #ccc);
 
-	td, th {
+	& > td, & > th {
 		border-left:1px solid #ccc;
 		border-top:1px solid #ccc;
 		text-align:left;
@@ -432,7 +439,40 @@ body {
 
 
 /***** MESSAGES *****/
-.msg {
+.message {
+	display:none;
+}
+ul.noty_container {
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+	position: fixed;
+	top: 20px;
+	width: 400px;
+	z-index: 9999999;
+	li {
+		clear: both;
+		float: left;
+		list-style: none;
+		margin: 10px 0 0 0;
+		padding: 0px;
+		position: relative;
+	}
+	&.topLeft {
+		left: 20px;
+		li {
+			width: 400px;
+		}
+	}
+	&.topRight {
+		right: 40px;
+		li {
+			float: right;
+			width: 400px;
+		}
+	}
+}
+.noty_bar {
 	background-size:40px 40px;
 	background-image:-webkit-linear-gradient(135deg, rgba(255, 255, 255, .05) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .05) 50%, rgba(255, 255, 255, .05) 75%, transparent 75%, transparent);
 	background-image:-moz-linear-gradient(135deg, rgba(255, 255, 255, .05) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .05) 50%, rgba(255, 255, 255, .05) 75%, transparent 75%, transparent);
@@ -442,23 +482,71 @@ body {
 	border:1px solid;
 	color:#fff;
 	cursor:pointer;
+	display: none;
 	padding:15px;
 	position:fixed;
 	_position:absolute;
 	text-shadow:0 1px 0 rgba(0,0,0,.5);
 	width:100%;
+	z-index: 9999999;
 	@include shadows(inset 0 -1px 0 rgba(255,255,255,.4));
+	@include shadows(2px 2px 3px #999);
 	-webkit-background-size:40px 40px;
 	-moz-background-size:40px 40px;
 	-webkit-animation:animate-bg 5s linear infinite;
 	-moz-animation:animate-bg 5s linear infinite;
-	&.info, &.debug {
+	&.top {
+		border-bottom: 3px solid #eee;
+		left: 0;
+		top: 0;
+		width: 100%;
+	}
+	&.bottom {
+		border-top: 3px solid #eee;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+	}
+	&.center {
+		border: 1px solid #eee;
+		left: 19.5%;
+		padding: 4px;
+		top: 40%;
+		width: 60%;
+		@include rounded-corners(5px);
+	}
+	&.topLeft, &.topRight {
+		border: 1px solid #eee;
+		clear: both;
+		padding: 4px;
+		position: relative;
+		width: 100%;
+		@include rounded-corners(5px);
+	}
+	.noty_message {
+		width: 96%;
+		.noty_buttons {
+			float: right;
+			font-size: 13px;
+			margin-top: -6px;
+			margin-left: -25px;
+			button {
+				margin-left: 5px;
+			}
+		}
+	}
+	.noty_close {
+		background-image: url(../images/closelabel.png);
+		cursor: pointer;
+		height: 20px;
+		position: absolute;
+		right: 10px;
+		top: 10px;
+		width: 20px;
+	}
+	&.alert, &.debug {
 		background-color: #4ea5cd;
 		border-color: #3b8eb5;
-	}
-	&.error {
-		background-color: #de4343;
-		border-color: #c43d3d;
 	}
 	&.critical {
 		background-color: #ff0000;
@@ -467,6 +555,10 @@ body {
 	&.warning {
 		background-color: #eaaf51;
 		border-color: #d99a36;
+	}
+	&.error {
+		background-color: #de4343;
+		border-color: #c43d3d;
 	}
 	&.success {
 		background-color: #61b832;
@@ -498,7 +590,9 @@ body {
 
 .adminContent {
 	padding:50px 10px;
-	h2 { padding:5px; }
+	h2 {
+		padding:5px;
+	}
 	input, select, textarea {
 		margin:5px;
 		padding:2px 3px;
@@ -511,6 +605,7 @@ body {
 		margin-right:20px;
 		padding:5px;
 	}
+	.dateentry { width: 70px; }
 	.eventContainer { display:block; }
 	.event {
 		margin:0;
@@ -526,26 +621,99 @@ body {
 			@include admin-button(url(../images/delete.png) no-repeat center center);
 		}
 	}
-}
-
-form table {
-	width: 99%;
-	&, & tr, & tr td {
-		border: 0 !important;
-	}
-	& input, & select, & textarea {
-		width: 95%;
-	}
-	& input.submit {
-		float: right;
-		width: 100px;
-	}
-	& tr td div {
-		width: 50%;
-		display: inline-block;
-		& input {
-			width: 90%;
+	table {
+		width: 99%;
+		.submit {
+			float: right;
+			width: 100px;
 		}
 	}
 }
 
+/***** EDITOR *****/
+.cleditorMain {
+	background-color: white;
+	border: 1px solid #999;
+	padding: 0 1px 1px;
+	iframe {
+		border: none;
+		margin: 0;
+		padding: 0;
+	}
+	textarea {
+		border: none;
+		font: 10pt Arial,Verdana;
+		margin: 0;
+		outline: none; /* webkit grip focus */
+		overflow-y: scroll;
+		padding: 0;
+		resize: none;
+	}
+}
+.cleditorToolbar {
+	background: url(../images/toolbar.gif);
+}
+.cleditorGroup {
+	float: left;
+	height: 26px;
+}
+.cleditorButton {
+	background: url(../images/buttons.gif);
+	float: left;
+	height: 24px;
+	margin: 1px 0 1px 0;
+	width: 24px;
+}
+.cleditorDisabled {
+	filter: alpha(opacity=30);
+	opacity: 0.3;
+}
+.cleditorDivider {
+	background: #ccc;
+	float: left;
+	height: 23px;
+	margin: 1px 0 1px 0;
+	width: 1px;
+}
+.cleditorPopup {
+	border: solid 1px #999;
+	background-color: white;
+	cursor: default;
+	font: 10pt Arial,Verdana;
+	position: absolute;
+	z-index: 10000;
+}
+.cleditorList {
+	div {
+		padding: 2px 4px 2px 4px;
+	}
+	p, h1, h2, h3, h4, h5, h6, font {
+		background-color: transparent;
+		margin: 0;
+		padding: 0;
+	}
+}
+.cleditorColor {
+	padding: 1px 0 0 1px;
+	width: 150px;
+	div {
+		float: left;
+		height: 14px;
+		margin: 0 1px 1px 0;
+		width: 14px;
+	}
+}
+.cleditorPrompt {
+	background-color: #F6F7F9;
+	padding: 4px;
+	font-size: 8.5pt;
+	input, textarea {
+		font: 8.5pt Arial,Verdana;
+	}
+}
+.cleditorMsg {
+	background-color: #FDFCEE;
+	font-size: 8.5pt;
+	padding: 4px;
+	width: 150px;
+}

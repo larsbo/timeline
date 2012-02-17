@@ -19,11 +19,12 @@ if ($_POST['username'] && $_POST['password']) {
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>Timeline - Admin</title>
   <link rel="stylesheet" type="text/css" href="css/style.css" />
-  <link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/themes/flick/jquery-ui.css" rel="stylesheet" />	
+  <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/themes/flick/jquery-ui.css" />	
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
   <script type="text/javascript" src="js/jquery.ui.datepicker-de.js"></script>
-  <script type="text/javascript" src="js/jquery.message.js"></script>
+  <script type="text/javascript" src="js/jquery.cleditor.js"></script>
+  <script type="text/javascript" src="js/jquery.noty.js"></script>
   <script type="text/javascript" src="js/admin.js"></script>
 <?php echo ColorClasses::getColorClasses(false)->toStyleDefinition(); ?>
 </head>
@@ -57,19 +58,18 @@ if (Admin::loggedIn()) {
 		echo "Login fehlgeschlagen!";
 	}
 ?>
-<form name="login" method="post" action="">
-  <label for="username">Benutzername:</label>
-  <input type="text" id="username" name="username" />
-  <label for="password">Passwort:</label>
-  <input type="password" id="password" name="password" />
-  <input type="submit" value="Login" />
-</form>
+    <form name="login" method="post" action="">
+      <label for="username">Benutzername:</label>
+      <input type="text" id="username" name="username" />
+      <label for="password">Passwort:</label>
+      <input type="password" id="password" name="password" />
+      <input type="submit" value="Login" />
+    </form>
 <?php
 }
 ?>
+	</div>
 </div>
-</div>
-
-<?php Log::output(); ?>
+<?php if ($_GET['debug']) Log::output(); // show debug messages only with ?debug=true ?>
 </body>
 </html>

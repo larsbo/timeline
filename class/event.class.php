@@ -161,35 +161,40 @@ EOD;
 		$action = $e===null?"save":"update";
 		$eventIdInput = $e===null?"":"<input type=\"hidden\" name=\"id\" value=\"".$e->event_id."\" />";
 		$html = <<<EOD
-<form data-action="$action">$eventIdInput<table><tr>
-	<td><label for="title">Titel:</label></td>
-	<td><input type="text" name="title" id="title" maxlength="30" value="{$title}" /></td>
-</tr><tr>
-	<td colspan="2"><div>
-		<table><tr>
-			<td><label for="start">Start:</label></td>
-			<td><input type="text" name="start" class="dateentry" id="start" maxlength="10" value="{$startdate}" /></td>
-		</tr></table>
-		</div><div>
-		<table><tr>
-			<td><label for="end">Ende:</label></td>
-			<td><input type="text" name="end" class="dateentry" id="end" maxlength="10" value="{$enddate}" /></td>
-		</tr></table>
-	</div></td>
-</tr><tr>
-	<td><label for="colorclass">Kategorie:</label></td>
-	<td>{$colorclassesSelectField}</td>
-</tr><tr>
-	<td><label for="type">Typ:</label></td>
-	<td>{$typeSelectField}</td>
-</tr><tr>
-	<td><label for="image">Bild:</label></td>
-	<td><input type="text" name="image" id="image" maxlength="100" value="{$image}" /></td>
-</tr><tr>
-	<td colspan="2"><textarea name="details" rows="10" cols="50">{$details}</textarea></td>
-</tr><tr>
-	<td colspan="2"><input class="submit" type="submit" value="Speichern" /></td>
-</tr></table></form>
+<form data-action="$action">$eventIdInput
+<table>
+	<tr>
+		<td width="50"><label for="title">Titel:</label></td>
+		<td><input type="text" name="title" id="title" maxlength="30" value="{$title}" /></td>
+	</tr>
+	<tr>
+		<td><label for="start">Start:</label></td>
+		<td>
+			<input type="text" name="start" class="dateentry" id="start" maxlength="10" value="{$startdate}" />
+			<label for="end">Ende:</label>
+			<input type="text" name="end" class="dateentry" id="end" maxlength="10" value="{$enddate}" />
+		</td>
+	</tr>
+	<tr>
+		<td><label for="colorclass">Kategorie:</label></td>
+		<td>{$colorclassesSelectField}</td>
+	</tr>
+	<tr>
+		<td><label for="type">Typ:</label></td>
+		<td>{$typeSelectField}</td>
+	</tr>
+	<tr>
+		<td><label for="image">Bild:</label></td>
+		<td><input type="text" name="image" id="image" maxlength="100" value="{$image}" /></td>
+	</tr>
+	<tr>
+		<td colspan="2"><textarea name="details" rows="10" cols="50">{$details}</textarea></td>
+	</tr>
+	<tr>
+		<td colspan="2"><input class="submit" type="submit" value="Speichern" /></td>
+	</tr>
+</table>
+</form>
 EOD;
 		return $html;
 	}
