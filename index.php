@@ -22,8 +22,8 @@
 <?php
 include 'class/timeline.class.php';
 $c = Config::getInstance();
-$timeline = new Timeline($c->startdate, $c->enddate);
-$width = max(1,$c->enddate - $c->startdate + 1) * $c->tl_column_width;
+$timeline = new Timeline();
+$width = max(1,$timeline->getEndYear() - $timeline->getStartYear() + 1) * $c->tl_column_width;
 echo $timeline->getColorClassesHTML();
 ?>
 </head>
