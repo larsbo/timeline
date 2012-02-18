@@ -1,3 +1,16 @@
+showDebugMsg = function(msgs){
+	if($('#debug').length){
+		$.each(msgs, function() {
+			noty({
+				layout: 'topRight',
+				text: '<h3>debug</h3><p>'+this+'</p>',
+				timeout: false,
+				type: 'debug'
+			});
+		});
+	}
+}
+
 jQuery(document).ready(function($){
 
 	/* messages */
@@ -9,6 +22,7 @@ jQuery(document).ready(function($){
 			timeout: false,
 			type: msg.data('type')
 		});
+		msg.remove();
 	});
 
 	/* datepicker options */
@@ -27,6 +41,7 @@ jQuery(document).ready(function($){
 	$('#new').click(function(){
 		$.getJSON('admin.inc.php?action=insert', function(data){
 			eventDetails.html(data.result);
+			if (data.debug) showDebugMsg(data.debug);
 			eventDetails.find('.dateentry').datepicker();
 			eventDetails.find('textarea').cleditor({width:'100%'});
 		});
@@ -37,6 +52,7 @@ jQuery(document).ready(function($){
 		var id = $(this).parent().data('id');
 		$.getJSON('admin.inc.php?action=show&id=' + id, function(data){
 			eventDetails.html(data.result);
+			if (data.debug) showDebugMsg(data.debug);
 		});
 	});
 
@@ -45,6 +61,7 @@ jQuery(document).ready(function($){
 		var id = $(this).parent().data('id');
 		$.getJSON('admin.inc.php?action=edit&id=' + id, function(data){
 			eventDetails.html(data.result);
+			if (data.debug) showDebugMsg(data.debug);
 			eventDetails.find('.dateentry').datepicker();
 			eventDetails.find('textarea').cleditor({width:'100%'});
 		});
@@ -63,6 +80,7 @@ jQuery(document).ready(function($){
 					//do deletion
 					$.getJSON('admin.inc.php?action=deleteconfirmation&id=' + id, function(data){
 						eventDetails.html(data.result);
+						if (data.debug) showDebugMsg(data.debug);
 						$('#eventList').find('[data-id="' + id + '"]').fadeOut('slow');
 					});
 					$( this ).dialog( "close" );
@@ -87,8 +105,10 @@ jQuery(document).ready(function($){
 
 		$.getJSON('admin.inc.php?action=' + action + '&' + form.serialize(), function(data){
 			eventDetails.html(data.result);
+			if (data.debug) showDebugMsg(data.debug);
 			$.getJSON('admin.inc.php?action=refresh', function(data){
 				eventList.find('div:first').html(data.result);
+				if (data.debug) showDebugMsg(data.debug);
 			});
 		});
 	});
@@ -101,6 +121,7 @@ jQuery(document).ready(function($){
 			else {
 				eventDetails.html("Das Datenbank Update ist fehlgeschlagen!");
 			}
+			if (data.debug) showDebugMsg(data.debug);
 		});
 	});
 	
@@ -117,8 +138,10 @@ jQuery(document).ready(function($){
 					$.getJSON('admin.inc.php?action=dropAndInsertTestData', function(data){
 						if (data.result) {
 							eventDetails.html("Datenbank Reset war erfolgreich.");
+							if (data.debug) showDebugMsg(data.debug);
 							$.getJSON('admin.inc.php?action=refresh', function(data){
 								eventList.find('div:first').html(data.result);
+								if (data.debug) showDebugMsg(data.debug);
 							});
 						}
 						else {
