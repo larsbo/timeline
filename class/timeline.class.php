@@ -6,17 +6,30 @@ require_once('colorclasses.class.php');
 
 class Timeline {
 	private $events;
-	private $start_year;
-	private $end_year;
+	private $start_year = null;
+	private $end_year = null;
 	private $colorclasses;	//this is only cache
 
-	function __Construct($start, $end) {
-		$this->start_year = $start;
-		$this->end_year = $end;
-		foreach (Events::getEvents($start, $end) as $event)
+	function __Construct() {
+		foreach (Events::getEvents() as $event) {
 			$this->events[] = array('event' => $event, 'line' => 0);
+			if ($this->start_year === null || $event->getStartYear() < $this->start_year)
+				$this->start_year = $event->getStartYear();
+			if ($this->end_year === null || $event->getEndYear() > $this->end_year)
+				$this->end_year = $event->getEndYear();
+		}
 		$this->alignEvents();
 		$this->colorclasses = ColorClasses::getColorClasses(true);
+		$this->start_year -= 1;
+		$this->end_year += 2;
+	}
+	
+	function getStartYear() {
+		return $this->start_year;
+	}
+	
+	function getEndYear() {
+		return $this->end_year;
 	}
 	
 	function getColorClassesHTML() {

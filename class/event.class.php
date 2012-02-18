@@ -211,18 +211,12 @@ EOD;
 }
 
 class Events {
-	static function getEvents($start = 0, $end = 0) {
+	static function getEvents() {
 		$sql = <<<EOD
 SELECT 
   e.event_id, e.title, e.details, e.colorclass, DATE(e.startdate) AS startdate, DATE(e.enddate) AS enddate, e.type, e.image 
 FROM `events` AS e
 EOD;
-//		if ($start != 0 && $end != 0)
-//			$sql .= " WHERE e.startdate >= DATE($start) AND e.enddate <= DATE($end)";
-//		else if ($start != 0)
-//			$sql .= " WHERE e.startdate >= DATE($start)";
-//		else if ($end != 0)
-//			$sql .= " WHERE e.enddate <= DATE($end)";// have to figure out, how this works ...
 		$sql .= " ORDER BY e.startdate ASC";
 		$events = Array();
 		foreach (DB::queryAssoc($sql) as $r)
