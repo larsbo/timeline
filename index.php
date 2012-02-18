@@ -48,5 +48,6 @@ echo $timeline->getColorClassesHTML();
     </div>
   </div>
 </div>
+<?php if ($_GET['debug']) Log::output(); // show debug messages only with ?debug=true ?>
 </body>
 </html>
