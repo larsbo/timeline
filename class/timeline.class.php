@@ -10,7 +10,7 @@ class Timeline {
 	private $end_year = null;
 	private $colorclasses;	//this is only cache
 
-	function __Construct($start, $end) {
+	function __Construct() {
 		foreach (Events::getEvents() as $event) {
 			$this->events[] = array('event' => $event, 'line' => 0);
 			if ($this->start_year === null || $event->getStartYear() < $this->start_year)
