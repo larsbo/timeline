@@ -424,6 +424,8 @@ table {
       background: #eee; }
     #mini-map div.pre {
       background: #0Cf; }
+    #mini-map div.hovered {
+      background: #0cc; }
 
 /***** iSCROLL *****/
 .scrollbarH {

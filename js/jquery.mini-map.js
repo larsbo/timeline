@@ -47,6 +47,7 @@ Licensed like jQuery - http://docs.jquery.com/License
 
 			var mapIcon = $('<div>');
 			mapIcon
+			.attr('id', 'minimap-'+event.data('event'))
 			.css({
 				'height': Math.round(event.height()/factor), 
 				'width': Math.round(event.width()/factor), 
