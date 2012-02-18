@@ -44,7 +44,7 @@ class Timeline {
 			while ($matrix[$year][$e['line']]) {
 				$e['line']++;
 			}
-			Log::debug("marking everything used on line: ".$e['line']." from year: ".$year." until ".$e['event']->getEndYear());
+	//		Log::debug("marking everything used on line: ".$e['line']." from year: ".$year." until ".$e['event']->getEndYear());
 			// found free row -> mark columns (=years) of this row in matrix
 			for ($j = $year; $j <= $e['event']->getEndYear(); $j++) {
 				$matrix[$j][$e['line']] = true;
