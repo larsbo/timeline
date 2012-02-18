@@ -15,6 +15,7 @@ class Event {
 	private $image;
 	
 	private $width = -1;	//cache for event representations width
+	private $offset = -1;	//cache for event representations offset
 
 	function __Construct($event_id, $title, $details, $startdate, $enddate, $colorclass, $type, $image) {
 		$this->event_id = $event_id;
@@ -62,10 +63,44 @@ class Event {
 	function getPixelWidth() {
 		if ($this->width == -1) {
 			$c = Config::getInstance();
-			$pixelWidthPerYear = $c->tl_column_width;
-			$this->width = max(1, $this->getEndYear() - $this->getStartYear() + 1) * $pixelWidthPerYear - $c->tl_event_padding_x;
+			$minwidth = $c->tl_column_width - $c->tl_event_padding_x; //minwidth is one year...
+
+			if ($this->getStartYear() == $this->getEndYear()) {
+				$this->width = $minwidth;	//we have minimal width
+				return $minwidth;
+			}
+			
+			$datetime1 = new DateTime($this->startdate);
+			$datetime2 = new DateTime($this->enddate);
+			$interval = $datetime1->diff($datetime2);
+			$daysdiff = max(1,intval($interval->format('%a')));
+			
+			$pixelsPerYear = $c->tl_column_width;
+			$pixelsPerDay = $pixelsPerYear / 365.0; //we have 365 days
+			
+			$pixelDays = round($pixelsPerDay * $daysdiff);
+			$this->width = max($minwidth, $pixelDays);
 		}
 		return $this->width;
+	}
+
+	function getPixelOffset() {
+		if ($this->offset == -1) {
+			$c = Config::getInstance();
+			if ($this->getStartYear() == $this->getEndYear() || substr($this->startdate, 5, 2) == '00')
+				return 0;	//if we have minimal width or no proper date => offset = 0
+
+			//how many months offset?
+			$months = intval(substr($this->startdate, 5, 2));
+			//how many days in this month?
+			$days = intval(substr($this->startdate, 8, 2));
+		
+			$pixelsPerYear = $c->tl_column_width;
+			$pixelsPerMonth = $pixelsPerYear / 12.0; //we have 12 months
+			$pixels = round($months * $pixelsPerMonth + $days * $pixelsPerMonth / 30.0);
+			$this->offset = $pixels;
+		}
+		return $this->offset;
 	}
 	
 	static function getTypes() {
@@ -79,13 +114,15 @@ class Event {
 		$length = $this->getPixelWidth();
 		$line = $line * $c->tl_event_padding_y;
 		$colorclass = $this->colorclass != "" ? " custom colorclass_".$this->colorclass : "";
+		$offset = $this->getPixelOffset();
 		$html = <<<EOD
 \t\t\t\t<div class="event-preview" style="zIndex: 0">
 \t\t\t\t\t<span 
 \t\t\t\t\t	class="event{$colorclass}" 
-\t\t\t\t\t	style="width:{$length}px;top:{$line}px;z-index:2;" 
+\t\t\t\t\t	style="width:{$length}px;top:{$line}px;left:{$offset}px;z-index:2;" 
 \t\t\t\t\t	data-event="{$this->event_id}" 
 \t\t\t\t\t	data-title="{$this->title}" 
+\t\t\t\t\t	data-offset="{$offset}" 
 \t\t\t\t\t	data-width="{$length}"
 \t\t\t\t\t>{$this->title}
 \t\t\t\t\t\t<span class="pin"></span>
