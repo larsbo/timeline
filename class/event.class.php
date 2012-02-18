@@ -70,10 +70,14 @@ class Event {
 				return $minwidth;
 			}
 			
-			$datetime1 = new DateTime($this->startdate);
+			/*$datetime1 = new DateTime($this->startdate);
 			$datetime2 = new DateTime($this->enddate);
 			$interval = $datetime1->diff($datetime2);
-			$daysdiff = max(1,intval($interval->format('%a')));
+			$daysdiff = max(1,intval($interval->format('%a')));*/ //it seems i dont have php 5.3 :(
+			
+			$diff = abs(strtotime($this->enddate) - strtotime($this->startdate));
+			$daysdiff = floor($diff/ (60*60*24));
+			Log::debug("#days: ".$daysdiff." for event ".$this->title." [".$this->event_id."]");
 			
 			$pixelsPerYear = $c->tl_column_width;
 			$pixelsPerDay = $pixelsPerYear / 365.0; //we have 365 days
