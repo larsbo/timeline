@@ -70,6 +70,13 @@ if (Admin::loggedIn()) {
 ?>
 	</div>
 </div>
-<?php if ($_GET['debug']) Log::output(); // show debug messages only with ?debug=true ?>
+<?php 
+  if ($_GET['debug']) {
+    // show debug messages only with ?debug=true
+    echo "<div id=\"debug\" style=\"display:hidden;\">";
+    Log::output();
+    echo "</div>";
+  }
+?>
 </body>
 </html>
