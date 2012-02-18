@@ -1,7 +1,15 @@
 jQuery(document).ready(function($){
 
 	/* messages */
-	$().message();
+	$('.message').each(function(){
+		var msg = $(this);
+		noty({
+			layout: 'topRight',
+			text: msg.html(),
+			timeout: false,
+			type: msg.data('type')
+		});
+	});
 
 	/* datepicker options */
 	$.datepicker.setDefaults($.datepicker.regional['de']); // make it german
@@ -20,6 +28,7 @@ jQuery(document).ready(function($){
 		$.getJSON('admin.inc.php?action=insert', function(data){
 			eventDetails.html(data.result);
 			eventDetails.find('.dateentry').datepicker();
+			eventDetails.find('textarea').cleditor({width:'100%'});
 		});
 	});
 
@@ -37,6 +46,7 @@ jQuery(document).ready(function($){
 		$.getJSON('admin.inc.php?action=edit&id=' + id, function(data){
 			eventDetails.html(data.result);
 			eventDetails.find('.dateentry').datepicker();
+			eventDetails.find('textarea').cleditor({width:'100%'});
 		});
 	});
 

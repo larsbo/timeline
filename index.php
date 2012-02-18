@@ -4,6 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>Timeline</title>
   <link rel="stylesheet" type="text/css" href="css/style.css" />
+  <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/themes/flick/jquery-ui.css" />	
 <!--[if gte IE 9]>
   <style type="text/css">
     .event, .button {
@@ -12,12 +13,11 @@
   </style>
 <![endif]-->
   <script type="text/javascript" src="js/iscroll.js"></script>
-  <link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/themes/flick/jquery-ui.css" rel="stylesheet" />	
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
   <script type="text/javascript" src="js/jquery.hovercard.js"></script>
-  <script type="text/javascript" src="js/jquery.message.js"></script>
   <script type="text/javascript" src="js/jquery.mini-map.js"></script>
+  <script type="text/javascript" src="js/jquery.noty.js"></script>
   <script type="text/javascript" src="js/run.js"></script>
 <?php
 include 'class/timeline.class.php';
