@@ -42,6 +42,8 @@ class Event {
 		return $this->type;
 	}
 	function getImage() {
+		if (!empty($this->image) && substr($this->image,0,4)=='http')
+			return $this->image;
 		if (!empty($this->image) && file_exists("data/".$this->image))
 			return "data/".$this->image;
 		else
