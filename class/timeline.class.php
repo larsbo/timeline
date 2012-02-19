@@ -32,8 +32,8 @@ class Timeline {
 		return $this->end_year;
 	}
 	
-	function getColorClassesHTML() {
-		return $this->colorclasses->toStyleDefinition();
+	function getColorClasses() {
+		return $this->colorclasses;
 	}
 
 	function alignEvents() {

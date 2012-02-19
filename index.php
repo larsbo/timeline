@@ -24,7 +24,7 @@ include 'class/timeline.class.php';
 $c = Config::getInstance();
 $timeline = new Timeline();
 $width = max(1,$timeline->getEndYear() - $timeline->getStartYear() + 1) * $c->tl_column_width;
-echo $timeline->getColorClassesHTML();
+echo $timeline->getColorClasses()->toStyleDefinition();
 ?>
 </head>
 <body>
@@ -46,6 +46,10 @@ echo $timeline->getColorClassesHTML();
 <?php echo "\t<div id=\"scroller\" style=\"width: ".$width."px\">\n" ?>
 <?php echo $timeline->getEventsOutput(); ?>
     </div>
+  </div>
+  <div id="colorclasses" class="bordered">
+  <p>Legende:</p>
+<?php echo $timeline->getColorClasses()->toLegendList(); ?>
   </div>
 </div>
 <?php if ($_GET['debug']) Log::output(); // show debug messages only with ?debug=true ?>

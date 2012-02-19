@@ -427,6 +427,26 @@ table {
     #mini-map div.hovered {
       background: #0cc; }
 
+/***** legende *****/
+#colorclasses {
+  position: fixed;
+  bottom: 0; }
+  #colorclasses p {
+    color: #333333;
+    display: inline-block;
+    font-weight: bold;
+    margin-right: 5px; }
+  #colorclasses ul {
+    display: inline-block; }
+    #colorclasses ul li {
+      display: inline-block;
+      padding: 5px;
+      margin: 5px;
+      border-radius: 2px;
+      -o-border-radius: 2px;
+      -moz-border-radius: 2px;
+      -webkit-border-radius: 2px; }
+
 /***** iSCROLL *****/
 .scrollbarH {
   bottom: 1px;
