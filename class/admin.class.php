@@ -59,13 +59,13 @@ class Admin {
 	}
 
 	static function saveEvent() {
-		$title = DB::escape($_GET['title']);
-		$start = DB::escape($_GET['start']);
-		$end = DB::escape($_GET['end']);
-		$details = DB::escape($_GET['details']);
-		$colorclass = DB::escape($_GET['colorclass']);
-		$type = DB::escape($_GET['type']);
-		$image = DB::escape($_GET['image']);
+		$title = DB::escape($_POST['title']);
+		$start = DB::escape($_POST['start']);
+		$end = DB::escape($_POST['end']);
+		$details = DB::escape($_POST['details']);
+		$colorclass = DB::escape($_POST['colorclass']);
+		$type = DB::escape($_POST['type']);
+		$image = DB::escape($_POST['image']);
 		$sql = <<<EOD
 INSERT INTO `events` (`title`, `startdate`, `enddate`, `details`, `colorclass`, `type`, `image`) 
 VALUES ('$title', '$start', '$end', '$details', '$colorclass', '$type', '$image');
@@ -82,13 +82,13 @@ EOD;
 	}
 
 	static function updateEvent($id) {
-		$title = DB::escape($_GET['title']);
-		$start = DB::escape($_GET['start']);
-		$end = DB::escape($_GET['end']);
-		$details = DB::escape($_GET['details']);
-		$colorclass = DB::escape($_GET['colorclass']);
-		$type = DB::escape($_GET['type']);
-		$image = DB::escape($_GET['image']);
+		$title = DB::escape($_POST['title']);
+		$start = DB::escape($_POST['start']);
+		$end = DB::escape($_POST['end']);
+		$details = DB::escape($_POST['details']);
+		$colorclass = DB::escape($_POST['colorclass']);
+		$type = DB::escape($_POST['type']);
+		$image = DB::escape($_POST['image']);
 		$result = DB::execute("UPDATE `events` 
 															SET `title` = '".$title."', 
 																	`startdate` = '".$start."',
