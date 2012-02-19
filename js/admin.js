@@ -39,31 +39,48 @@ jQuery(document).ready(function($){
 
 	// insert event
 	$('#new').click(function(){
-		$.getJSON('admin.inc.php?action=insert', function(data){
-			eventDetails.html(data.result);
-			if (data.debug) showDebugMsg(data.debug);
-			eventDetails.find('.dateentry').datepicker();
-			eventDetails.find('textarea').cleditor({width:'100%'});
+		$.ajax({
+			url: 'admin.inc.php',
+			data: { 'action': 'insert' },
+			dataType: 'json',
+			success: function(data){
+				eventDetails.html(data.result);
+				if (data.debug) showDebugMsg(data.debug);
+				eventDetails.find('.dateentry').datepicker();
+				eventDetails.find('textarea').cleditor({width:'100%'});
+			}
 		});
 	});
 
 	// show event
 	eventList.on('click', '.event:not(.new)', function(){
 		var id = $(this).parent().data('id');
-		$.getJSON('admin.inc.php?action=show&id=' + id, function(data){
-			eventDetails.html(data.result);
-			if (data.debug) showDebugMsg(data.debug);
+		$.ajax({
+			url: 'admin.inc.php',
+			data: { 'action': 'show',
+				'id': id },
+			dataType: 'json',
+			success: function(data){
+				eventDetails.html(data.result);
+				if (data.debug) showDebugMsg(data.debug);
+			}
 		});
 	});
 
 	// edit event
 	eventList.on('click', '.edit', function(){
 		var id = $(this).parent().data('id');
-		$.getJSON('admin.inc.php?action=edit&id=' + id, function(data){
-			eventDetails.html(data.result);
-			if (data.debug) showDebugMsg(data.debug);
-			eventDetails.find('.dateentry').datepicker();
-			eventDetails.find('textarea').cleditor({width:'100%'});
+		$.ajax({
+			url: 'admin.inc.php',
+			data: { 'action': 'edit',
+				'id': id },
+			dataType: 'json',
+			success: function(data){
+				eventDetails.html(data.result);
+				if (data.debug) showDebugMsg(data.debug);
+				eventDetails.find('.dateentry').datepicker();
+				eventDetails.find('textarea').cleditor({width:'100%'});
+			}
 		});
 	});
 
@@ -78,10 +95,16 @@ jQuery(document).ready(function($){
 			buttons: {
 				Confirm: function() {
 					//do deletion
-					$.getJSON('admin.inc.php?action=deleteconfirmation&id=' + id, function(data){
-						eventDetails.html(data.result);
-						if (data.debug) showDebugMsg(data.debug);
-						$('#eventList').find('[data-id="' + id + '"]').fadeOut('slow');
+					$.ajax({
+						url: 'admin.inc.php',
+						data: { 'action': 'delete',
+							'id': id },
+						dataType: 'json',
+						success: function(data){
+							eventDetails.html(data.result);
+							if (data.debug) showDebugMsg(data.debug);
+							$('#eventList').find('[data-id="' + id + '"]').fadeOut('slow');
+						}
 					});
 					$( this ).dialog( "close" );
 					$('#dialogConfirm').remove();
@@ -101,15 +124,25 @@ jQuery(document).ready(function($){
 	eventDetails.on('submit', 'form', function(e){
 		e.preventDefault();
 		var form = $(this);
-		var action = form.data('action');
 
-		$.getJSON('admin.inc.php?action=' + action + '&' + form.serialize(), function(data){
-			eventDetails.html(data.result);
-			if (data.debug) showDebugMsg(data.debug);
-			$.getJSON('admin.inc.php?action=refresh', function(data){
-				eventList.find('div:first').html(data.result);
+		$.ajax({
+			url: 'admin.inc.php',
+			data: $.merge(form, { 'action': form.data('action'),
+				'id': id }),
+			dataType: 'json',
+			success: function(data){
+				eventDetails.html(data.result);
 				if (data.debug) showDebugMsg(data.debug);
-			});
+				$.ajax({
+					url: 'admin.inc.php',
+					data: { 'action': 'refresh' },
+					dataType: 'json',
+					success: function(data){
+						eventList.find('div:first').html(data.result);
+						if (data.debug) showDebugMsg(data.debug);
+					}
+				});
+			}
 		});
 	});
 

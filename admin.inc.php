@@ -6,12 +6,12 @@ require_once 'class/admin.class.php';
 if (!Admin::loggedIn()) die('not logged in!');
 
 
-$action = DB::escape($_GET['action']);
+$action = DB::escape($_POST['action']);
 $log = array();
 
 switch ($action) {
 	case 'show':
-	$id = DB::escape($_GET['id']);
+	$id = DB::escape($_POST['id']);
 	$log['result'] = Admin::showEvent($id);
 	break;
 
@@ -24,17 +24,17 @@ switch ($action) {
 	break;
 
 	case 'edit':
-	$id = DB::escape($_GET['id']);
+	$id = DB::escape($_POST['id']);
 	$log['result'] = Admin::editEvent($id);
 	break;
 
 	case 'update':
-	$id = DB::escape($_GET['id']);
+	$id = DB::escape($_POST['id']);
 	$log['result'] = Admin::updateEvent($id);
 	break;
 
 	case 'deleteconfirmation':
-	$id = DB::escape($_GET['id']);
+	$id = DB::escape($_POST['id']);
 	$log['result'] = Admin::deleteEventConfirmation($id);
 	break;
 
@@ -43,7 +43,7 @@ switch ($action) {
 	break;
 
 	case 'databaseRefresh':
-	$insertdata = trim($_GET['insert']);
+	$insertdata = trim($_POST['insert']);
 	$log['result'] = Admin::checkAndUpdateTable($insertdata?true:false);
 	break;
 
