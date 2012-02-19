@@ -25,15 +25,15 @@ class ColorClasses {
 		$html = "<select name=\"colorclass\" id=\"colorclass\">";
 		foreach ($this->colorclasses as $colorclass)
 			if ($colorclass['color_id'] == $selectedElement)
-				$html .= "<option selected=\"selected\">".$colorclass['color_id']."</option>\n";
+				$html .= "<option value=\"".$colorclass['color_id']."\" selected=\"selected\">".$colorclass['description']."</option>\n";
 			else
-				$html .= "<option>".$colorclass['color_id']."</option>\n";
+				$html .= "<option value=\"".$colorclass['color_id']."\">".$colorclass['description']."</option>\n";
 		$html .= "</select>";
 		return $html;
 	}
 
 	static function getColorClasses($activeOnly = true) {
-		$sql = "SELECT DISTINCT c.color_id, c.css_code AS css FROM `colorclasses` AS c";
+		$sql = "SELECT DISTINCT c.color_id, c.css_code AS css, c.description FROM `colorclasses` AS c";
 		if ($activeOnly)
 			$sql .= " RIGHT JOIN events AS e ON e.colorclass = c.color_id;";
 		else
