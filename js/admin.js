@@ -10,6 +10,12 @@ showDebugMsg = function(msgs){
 		});
 	}
 }
+refreshList = function(){
+	$.post('admin.inc.php', { 'action': 'refresh' }, function(data){
+			$('#eventList').find('div:first').html(data.result);
+			if (data.debug) showDebugMsg(data.debug);
+		}, 'json');
+}
 
 jQuery(document).ready(function($){
 
@@ -39,49 +45,38 @@ jQuery(document).ready(function($){
 
 	// insert event
 	$('#new').click(function(){
-		$.ajax({
-			url: 'admin.inc.php',
-			data: { 'action': 'insert' },
-			dataType: 'json',
-			success: function(data){
+		$.post('admin.inc.php', { 'action': 'insert' }, function(data){
 				eventDetails.html(data.result);
 				if (data.debug) showDebugMsg(data.debug);
 				eventDetails.find('.dateentry').datepicker();
 				eventDetails.find('textarea').cleditor({width:'100%'});
-			}
-		});
+			}, 'json');
 	});
 
 	// show event
 	eventList.on('click', '.event:not(.new)', function(){
 		var id = $(this).parent().data('id');
-		$.ajax({
-			url: 'admin.inc.php',
-			data: { 'action': 'show',
-				'id': id },
-			dataType: 'json',
-			success: function(data){
+		$.post('admin.inc.php', { 
+				'action': 'show',
+				'id': id 
+			}, function(data){
 				eventDetails.html(data.result);
 				if (data.debug) showDebugMsg(data.debug);
-			}
-		});
+			}, 'json');
 	});
 
 	// edit event
 	eventList.on('click', '.edit', function(){
 		var id = $(this).parent().data('id');
-		$.ajax({
-			url: 'admin.inc.php',
-			data: { 'action': 'edit',
-				'id': id },
-			dataType: 'json',
-			success: function(data){
+		$.post('admin.inc.php', { 
+				'action': 'edit',
+				'id': id 
+			}, function(data){
 				eventDetails.html(data.result);
 				if (data.debug) showDebugMsg(data.debug);
 				eventDetails.find('.dateentry').datepicker();
 				eventDetails.find('textarea').cleditor({width:'100%'});
-			}
-		});
+			}, 'json');
 	});
 
 	// delete event
@@ -95,17 +90,14 @@ jQuery(document).ready(function($){
 			buttons: {
 				Confirm: function() {
 					//do deletion
-					$.ajax({
-						url: 'admin.inc.php',
-						data: { 'action': 'delete',
-							'id': id },
-						dataType: 'json',
-						success: function(data){
+					$.post('admin.inc.php', { 
+							'action': 'deleteconfirmation',
+							'id': id 
+						}, function(data){
 							eventDetails.html(data.result);
 							if (data.debug) showDebugMsg(data.debug);
 							$('#eventList').find('[data-id="' + id + '"]').fadeOut('slow');
-						}
-					});
+						}, 'json');
 					$( this ).dialog( "close" );
 					$('#dialogConfirm').remove();
 				},
@@ -127,35 +119,27 @@ jQuery(document).ready(function($){
 
 		$.ajax({
 			url: 'admin.inc.php',
-			data: $.merge(form, { 'action': form.data('action'),
-				'id': id }),
+			data: form.serialize()+"&action="+form.data('action'),
 			dataType: 'json',
+			type: 'POST',
 			success: function(data){
 				eventDetails.html(data.result);
 				if (data.debug) showDebugMsg(data.debug);
-				$.ajax({
-					url: 'admin.inc.php',
-					data: { 'action': 'refresh' },
-					dataType: 'json',
-					success: function(data){
-						eventList.find('div:first').html(data.result);
-						if (data.debug) showDebugMsg(data.debug);
-					}
-				});
+				refreshList();
 			}
 		});
 	});
 
 		// databaseupdate
 	$('#databaseUpdate').click(function() {
-		$.getJSON('admin.inc.php?action=databaseRefresh', function(data) {
+		$.post('admin.inc.php',{'action':'databaseRefresh'}, function(data) {
 			if (data.result)
 				eventDetails.html("Datenbank Update war erfolgreich.");
 			else {
 				eventDetails.html("Das Datenbank Update ist fehlgeschlagen!");
 			}
 			if (data.debug) showDebugMsg(data.debug);
-		});
+		},'json');
 	});
 	
 	//dropAllTables And restart with testdata
@@ -168,19 +152,16 @@ jQuery(document).ready(function($){
 			buttons: {
 				Confirm: function() {
 					//do deletion
-					$.getJSON('admin.inc.php?action=dropAndInsertTestData', function(data){
+					$.post('admin.inc.php', {'action':'dropAndInsertTestData'}, function(data){
 						if (data.result) {
 							eventDetails.html("Datenbank Reset war erfolgreich.");
 							if (data.debug) showDebugMsg(data.debug);
-							$.getJSON('admin.inc.php?action=refresh', function(data){
-								eventList.find('div:first').html(data.result);
-								if (data.debug) showDebugMsg(data.debug);
-							});
+							refreshList();
 						}
 						else {
 							eventDetails.html("Das Datenbank Reset ist fehlgeschlagen!");
 						}
-					});
+					},'json');
 					$( this ).dialog( "close" );
 					$('#dialogConfirm').remove();
 				},
