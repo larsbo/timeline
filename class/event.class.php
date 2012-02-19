@@ -11,19 +11,21 @@ class Event {
 	private $startdate;
 	private $enddate;
 	private $colorclass;
+	private $colordescription;
 	private $type;
 	private $image;
 	
 	private $width = -1;	//cache for event representations width
 	private $offset = -1;	//cache for event representations offset
 
-	function __Construct($event_id, $title, $details, $startdate, $enddate, $colorclass, $type, $image) {
+	function __Construct($event_id, $title, $details, $startdate, $enddate, $colorclass, $colordescription, $type, $image) {
 		$this->event_id = $event_id;
 		$this->title = $title;
 		$this->details = $details;
 		$this->startdate = $startdate;
 		$this->enddate = $enddate;
 		$this->colorclass = $colorclass;
+		$this->colordescription = $colordescription;
 		$this->type = $type;
 		$this->image = $image;
 	}
@@ -185,7 +187,7 @@ EOD;
 <p><b>Titel:</b> {$this->title}</p>
 <p><b>Start:</b> {$this->startdate}</p>
 <p><b>Ende:</b> {$this->enddate}</p>
-<p><b>Kategorie:</b> {$this->colorclass}</p>
+<p><b>Kategorie:</b> {$this->colordescription}</p>
 <p><b>Typ:</b> {$this->type}</p>
 <p><b>Bild:</b> {$this->image}</p>
 <p>{$this->details}</p>
@@ -246,14 +248,15 @@ EOD;
 	static function getEventFromId($id) {
 		$sql = <<<EOD
 SELECT 
-  e.event_id, e.title, e.details, e.colorclass, DATE(e.startdate) AS startdate, DATE(e.enddate) AS enddate, e.type, e.image 
+  e.event_id, e.title, e.details, e.colorclass, DATE(e.startdate) AS startdate, DATE(e.enddate) AS enddate, e.type, e.image, c.description AS colordescription 
 FROM `events` AS e 
+LEFT JOIN `colorclasses` AS c ON c.color_id = e.colorclass
 WHERE `event_id` = '$id' 
 LIMIT 1;
 EOD;
 		$r = DB::queryAssocAtom($sql);
 		return new Event($r['event_id'], $r['title'], $r['details'], 
-				$r['startdate'], $r['enddate'], $r['colorclass'], $r['type'], $r['image']);
+				$r['startdate'], $r['enddate'], $r['colorclass'], $r['colordescription'], $r['type'], $r['image']);
 	}
 
 }
@@ -262,14 +265,15 @@ class Events {
 	static function getEvents() {
 		$sql = <<<EOD
 SELECT 
-  e.event_id, e.title, e.details, e.colorclass, DATE(e.startdate) AS startdate, DATE(e.enddate) AS enddate, e.type, e.image 
+  e.event_id, e.title, e.details, e.colorclass, DATE(e.startdate) AS startdate, DATE(e.enddate) AS enddate, e.type, e.image, c.description AS colordescription 
 FROM `events` AS e
+LEFT JOIN `colorclasses` AS c ON c.color_id = e.colorclass
 EOD;
 		$sql .= " ORDER BY e.startdate ASC";
 		$events = Array();
 		foreach (DB::queryAssoc($sql) as $r)
 			$events[] = new Event($r['event_id'], $r['title'], $r['details'], 
-					$r['startdate'], $r['enddate'], $r['colorclass'], $r['type'], $r['image']);
+					$r['startdate'], $r['enddate'], $r['colorclass'], $r['colordescription'], $r['type'], $r['image']);
 		return $events;
 	}
 }
