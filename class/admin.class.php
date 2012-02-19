@@ -122,7 +122,7 @@ EOD;
 	}
 
 	static function checkAndUpdateTableColorClasses($insertData) {
-		$tablediff = DB::checkForTable('colorclasses', array('color_id', 'css_code'));
+		$tablediff = DB::checkForTable('colorclasses', array('color_id', 'css_code', 'description'));
 
 		//the table is in some wrong state .... need to update or create
 		if ($tablediff === null) {
@@ -132,6 +132,7 @@ EOD;
 CREATE TABLE IF NOT EXISTS `colorclasses` (
   `color_id` VARCHAR(14) NOT NULL,
   `css_code` TEXT NOT NULL,
+  `description` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`color_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 EOD;
@@ -150,6 +151,8 @@ EOD;
 			$sql = "";
 			if (in_array('css_code', $tablediff))
 				$sql .= "ALTER TABLE `colorclasses` ADD `css_code` TEXT NOT NULL;";
+			if (in_array('description', $tablediff))
+				$sql .= "ALTER TABLE `colorclasses` ADD `description` VARCHAR(100) NOT NULL;";
 
 			return DB::execute($sql);
 		}
@@ -262,35 +265,35 @@ EOD;
 		switch ($table) {
 			case 'colorclasses':
 			$sql = <<<EOD
-INSERT INTO `colorclasses` (`color_id`, `css_code`) VALUES
+INSERT INTO `colorclasses` (`color_id`, `css_code`, `description`) VALUES
 ('Politik', 'background-image: linear-gradient(top, #ee0000, #aa0000);
   background-image: -o-linear-gradient(top, #ee0000, #aa0000);
   background-image: -ms-linear-gradient(top, #ee0000, #aa0000);
   background-image: -moz-linear-gradient(top, #ee0000, #aa0000);
   background-image: -webkit-linear-gradient(top, #ee0000, #aa0000);
   color: #fff;
-  text-shadow: 0 1px 0 #000;'),
+  text-shadow: 0 1px 0 #000;','Politik'),
 ('Gesellschaft', 'background-image: linear-gradient(top, #eeee00, #aaaa00);
   background-image: -o-linear-gradient(top, #eeee00, #aaaa00);
   background-image: -ms-linear-gradient(top, #eeee00, #aaaa00);
   background-image: -moz-linear-gradient(top, #eeee00, #aaaa00);
   background-image: -webkit-linear-gradient(top, #eeee00, #aaaa00);
   color: #fff;
-  text-shadow: 0 1px 0 #000;'),
+  text-shadow: 0 1px 0 #000;','Gesellschaft'),
 ('Wissenschaft', 'background-image: linear-gradient(top, #00ee00, #00aa00);
   background-image: -o-linear-gradient(top, #00ee00, #00aa00);
   background-image: -ms-linear-gradient(top, #00ee00, #00aa00);
   background-image: -moz-linear-gradient(top, #00ee00, #00aa00);
   background-image: -webkit-linear-gradient(top, #00ee00, #00aa00);
   color: #fff;
-  text-shadow: 0 1px 0 #000;'),
+  text-shadow: 0 1px 0 #000;','Wissenschaft'),
 ('Religion', 'background-image: linear-gradient(top, #0066ee, #0033aa);
   background-image: -o-linear-gradient(top, #0066ee, #0033aa);
   background-image: -ms-linear-gradient(top, #0066ee, #0033aa);
   background-image: -moz-linear-gradient(top, #0066ee, #0033aa);
   background-image: -webkit-linear-gradient(top, #0066ee, #0033aa);
   color: #fff;
-  text-shadow: 0 1px 0 #000;');
+  text-shadow: 0 1px 0 #000;','Religion');
 EOD;
 			break;
 
