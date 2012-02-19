@@ -49,6 +49,7 @@ if (Admin::loggedIn()) {
 		<ul class="bordered">
 			<li id="databaseUpdate" class="button">Datenbank Update</a></li>
 			<li id="databaseRestart" class="button">Datenbanken neu anlegen und Testdaten einfügen</a></li>
+			<li id="refreshbutton" class="button">Ansicht aktualisieren</a></li>
 		</ul>
 <?php
 } else {

@@ -617,6 +617,9 @@ ul.noty_container {
     float: left; }
   .adminContent .config {
     float: right; }
+    .adminContent .config ul li {
+      display: block;
+      margin: 5px 0; }
   .adminContent .bordered {
     float: left;
     margin-right: 20px;

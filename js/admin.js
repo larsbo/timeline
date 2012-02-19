@@ -174,4 +174,7 @@ jQuery(document).ready(function($){
 		});
 	});
 
+		// refreshbutton
+	$('#refreshbutton').click(refreshList);
+
 });
