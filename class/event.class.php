@@ -145,7 +145,7 @@ SET `title` = '{$this->title}',
 	`colorclass` = '{$this->colorclass}', 
 	`type` = '{$this->type}', 
 	`image` = '{$this->image}' 
-WHERE `event_id` = '{$this->event_id}';");
+WHERE `event_id` = '{$this->event_id}';
 EOD;
 		}
 
