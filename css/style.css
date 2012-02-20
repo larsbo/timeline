@@ -263,6 +263,12 @@ table {
       font-size: 11px;
       font-style: italic;
       text-align: center; }
+    .event-preview .event-details a.back {
+      background: url("../images/left.png") no-repeat;
+      cursor: pointer;
+      float: right;
+      height: 32px;
+      width: 32px; }
   .event-preview.ui-state-disabled, .event-preview.ui-widget-content .event-preview.ui-state-disabled, .event-preview.ui-widget-header .event-preview.ui-state-disabled {
     opacity: 1 !important; }
 
