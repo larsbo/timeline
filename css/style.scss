@@ -443,6 +443,7 @@ $wrapperheight: 300px;
 				padding: 5px;
 				margin: 5px;
 				@include rounded-corners(4px);
+				cursor: pointer;
 				
 				&.selected{
 					font-weight: bold;
