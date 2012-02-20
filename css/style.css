@@ -69,7 +69,7 @@ table {
 /***** TIMELINE *****/
 #wrapper {
   bottom: 0;
-  height: 315px;
+  height: 100%;
   left: 0;
   overflow: auto;
   position: absolute;
@@ -106,7 +106,7 @@ table {
     left: 7px;
     right: 7px;
     position: absolute;
-    z-index: 100; }
+    z-index: -1; }
     #wrapper .scrollbarH > div {
       border: 1px solid #06a;
       height: 100%;
