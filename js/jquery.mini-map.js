@@ -77,7 +77,7 @@ Licensed like jQuery - http://docs.jquery.com/License
 			var mousePosition = e.pageX;
 			var offset =  $(this).offset();
 			var viewCenter = Math.round(view.width()/2);
-			var newPosition = Math.round((mousePosition - viewCenter - offset.left) * -8);
+			var newPosition = Math.round((mousePosition - viewCenter - offset.left) * -factor);
 
 			view.css('cursor', 'pointer');
 			timeline.scrollTo(newPosition, 0, 200);
