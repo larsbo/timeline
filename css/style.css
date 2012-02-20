@@ -658,11 +658,12 @@ ul.noty_container {
   .adminContent .dateentry {
     width: 70px; }
   .adminContent .eventContainer {
-    display: block; }
-  .adminContent .event {
-    margin: 0;
-    position: relative;
-    width: 400px; }
+    display: block;
+    width: 460px; }
+    .adminContent .eventContainer .event {
+      margin: 0;
+      position: relative;
+      width: 400px; }
   .adminContent #eventDetails {
     width: 440px; }
   .adminContent .button.edit {

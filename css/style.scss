@@ -646,11 +646,14 @@ ul.noty_container {
 		padding:5px;
 	}
 	.dateentry { width: 70px; }
-	.eventContainer { display:block; }
-	.event {
-		margin:0;
-		position:relative;
-		width:400px;
+	.eventContainer { 
+		display:block;
+		width: 460px;
+		.event {
+			margin:0;
+			position:relative;
+			width:400px;
+		}
 	}
 	#eventDetails { width:440px; }
 	.button {
