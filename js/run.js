@@ -6,7 +6,6 @@ jQuery(document).ready(function($){
 	var wrapper = $('#wrapper');
 	var full_width = $(window).width();
 	var full_height = $(window).height();
-	console.log(full_height - parseInt(wrapper.css('top')) - 50);
 	timeline.css('height', full_height - parseInt(wrapper.css('top')) - 70 + 'px');
 };
 
