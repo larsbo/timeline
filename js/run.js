@@ -1,5 +1,14 @@
 jQuery(document).ready(function($){
 
+	/* set wrapper height to current browser viewport */
+	setWrapperHeight = function() {
+		var wrapper = $('#wrapper');
+		var full_width = $(window).width();
+		var full_height = $(window).height();
+		console.log(full_height.toString() - parseInt(wrapper.css('top')));
+		wrapper.css('height', full_height.toString() - parseInt(wrapper.css('top')));
+	};
+
 	/* iScroll */
 	var timeline = new iScroll('wrapper',{
 		bounce: false,
@@ -13,6 +22,12 @@ jQuery(document).ready(function($){
 
 	/* show mini map of the timeline */
 	$('#timeline').minimap(timeline);
+
+	// update timeline height
+	setWrapperHeight();
+	$(window).resize(function() {
+		setWrapperHeight();
+ });
 
 	var events = $('.event');
 

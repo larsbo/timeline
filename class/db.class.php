@@ -95,6 +95,9 @@ class DB
 	static function escape($string) {
 		$db = DB::getInstance();
 
+		if (get_magic_quotes_gpc()) { // magic quotes aktiviert?
+			$string = stripslashes($string);
+		}
 		return mysql_real_escape_string($string, $db->db_connect_id);
 	}
 
