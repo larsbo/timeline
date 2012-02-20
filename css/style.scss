@@ -429,19 +429,22 @@ table {
 	margin: 380px 10px 10px;
 	padding: 5px;
 	z-index: 2;
-	p {
-		color: #333333;
-		display: inline-block;
-		font-weight: bold;
-		margin-right: 5px;
-	}
-	ul {
-		display: inline-block;
-		li {
-			display:inline-block;
-			padding: 5px;
-			margin: 5px;
-			@include rounded-corners(2px);
+	div {
+		text-align: center;
+		p {
+			color: #333333;
+			display: inline-block;
+			font-weight: bold;
+			margin-right: 5px;
+		}
+		ul {
+			display: inline-block;
+			li {
+				display:inline-block;
+				padding: 5px;
+				margin: 5px;
+				@include rounded-corners(2px);
+			}
 		}
 	}
 }

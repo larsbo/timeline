@@ -48,8 +48,10 @@ echo $timeline->getColorClasses()->toStyleDefinition();
     <a href="#" class="button" data-type="hidden" title="Ereignisse ausblenden">gefiltert</a>
   </div>
   <div id="colorclasses" class="bordered">
-    <p>Legende:</p>
+    <div>
+      <p>Legende:</p>
 <?php echo $timeline->getColorClasses()->toLegendList(); ?>
+    </div>
   </div>
 </div>
 <?php if ($_GET['debug']) Log::output(); // show debug messages only with ?debug=true ?>
