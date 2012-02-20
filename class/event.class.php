@@ -115,6 +115,48 @@ class Event {
 		return array('text', 'quote', 'image');
 	}
 	
+	private function escape() {
+		$this->title = DB::escape($this->title);
+		$this->details = DB::escape($this->details);
+		$this->startdate = DB::escape($this->startdate);
+		$this->enddate = DB::escape($this->enddate);
+		$this->colorclass = DB::escape($this->colorclass);
+		$this->type = DB::escape($this->type);
+		$this->image = DB::escape($this->image);
+	}
+	
+	function save() {
+		$this->escape();
+		
+		//if we have no id, insert, otherwise do update...
+		if ($this->event_id == null || $this->event_id == -1) {
+			$sql = <<<EOD
+INSERT INTO `events` (`title`, `startdate`, `enddate`, `details`, `colorclass`, `type`, `image`) 
+VALUES ('{$this->title}', '{$this->startdate}', '{$this->enddate}', '{$this->details}', '{$this->colorclass}', '{$this->type}', '{$this->image}');
+EOD;
+		}
+		else {
+			$sql = <<<EOD
+UPDATE `events` 
+SET `title` = '{$this->title}', 
+	`startdate` = '{$this->startdate}',
+	`enddate` = '{$this->enddate}',
+	`details` = '{$this->details}', 
+	`colorclass` = '{$this->colorclass}', 
+	`type` = '{$this->type}', 
+	`image` = '{$this->image}' 
+WHERE `event_id` = '{$this->event_id}';");
+EOD;
+		}
+
+		return DB::execute($sql);
+
+	}
+	
+	function delete() {
+		return DB::execute("DELETE FROM `events` WHERE `event_id` = '".$this->event_id."' LIMIT 1;");
+	}
+	
 	/** representations **/
 	function toTimelineRepresentation($line) {
 		$c = Config::getInstance();

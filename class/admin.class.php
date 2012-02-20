@@ -58,19 +58,10 @@ class Admin {
 		return Event::getForm();
 	}
 
-	static function saveEvent() {
-		$title = DB::escape($_POST['title']);
-		$start = DB::escape($_POST['start']);
-		$end = DB::escape($_POST['end']);
-		$details = DB::escape($_POST['details']);
-		$colorclass = DB::escape($_POST['colorclass']);
-		$type = DB::escape($_POST['type']);
-		$image = DB::escape($_POST['image']);
-		$sql = <<<EOD
-INSERT INTO `events` (`title`, `startdate`, `enddate`, `details`, `colorclass`, `type`, `image`) 
-VALUES ('$title', '$start', '$end', '$details', '$colorclass', '$type', '$image');
-EOD;
-		if (DB::execute($sql))
+	static function saveEvent($data) {
+		//-1 indicates, that there is no id yet ... so it will get inserted, when calling save
+		$e = new Event(-1, $data['title'], $data['details'], $data['start'], $data['end'], $data['colorclass'], "", $data['type'], $data['image']);
+		if ($e->save())
 			return "Ereignis erfolgreich eingetragen!";
 		else
 			return "Ereignis konnte nicht gespeichert werden!";
@@ -81,32 +72,17 @@ EOD;
 		return Event::getForm($event);
 	}
 
-	static function updateEvent($id) {
-		$title = DB::escape($_POST['title']);
-		$start = DB::escape($_POST['start']);
-		$end = DB::escape($_POST['end']);
-		$details = DB::escape($_POST['details']);
-		$colorclass = DB::escape($_POST['colorclass']);
-		$type = DB::escape($_POST['type']);
-		$image = DB::escape($_POST['image']);
-		$result = DB::execute("UPDATE `events` 
-															SET `title` = '".$title."', 
-																	`startdate` = '".$start."',
-																	`enddate` = '".$end."',
-																	`details` = '".$details."', 
-																	`colorclass` = '".$colorclass."', 
-																	`type` = '".$type."', 
-																	`image` = '".$image."' 
-														WHERE `event_id` = '".$id."';");
-		if ($result)
+	static function updateEvent($id, $data) {
+		$e = new Event($id, $data['title'], $data['details'], $data['start'], $data['end'], $data['colorclass'], "", $data['type'], $data['image']);
+		if ($e->save())
 			return "Ereignis ".$id." erfolgreich bearbeitet!";
 		else
 			return "Ereignis ".$id." konnte nicht bearbeitet werden!";
 	}
 
 	static function deleteEventConfirmation($id) {
-		$result = DB::execute("DELETE FROM `events` WHERE `event_id` = '".$id."' LIMIT 1;");
-		if ($result)
+		$e = Event::getEventFromId($id);
+		if ($e && $e->delete())
 			return "Ereignis ".$id." erfolgreich gel&ouml;scht!";
 		else
 			return "Ereignis ".$id." konnte nicht gel&ouml;scht werden!";
