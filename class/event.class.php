@@ -165,62 +165,58 @@ EOD;
 		$line = $line * $c->tl_event_padding_y;
 		$colorclass = $this->colorclass != "" ? " custom colorclass_".$this->colorclass : "";
 		$offset = $this->getPixelOffset();
-		$html = <<<EOD
-\t\t\t\t<div class="event-preview" style="zIndex: 0">
-\t\t\t\t\t<span 
-\t\t\t\t\t	class="event{$colorclass}" 
-\t\t\t\t\t	style="width:{$length}px;top:{$line}px;left:{$offset}px;z-index:2;" 
-\t\t\t\t\t	data-event="{$this->event_id}" 
-\t\t\t\t\t	data-title="{$this->title}" 
-\t\t\t\t\t	data-offset="{$offset}" 
-\t\t\t\t\t	data-width="{$length}"
-\t\t\t\t\t>{$this->title}
-\t\t\t\t\t\t<span class="pin"></span>
-\t\t\t\t\t</span>
-EOD;
 		switch ($this->type) {
-			case 'text':
-			$html .= $this->getTextRepresentation();
+		case 'quote':
+			$text = $this->getQuoteRepresentation();
 			break;
-			
-			case 'quote':
-			$html .= $this->getQuoteRepresentation();
+		case 'image':
+			$text = $this->getImageRepresentation();
 			break;
-			
-			case 'image':
-			$html .= $this->getImageRepresentation();
-			break;
-			
+		case 'text':
 			default:
-			$html .= $this->getTextRepresentation();
+			$text = $this->getTextRepresentation();
 			break;
 		}
-		$html .= "\t\t\t\t</div>";
+		$html = <<<EOD
+<div class="event-preview" style="zIndex: 0">
+	<span 
+		class="event{$colorclass}" 
+		style="width:{$length}px;top:{$line}px;left:{$offset}px;z-index:2;" 
+		data-event="{$this->event_id}" 
+		data-title="{$this->title}" 
+		data-offset="{$offset}" 
+		data-width="{$length}"
+	>{$this->title}
+		<span class="pin"></span>
+	</span>
+	{$text}
+</div>
+EOD;
 		return $html;
 	}
 
 	private function getTextRepresentation() {
 		$image = $this->getImage() ? "<span class=\"img\">".$this->getImage()."</span>" : "";
 		return <<<EOD
-\t\t\t\t\t<div class="event-details" style="zIndex: 1">{$image}{$this->details}</div>
+<div class="event-details" style="zIndex: 1">{$image}{$this->details}</div>
 EOD;
 	}
 
 	private function getQuoteRepresentation() {
 		return <<<EOD
-\t\t\t\t\t<div class="event-details" style="zIndex: 1">
-\t\t\t\t\t\t<blockquote>{$this->details}</blockquote>
-\t\t\t\t\t</div>
+<div class="event-details" style="zIndex: 1">
+<blockquote>{$this->details}</blockquote>
+</div>
 EOD;
 	}
 
 	private function getImageRepresentation() {
 		$image = $this->getImage() ? "<img src=\"".$this->getImage()."\" alt=\"".$this->details."\" />" : "";
 		return <<<EOD
-\t\t\t\t\t<div class="event-details" style="zIndex: 1">
-\t\t\t\t\t\t<div class="big-img">{$image}</div>
-\t\t\t\t\t\t<div class="img-text">{$this->details}</div>
-\t\t\t\t\t</div>
+<div class="event-details" style="zIndex: 1">
+	<div class="big-img">{$image}</div>
+	<div class="img-text">{$this->details}</div>
+</div>
 EOD;
 	}
 
