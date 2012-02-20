@@ -44,17 +44,17 @@ echo $timeline->getColorClasses()->toStyleDefinition();
     </div>
   </div>
   <div id="options">
-    <div id="options-container">
+    <div id="colorclasses">
       <p>Ereignisse anzeigen:</p>
+<?php echo $timeline->getColorClasses()->toLegendList(); ?>
+    </div>
+    <div id="options-container">
+      <p>Optionen:</p>
       <ul>
         <li class="button selected" data-type="long" title="lange Ereignisse anzeigen">lang</li>
         <li class="button" data-type="short" title="kurze Ereignisse anzeigen">kurz</li>
         <li class="button" data-type="hidden" title="Ereignisse ausblenden">gefiltert</li>
       </ul>
-    </div>
-    <div id="colorclasses">
-      <p>Legende:</p>
-<?php echo $timeline->getColorClasses()->toLegendList(); ?>
     </div>
   </div>
 </div>

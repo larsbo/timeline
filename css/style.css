@@ -203,8 +203,6 @@ table {
     -o-border-radius: 0.15em 0 0 0.15em;
     -moz-border-radius: 0.15em 0 0 0.15em;
     -webkit-border-radius: 0.15em 0 0 0.15em; }
-  .sticky .event {
-    cursor: move; }
 
 .clone {
   cursor: inherit; }
@@ -451,7 +449,7 @@ table {
   left: 0;
   width: 100%;
   text-align: center;
-  padding: 5px 0 0 0;
+  padding: 5px 0;
   z-index: 2; }
   #options div {
     display: inline-block;
@@ -464,7 +462,8 @@ table {
     -o-box-shadow: 0 1px 1px #cccccc;
     -moz-box-shadow: 0 1px 1px #cccccc;
     -webkit-box-shadow: 0 1px 1px #cccccc;
-    padding: 5px; }
+    margin: 0 2px;
+    padding: 0 5px; }
     #options div p {
       color: #333;
       display: inline-block;
@@ -473,16 +472,18 @@ table {
     #options div ul {
       display: inline-block; }
       #options div ul li {
+        cursor: pointer;
         display: inline-block;
+        opacity: 0.5;
         padding: 5px;
         margin: 5px;
         border-radius: 4px;
         -o-border-radius: 4px;
         -moz-border-radius: 4px;
-        -webkit-border-radius: 4px;
-        cursor: pointer; }
+        -webkit-border-radius: 4px; }
         #options div ul li.selected {
-          font-weight: bold; }
+          font-weight: bold;
+          opacity: 1; }
         #options div ul li:not(.selected) {
           font-weight: normal; }
 

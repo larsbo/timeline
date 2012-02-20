@@ -222,9 +222,6 @@ $wrapperheight: 300px;
 		@include shadows(1px 0 0 rgba(0,0,0,.5));
 		@include rounded-corners(.15em 0 0 .15em);
 	}
-	.sticky & {
-		cursor:move;
-	}
 }
 .clone {
 	cursor:inherit;
@@ -428,14 +425,15 @@ $wrapperheight: 300px;
 	left:0;
 	width:100%;
 	text-align: center;
-	padding: 5px 0 0 0;
+	padding: 5px 0;
 	z-index: 2;
 	div {
 		display: inline-block;
 		border:solid #ccc 1px;
 		@include rounded-corners(6px);
 		@include shadows(0 1px 1px #ccc);
-		padding: 5px;
+		margin: 0 2px;
+		padding: 0 5px;
 		p {
 			color:#333;
 			display:inline-block;
@@ -445,16 +443,18 @@ $wrapperheight: 300px;
 		ul {
 			display: inline-block;
 			li {
-				display:inline-block;
+				cursor: pointer;
+				display: inline-block;
+				opacity: 0.5;
 				padding: 5px;
 				margin: 5px;
 				@include rounded-corners(4px);
-				cursor: pointer;
 				
-				&.selected{
+				&.selected {
 					font-weight: bold;
+					opacity: 1;
 				}
-				&:not(.selected){
+				&:not(.selected) {
 					font-weight: normal;
 				}
 			}
