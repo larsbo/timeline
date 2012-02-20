@@ -1,18 +1,22 @@
 var timeline = null;
-var stack = new Array();
 jumpToEvent = function(currentEventId, eventId) {
-	if (currentEventId)
-		stack.push(currentEventId);
 	timeline.scrollToElement('#event'+eventId, 300);
 	var el = $('#event'+eventId);
 	if(el.length) {
 		el.parent().addClass('sticky');
+		//show back button
+		var a = $("<a class=\"back\">Zurück</a>");
+		a.click(function(e){
+			e.preventDefault();
+			jumpBack(currentEventId);
+			a.remove();
+		});
+		el.next().append(a);
 		el.next().stop(true, true).fadeIn();
 	}
 }
-jumpBack = function() {
-	if (stack.length)
-		timeline.scrollToElement('#event'+stack.pop(), 300);
+jumpBack = function(el) {
+	timeline.scrollToElement('#event'+el, 300);
 }
 
 jQuery(document).ready(function($){
