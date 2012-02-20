@@ -22,6 +22,10 @@ class Event {
 		$this->event_id = $event_id;
 		$this->title = $title;
 		$this->details = $details;
+		if (strlen($startdate) <= 4)
+			$startdate .= "-00-00";
+		if (strlen($enddate) <= 4)
+			$enddate .= "-00-00";
 		$this->startdate = $startdate;
 		$this->enddate = $enddate;
 		$this->colorclass = $colorclass;
