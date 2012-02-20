@@ -215,7 +215,7 @@ EOD;
 	}
 
 	private function getImageRepresentation() {
-		$image = $this->getImage() ? "<img src=\"".$this->getImage()."\" alt=\"".$this->details."\" />" : "";
+		$image = $this->getImage() ? "<img src=\"".$this->getImage()."\" alt=\"".$this->title."\" />" : "";
 		return <<<EOD
 <div class="event-details" style="zIndex: 1">
 	<div class="big-img">{$image}</div>
