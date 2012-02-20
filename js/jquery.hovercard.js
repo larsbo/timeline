@@ -84,32 +84,35 @@ var zIndices = [];
 		event.parent().hover(function(){
 			var $this = $(this);
 
-			if (!$this.hasClass('sticky')) {
-				//create new max of zIndices, so element will hover on top...
-				zIndices.push(zIndices.last()+1);
-				$this.css("zIndex", zIndices.last().toString());
-
-				if (shortModus()) {
-					// show title on hover
-					event
-						.width(event.attr('data-width'))
-						.html(event.data('title') + '<span class="pin"></span>');
+			if ($this.find('.event-details').html() != '') {
+				// show details only when not empty
+	
+				if (!$this.hasClass('sticky')) {
+					//create new max of zIndices, so element will hover on top...
+					zIndices.push(zIndices.last()+1);
+					$this.css("zIndex", zIndices.last().toString());
+	
+					if (shortModus()) {
+						// show title on hover
+						event
+							.width(event.attr('data-width'))
+							.html(event.data('title') + '<span class="pin"></span>');
+					}
+					event.next().stop(true, true).delay(options.delay).fadeIn();
 				}
-				event.next().stop(true, true).delay(options.delay).fadeIn();
+				else {
+					//remove self from list, find max and set to max+1
+					zIndices.rmElem(parseInt($this.css("zIndex")));
+					zIndices.push(zIndices.last()+1);
+					$this.css("zIndex", zIndices.last().toString());
+				}
+	
+				//Default functionality on hoverin, and also allows callback
+				if (typeof options.onHoverIn == 'function') {
+					//Callback function
+					options.onHoverIn.call(this);
+				}
 			}
-			else {
-				//remove self from list, find max and set to max+1
-				zIndices.rmElem(parseInt($this.css("zIndex")));
-				zIndices.push(zIndices.last()+1);
-				$this.css("zIndex", zIndices.last().toString());
-			}
-
-			//Default functionality on hoverin, and also allows callback
-			if (typeof options.onHoverIn == 'function') {
-				//Callback function
-				options.onHoverIn.call(this);
-			}
-
 		},
 		// hode event details on hover out
 		function(){

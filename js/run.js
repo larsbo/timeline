@@ -21,6 +21,15 @@ jQuery(document).ready(function($){
 		}
 	});
 
+/* set wrapper height to current browser viewport */
+	setWrapperHeight = function() {
+	var timeline = $('#timeline');
+	var wrapper = $('#wrapper');
+	var full_width = $(window).width();
+	var full_height = $(window).height();
+	timeline.css('height', full_height - parseInt(wrapper.css('top')) - 70 + 'px');
+};
+
 	/* iScroll */
 	timeline = new iScroll('wrapper',{
 		bounce: false,
@@ -31,6 +40,12 @@ jQuery(document).ready(function($){
 
 	/* show mini map of the timeline */
 	$('#timeline').minimap(timeline, $(window).width()-10);
+
+// update timeline height
+	setWrapperHeight();
+	$(window).resize(function() {
+		setWrapperHeight();
+	});
 
 	var events = $('.event');
 
