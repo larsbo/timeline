@@ -202,7 +202,8 @@ EOD;
 	}
 
 	private function getTextRepresentation() {
-		$image = $this->getImage() ? "<span class=\"img\">".$this->getImage()."</span>" : "";
+		$image = $this->resizeImage($this->getImage(), 150, $this->title, 'class="img"');
+
 		return <<<EOD
 <div class="event-details" style="zIndex: 1">{$image}{$this->details}</div>
 EOD;
@@ -217,7 +218,7 @@ EOD;
 	}
 
 	private function getImageRepresentation() {
-		$image = $this->getImage() ? "<img src=\"".$this->getImage()."\" alt=\"".$this->title."\" />" : "";
+		$image = $this->resizeImage($this->getImage(), 150, 'alt="'.$this->title.'" title="'.$this->title.'"');
 		if ($this->details) {
 			return <<<EOD
 <div class="event-details" style="zIndex: 1">
@@ -229,6 +230,21 @@ EOD;
 			return <<<EOD
 <div class="event-details" style="zIndex: 1"></div>
 EOD;
+		}
+	}
+
+	private function resizeImage($image, $max, $title, $extra = "") {
+		if ($image && file_exists($image)) {
+			list($width, $height) = getimagesize($image);
+			if ($width > 2*$max) {
+				return "<a title=\"".$title."\" href=\"".$image."\"><img src=\"".$image."\" width=\"".$max."\" ".$extra."/></a>";
+			} elseif ($height > $max) {
+				return "<a title=\"".$title."\" href=\"".$image."\"><img src=\"".$image."\" height=\"".$max."\" ".$extra."/></a>";
+			} else {
+				return "<a title=\"".$title."\" href=\"".$image."\"><img src=\"".$timage."\" ".$extra."/></a>";
+			}
+		} else {
+			return;
 		}
 	}
 

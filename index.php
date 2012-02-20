@@ -15,6 +15,8 @@
   <script type="text/javascript" src="js/iscroll.js"></script>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="js/jquery.easing.js"></script>
+  <script type="text/javascript" src="js/jquery.fancybox-1.3.4.pack.js"></script>
   <script type="text/javascript" src="js/jquery.hovercard.js"></script>
   <script type="text/javascript" src="js/jquery.mini-map.js"></script>
   <script type="text/javascript" src="js/jquery.noty.js"></script>

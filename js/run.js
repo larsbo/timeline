@@ -23,10 +23,12 @@ jQuery(document).ready(function($){
 	//make internal links
 	$('.event-details').find('a').each(function() {
 		var a = $(this);
-		if (a.attr('href').substr(0,1) == '#') {
-			var nid = a.attr('href').substr(1,a.attr('href').length-1);
-			var oid = a.parents('.event-preview').first().children().first().data('event');
-			a.click(function(e){ e.preventDefault(); jumpToEvent(oid, nid); });
+		if (a.attr('href')) {
+			if (a.attr('href').substr(0,1) == '#') {
+				var nid = a.attr('href').substr(1,a.attr('href').length-1);
+				var oid = a.parents('.event-preview').first().children().first().data('event');
+				a.click(function(e){ e.preventDefault(); jumpToEvent(oid, nid); });
+			}
 		}
 	});
 
@@ -61,6 +63,9 @@ jQuery(document).ready(function($){
 	/* show event details */
 	events.each(function(){
 		var event = $(this);
+
+		// show large image
+		event.siblings().first().find('img').parent().fancybox();
 
 		// clone events
 		var clone = event.parent().clone().css({
