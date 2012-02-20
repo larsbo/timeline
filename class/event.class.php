@@ -184,6 +184,7 @@ EOD;
 		$html = <<<EOD
 <div class="event-preview" style="zIndex: 0">
 	<span 
+		id="event{$this->event_id}"
 		class="event{$colorclass}" 
 		style="width:{$length}px;top:{$line}px;left:{$offset}px;z-index:2;" 
 		data-event="{$this->event_id}" 
