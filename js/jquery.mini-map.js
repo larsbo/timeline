@@ -18,6 +18,9 @@ Licensed like jQuery - http://docs.jquery.com/License
 		
 		//factor-calc:
 		factor = Math.round(el.width()/size);
+		timeline.options.onScrollEnd = function(){
+			$('#current-view').css('left', -timeline.x/factor);
+		};
 
 		var height = Math.round(el.height()/factor);
 		var width = Math.round(el.width()/factor);

@@ -5,10 +5,7 @@ jQuery(document).ready(function($){
 		bounce: false,
 		scrollbarClass: 'scrollbar',
 		vScroll: false,
-		vScrollbar: false,
-		onScrollEnd: function(){
-			$('#current-view').css('left', -timeline.x/8);
-		}
+		vScrollbar: false
 	});
 
 	/* show mini map of the timeline */
