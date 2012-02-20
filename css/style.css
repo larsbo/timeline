@@ -478,6 +478,10 @@ table {
         -o-border-radius: 4px;
         -moz-border-radius: 4px;
         -webkit-border-radius: 4px; }
+        #options div ul li.selected {
+          font-weight: bold; }
+        #options div ul li:not(.selected) {
+          font-weight: normal; }
 
 /***** MESSAGES *****/
 .message {

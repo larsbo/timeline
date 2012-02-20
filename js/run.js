@@ -109,6 +109,38 @@ jQuery(document).ready(function($){
 			});
 		}
 	});
+	
+	/* legende is intelligent filter */
+	$('#colorclasses').find('li').click(function(){
+		var button = $(this);
+		button.toggleClass('selected');
+		var activeFilters = button.parent().children().filter('.selected');
+
+		if (activeFilters.length == 0) {
+			//no filter, show all
+			$('.event').each(function(){
+				var event = $(this);
+				event.show();
+			});
+		}
+		else {
+			//show only objects of activeFilters-categories
+			$('.event').each(function(){
+				var event = $(this);
+				var value = event.data('colorclass');
+				var flag = false;
+				activeFilters.each(function() {
+					if ($(this).data('colorclass') == value)
+						flag = true;
+				});
+				if (flag)
+					event.show();
+				else {
+					event.hide();
+				}
+			});
+		}
+	});
 
 	// highlight timeline column on hover
 	$('#content').find('td').hover(function(){

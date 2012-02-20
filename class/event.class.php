@@ -190,6 +190,7 @@ EOD;
 		data-title="{$this->title}" 
 		data-offset="{$offset}" 
 		data-width="{$length}"
+		data-colorclass="{$this->colorclass}"
 	>{$this->title}
 		<span class="pin"></span>
 	</span>

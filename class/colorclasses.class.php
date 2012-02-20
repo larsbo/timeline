@@ -24,7 +24,7 @@ class ColorClasses {
 	function toLegendList() {
 		$html = '<ul>'."\n";
 		foreach ($this->colorclasses as $colorclass) {
-			$html .= "<li class=\"colorclass_".$colorclass['color_id']."\">".$colorclass['description']."</li>\n";
+			$html .= "<li class=\"colorclass_".$colorclass['color_id']."\" data-colorclass=\"".$colorclass['color_id']."\">".$colorclass['description']."</li>\n";
 		}
 		$html .= "</ul>\n";
 		return $html;
