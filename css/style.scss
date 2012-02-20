@@ -279,6 +279,13 @@ $wrapperheight: 300px;
 			font-style:italic;
 			text-align:center;
 		}
+		a.back {
+			background: url("../images/left.png") no-repeat;
+			cursor: pointer;
+			float: right;
+			height: 32px;
+			width: 32px;
+		}
 	}
 	&.ui-state-disabled, &.ui-widget-content &.ui-state-disabled, &.ui-widget-header &.ui-state-disabled {
 		opacity: 1 !important;

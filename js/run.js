@@ -1,45 +1,60 @@
 var timeline = null;
+
 jumpToEvent = function(currentEventId, eventId) {
 	timeline.scrollToElement('#event'+eventId, 300);
 	var el = $('#event'+eventId);
 	if(el.length) {
-		el.parent().addClass('sticky');
 		//show back button
-		var a = $("<a class=\"back\">Zurück</a>");
-		a.click(function(e){
-			e.preventDefault();
-			jumpBack(currentEventId);
-			a.remove();
-		});
-		el.next().append(a);
+		if (el.find('a.back').length == 0 && currentEventId) {
+			var a = $("<a class=\"back\"></a>");
+			a.title = $('#event'+currentEventId).data('title');
+			a.click(function(e){
+				e.preventDefault();
+				jumpBack(currentEventId);
+				a.remove();
+			});
+			el.next().append(a);
+		}
+		else if (currentEventId) {
+			var a = el.find('a.back');
+			a.click(function(e){
+				e.preventDefault();
+				jumpBack(currentEventId);
+				a.remove();
+			});
+			a.title = $('#event'+currentEventId).data('title');
+		}
+		el.parent().addClass('sticky');
 		el.next().stop(true, true).fadeIn();
 	}
-}
+};
+
 jumpBack = function(el) {
 	timeline.scrollToElement('#event'+el, 300);
-}
-
-jQuery(document).ready(function($){
-	//make internal links
-	$('.event-details').find('a').each(function() {
-		var a = $(this);
-		if (a.attr('href')) {
-			if (a.attr('href').substr(0,1) == '#') {
-				var nid = a.attr('href').substr(1,a.attr('href').length-1);
-				var oid = a.parents('.event-preview').first().children().first().data('event');
-				a.click(function(e){ e.preventDefault(); jumpToEvent(oid, nid); });
-			}
-		}
-	});
+};
 
 /* set wrapper height to current browser viewport */
-	setWrapperHeight = function() {
+setWrapperHeight = function() {
 	var scroller = $('#scroller');
 	var wrapper = $('#wrapper');
 	var full_width = $(window).width();
 	var full_height = $(window).height();
 	scroller.css('height', full_height - parseInt(wrapper.css('top')) - 70 + 'px');
 };
+
+jQuery(document).ready(function($){
+	//make internal links
+	$('.event-details').find('a').each(function() {
+		var ab = $(this);
+		var hr = ab.attr('href');
+		if (hr && hr.substr(0,1) == '#') {
+			var nid = hr.substr(1, hr.length-1);
+			var oid = ab.parents('.event-preview').first().children().first().data('event');
+			ab.click(function(e){ e.preventDefault(); jumpToEvent(oid, nid); });
+		}
+	});
+
+
 
 	/* iScroll */
 	timeline = new iScroll('wrapper',{
@@ -52,7 +67,7 @@ jQuery(document).ready(function($){
 	/* show mini map of the timeline */
 	$('#timeline').minimap(timeline, $(window).width()-10);
 
-// update timeline height
+	// update timeline height
 	setWrapperHeight();
 	$(window).resize(function() {
 		setWrapperHeight();
