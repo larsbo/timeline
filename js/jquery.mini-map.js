@@ -4,16 +4,20 @@ extended for timeline use copyright Lars Borchert <borchert.lars@gmail.com>
 Licensed like jQuery - http://docs.jquery.com/License
 */
 (function($){
-	$.fn.minimap = function(timeline, factor){
-		if (!factor) {
-			factor = 8;
+	$.fn.minimap = function(timeline, size){
+		if (!size) {
+			size = 500;
 		}
+
 		var el = this;
 		var years = el.find('.date');
 		var events = el.find('.event');
 		var clicked = false;
 		var miniMap = $('#mini-map');
 		var miniMapCurrentView = $('#current-view');
+		
+		//factor-calc:
+		factor = Math.round(el.width()/size);
 
 		var height = Math.round(el.height()/factor);
 		var width = Math.round(el.width()/factor);

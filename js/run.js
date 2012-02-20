@@ -5,7 +5,6 @@ jQuery(document).ready(function($){
 		var wrapper = $('#wrapper');
 		var full_width = $(window).width();
 		var full_height = $(window).height();
-		console.log(full_height.toString() - parseInt(wrapper.css('top')));
 		wrapper.css('height', full_height.toString() - parseInt(wrapper.css('top')));
 	};
 
@@ -21,7 +20,7 @@ jQuery(document).ready(function($){
 	});
 
 	/* show mini map of the timeline */
-	$('#timeline').minimap(timeline);
+	$('#timeline').minimap(timeline, $(window).width()-10);
 
 	// update timeline height
 	setWrapperHeight();
