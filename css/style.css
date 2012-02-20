@@ -442,13 +442,15 @@ table {
       background: #0cc; }
 
 #options {
+  background: #fff;
   border-top: solid #ccc 1px;
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
   text-align: center;
-  padding: 5px 0 0 0; }
+  padding: 5px 0 0 0;
+  z-index: 2; }
   #options div {
     display: inline-block;
     border: solid #ccc 1px;

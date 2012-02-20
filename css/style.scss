@@ -415,6 +415,7 @@ $wrapperheight: 300px;
 }
 
 #options {
+	background: #fff;
 	border-top:solid #ccc 1px;
 	position: fixed;
 	bottom:0;
@@ -422,6 +423,7 @@ $wrapperheight: 300px;
 	width:100%;
 	text-align: center;
 	padding: 5px 0 0 0;
+	z-index: 2;
 	div {
 		display: inline-block;
 		border:solid #ccc 1px;
