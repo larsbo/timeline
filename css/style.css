@@ -335,7 +335,6 @@ table {
   color: #666;
   cursor: pointer;
   display: inline-block;
-  font: bold 1em/2em Arial, Helvetica;
   background-color: #ddd;
   background-image: linear-gradient(top, #eeeeee, #cccccc);
   background-image: -o-linear-gradient(top, #eeeeee, #cccccc);
@@ -443,55 +442,41 @@ table {
     #mini-map div.hovered {
       background: #0cc; }
 
-/***** OPTIONS *****/
-#options-container {
-  background: #fff;
-  clear: both;
-  float: left;
-  line-height: 35px;
-  margin: 380px 10px 10px;
-  padding: 5px;
-  z-index: 2; }
-  #options-container p {
-    color: #333;
+#options {
+  border-top: solid #ccc 1px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  padding: 5px 0 0 0; }
+  #options div {
     display: inline-block;
-    font-weight: bold;
-    margin-right: 5px; }
-  #options-container ul {
-    display: inline-block;
-    height: 27px;
-    list-style: none;
-    vertical-align: middle; }
-    #options-container ul li {
-      float: left;
-      height: 27px; }
-  #options-container input[type=radio] {
-    display: none; }
-
-/***** LEGENDE *****/
-#colorclasses {
-  background: #fff;
-  float: left;
-  margin: 380px 10px 10px;
-  padding: 5px;
-  z-index: 2; }
-  #colorclasses div {
-    text-align: center; }
-    #colorclasses div p {
-      color: #333333;
+    border: solid #ccc 1px;
+    border-radius: 6px;
+    -o-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    box-shadow: 0 1px 1px #cccccc;
+    -o-box-shadow: 0 1px 1px #cccccc;
+    -moz-box-shadow: 0 1px 1px #cccccc;
+    -webkit-box-shadow: 0 1px 1px #cccccc;
+    padding: 5px; }
+    #options div p {
+      color: #333;
       display: inline-block;
       font-weight: bold;
       margin-right: 5px; }
-    #colorclasses div ul {
+    #options div ul {
       display: inline-block; }
-      #colorclasses div ul li {
+      #options div ul li {
         display: inline-block;
         padding: 5px;
         margin: 5px;
-        border-radius: 2px;
-        -o-border-radius: 2px;
-        -moz-border-radius: 2px;
-        -webkit-border-radius: 2px; }
+        border-radius: 4px;
+        -o-border-radius: 4px;
+        -moz-border-radius: 4px;
+        -webkit-border-radius: 4px; }
 
 /***** MESSAGES *****/
 .message {

@@ -328,7 +328,6 @@ $wrapperheight: 300px;
 	color:#666;
 	cursor:pointer;
 	display:inline-block;
-	font:bold 1em/2em Arial, Helvetica;
 	background-color:#ddd;
 	@include background-gradients(top, #eee, #ccc);
 	padding:0 0.9em;
@@ -416,51 +415,25 @@ $wrapperheight: 300px;
 	}
 }
 
-/***** OPTIONS *****/
-#options-container {
-	background: #fff;
-	clear: both;
-	float: left;
-	line-height: 35px;
-	margin: 380px 10px 10px;
-	padding: 5px;
-	z-index: 2;
-	p {
-		color:#333;
-		display:inline-block;
-		font-weight:bold;
-		margin-right:5px;
-	}
-	ul {
-		display:inline-block;
-		height:27px;
-		list-style:none;
-		vertical-align:middle;
-		li {
-			float:left;
-			height:27px;
-		}
-	}
-	input[type=radio] {
-		display:none;
-	}
-}
-
-
-/***** LEGENDE *****/
-#colorclasses {
-	background: #fff;
-	float: left;
-	margin: 380px 10px 10px;
-	padding: 5px;
-	z-index: 2;
+#options {
+	border-top:solid #ccc 1px;
+	position: fixed;
+	bottom:0;
+	left:0;
+	width:100%;
+	text-align: center;
+	padding: 5px 0 0 0;
 	div {
-		text-align: center;
+		display: inline-block;
+		border:solid #ccc 1px;
+		@include rounded-corners(6px);
+		@include shadows(0 1px 1px #ccc);
+		padding: 5px;
 		p {
-			color: #333333;
-			display: inline-block;
-			font-weight: bold;
-			margin-right: 5px;
+			color:#333;
+			display:inline-block;
+			font-weight:bold;
+			margin-right:5px;
 		}
 		ul {
 			display: inline-block;
@@ -468,7 +441,7 @@ $wrapperheight: 300px;
 				display:inline-block;
 				padding: 5px;
 				margin: 5px;
-				@include rounded-corners(2px);
+				@include rounded-corners(4px);
 			}
 		}
 	}
