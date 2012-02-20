@@ -23,7 +23,7 @@ class Event {
 		$this->title = $title;
 		$this->details = $details;
 		if (strlen($startdate) <= 4)
-			$startdate .= "-00-00";
+			$startdate .= "-00-00";//real dirty
 		if (strlen($enddate) <= 4)
 			$enddate .= "-00-00";
 		$this->startdate = $startdate;
