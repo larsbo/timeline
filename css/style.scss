@@ -116,7 +116,7 @@ table {
 $wrapperheight: 300px;
 #wrapper {
 	bottom:0;
-	height: $wrapperheight+15;
+	height: 100%;
 	left:0;
 	overflow:auto;
 	position:absolute;
@@ -157,7 +157,7 @@ $wrapperheight: 300px;
 		left:7px;
 		right:7px;
 		position:absolute;
-		z-index:100;
+		z-index:-1;
 		& > div {
 			border:1px solid #06a;
 			height:100%;
