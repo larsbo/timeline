@@ -113,41 +113,66 @@ table {
 }
 
 /***** TIMELINE *****/
+$wrapperheight: 300px;
 #wrapper {
 	bottom:0;
-	height: 100%;
+	height: $wrapperheight+15;
 	left:0;
 	overflow:auto;
 	position:absolute;
 	top:80px;
 	width:100%;
 	z-index:1;
-}
-#scroller {
-	cursor:ew-resize;
-	float:left;
-	padding:0;
-}
-#timeline {
-	background:#fff url(../images/bg.png);
-	margin:10px;
-	height:350px;
-	overflow:hidden;
-	th {
-		border-left:1px solid #ccc;
-		border-right:1px solid #fff;
-		font:bold 18px Arial, Helvetica;
-		height:30px;
-		text-align:center;
-		text-shadow:0 1px 0 rgba(255, 255, 255, 0.9);
-		vertical-align:middle;
+	#scroller {
+		cursor:ew-resize;
+		padding:0;
+		margin-bottom: 5px;
+		height: $wrapperheight;
+		#timeline {
+			background:#fff url(../images/bg.png);
+			margin:10px;
+			height:100%;
+			margin-top: 0;
+			margin-bottom: 0;
+			overflow:hidden;
+			th {
+				border-left:1px solid #ccc;
+				border-right:1px solid #fff;
+				font:bold 18px Arial, Helvetica;
+				height:30px;
+				text-align:center;
+				text-shadow:0 1px 0 rgba(255, 255, 255, 0.9);
+				vertical-align:middle;
+			}
+			td {
+				border-left:1px solid #ccc;
+				border-right:1px solid #fff;
+				vertical-align:top;
+			}
+		}
 	}
-	td {
-		border-left:1px solid #ccc;
-		border-right:1px solid #fff;
-		vertical-align:top;
+	/***** iSCROLL *****/
+	.scrollbarH {
+		height:8px;
+		left:7px;
+		right:7px;
+		position:absolute;
+		z-index:100;
+		& > div {
+			border:1px solid #06a;
+			height:100%;
+			position:absolute;
+			z-index:100;
+			background:#258dc8;
+			@include background-gradients(top, #258dc8 0%, #258dc8 100%);
+			@include background-clips(padding-box);
+			@include box-sizings(border-box);
+			@include rounded-corners(4px);
+			@include shadows(inset 1px 1px 0 rgba(255,255,255,0.5));
+		}
 	}
 }
+
 
 /***** EVENT *****/
 .event {
@@ -448,29 +473,6 @@ table {
 		}
 	}
 }
-
-/***** iSCROLL *****/
-.scrollbarH {
-	bottom:1px;
-	height:8px;
-	left:2px;
-	position:absolute;
-	right:7px;
-	z-index:100;
-}
-.scrollbarH > div {
-	border:1px solid #06a;
-	height:100%;
-	position:absolute;
-	z-index:100;
-	background:#258dc8;
-	@include background-gradients(top, #258dc8 0%, #258dc8 100%);
-	@include background-clips(padding-box);
-	@include box-sizings(border-box);
-	@include rounded-corners(4px);
-	@include shadows(inset 1px 1px 0 rgba(255,255,255,0.5));
-}
-
 
 /***** MESSAGES *****/
 .message {
