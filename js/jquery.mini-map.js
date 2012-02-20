@@ -26,6 +26,7 @@ Licensed like jQuery - http://docs.jquery.com/License
 		var width = Math.round(el.width()/factor);
 		miniMap.height(height + 10);
 		miniMap.width(width);
+		$('#map-container').width(width);
 
 		miniMapCurrentView.height(height + 12);
 		miniMapCurrentView.width(Math.round($(window).width()/factor));
