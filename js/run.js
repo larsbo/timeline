@@ -1,7 +1,28 @@
+var timeline = null;
+var stack = new Array();
+jumpToEvent = function(currentEventId, eventId) {
+	if (currentEventId)
+		stack.push(currentEventId);
+	timeline.scrollToElement('#event'+eventId, 300);
+}
+jumpBack = function() {
+	if (stack.length)
+		timeline.scrollToElement('#event'+stack.pop(), 300);
+}
+
 jQuery(document).ready(function($){
+	//make internal links
+	$('.event-details').find('a').each(function() {
+		var a = $(this);
+		if (a.attr('href').substr(0,1) == '#') {
+			var nid = a.attr('href').substr(1,a.attr('href').length-1);
+			var oid = a.parents('.event-preview').first().children().first().data('event');
+			a.click(function(e){ e.preventDefault(); jumpToEvent(oid, nid); });
+		}
+	});
 
 	/* iScroll */
-	var timeline = new iScroll('wrapper',{
+	timeline = new iScroll('wrapper',{
 		bounce: false,
 		scrollbarClass: 'scrollbar',
 		vScroll: false,
