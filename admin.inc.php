@@ -20,7 +20,7 @@ switch ($action) {
 	break;
 
 	case 'save':
-	$log['result'] = Admin::saveEvent();
+	$log['result'] = Admin::saveEvent($_POST);
 	break;
 
 	case 'edit':
@@ -30,7 +30,7 @@ switch ($action) {
 
 	case 'update':
 	$id = DB::escape($_POST['id']);
-	$log['result'] = Admin::updateEvent($id);
+	$log['result'] = Admin::updateEvent($id, $_POST);
 	break;
 
 	case 'deleteconfirmation':
