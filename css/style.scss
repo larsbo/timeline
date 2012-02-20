@@ -106,6 +106,7 @@ table {
 
 /***** PAGE *****/
 #page {
+	overflow:hidden;
 	position:absolute;
 	height:100%;
 	width:100%;
@@ -114,7 +115,7 @@ table {
 /***** TIMELINE *****/
 #wrapper {
 	bottom:0;
-	cursor:ew-resize;
+	height: 100%;
 	left:0;
 	overflow:auto;
 	position:absolute;
@@ -123,8 +124,8 @@ table {
 	z-index:1;
 }
 #scroller {
+	cursor:ew-resize;
 	float:left;
-	height:100%;
 	padding:0;
 }
 #timeline {
@@ -330,32 +331,6 @@ table {
 }
 
 
-/***** OPTIONS *****/
-#options-container {
-	float:left;
-	margin:10px;
-	p {
-		color:#333;
-		display:inline-block;
-		font-weight:bold;
-		margin-right:5px;
-	}
-	ul {
-		display:inline-block;
-		height:27px;
-		list-style:none;
-		vertical-align:middle;
-		li {
-			float:left;
-			height:27px;
-		}
-	}
-	input[type=radio] {
-		display:none;
-	}
-}
-
-
 /***** MINI-MAP *****/
 #map-container {
 	float:left;
@@ -416,10 +391,44 @@ table {
 	}
 }
 
-/***** legende *****/
+/***** OPTIONS *****/
+#options-container {
+	background: #fff;
+	clear: both;
+	float: left;
+	line-height: 35px;
+	margin: 380px 10px 10px;
+	padding: 5px;
+	z-index: 2;
+	p {
+		color:#333;
+		display:inline-block;
+		font-weight:bold;
+		margin-right:5px;
+	}
+	ul {
+		display:inline-block;
+		height:27px;
+		list-style:none;
+		vertical-align:middle;
+		li {
+			float:left;
+			height:27px;
+		}
+	}
+	input[type=radio] {
+		display:none;
+	}
+}
+
+
+/***** LEGENDE *****/
 #colorclasses {
-	position: fixed;
-	bottom: 0;
+	background: #fff;
+	float: left;
+	margin: 380px 10px 10px;
+	padding: 5px;
+	z-index: 2;
 	p {
 		color: #333333;
 		display: inline-block;
