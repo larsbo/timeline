@@ -217,12 +217,18 @@ EOD;
 
 	private function getImageRepresentation() {
 		$image = $this->getImage() ? "<img src=\"".$this->getImage()."\" alt=\"".$this->title."\" />" : "";
-		return <<<EOD
+		if ($this->details) {
+			return <<<EOD
 <div class="event-details" style="zIndex: 1">
 	<div class="big-img">{$image}</div>
 	<div class="img-text">{$this->details}</div>
 </div>
 EOD;
+		} else {
+			return <<<EOD
+<div class="event-details" style="zIndex: 1"></div>
+EOD;
+		}
 	}
 
 	function toAdminRepresentation() {

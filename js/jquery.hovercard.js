@@ -84,8 +84,7 @@ var zIndices = [];
 		event.parent().hover(function(){
 			var $this = $(this);
 
-			if ($this.find('.event-details').html() != '') {
-				// show details only when not empty
+			if ($this.find('.event-details').text().length) {	// check for content
 	
 				if (!$this.hasClass('sticky')) {
 					//create new max of zIndices, so element will hover on top...
