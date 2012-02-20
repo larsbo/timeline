@@ -4,6 +4,11 @@ jumpToEvent = function(currentEventId, eventId) {
 	if (currentEventId)
 		stack.push(currentEventId);
 	timeline.scrollToElement('#event'+eventId, 300);
+	var el = $('#event'+eventId);
+	if(el.length) {
+		el.parent().addClass('sticky');
+		el.next().stop(true, true).fadeIn();
+	}
 }
 jumpBack = function() {
 	if (stack.length)
