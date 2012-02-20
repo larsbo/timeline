@@ -47,9 +47,11 @@ echo $timeline->getColorClasses()->toStyleDefinition();
 <?php echo $timeline->getEventsOutput(); ?>
     </div>
   </div>
-  <div id="colorclasses" class="bordered">
-  <p>Legende:</p>
+  <div id="colorclasses">
+    <div>
+    <p>Legende:</p>
 <?php echo $timeline->getColorClasses()->toLegendList(); ?>
+    </div>
   </div>
 </div>
 <?php if ($_GET['debug']) Log::output(); // show debug messages only with ?debug=true ?>

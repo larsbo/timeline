@@ -420,19 +420,24 @@ table {
 #colorclasses {
 	position: fixed;
 	bottom: 0;
-	p {
-		color: #333333;
-		display: inline-block;
-		font-weight: bold;
-		margin-right: 5px;
-	}
-	ul {
-		display: inline-block;
-		li {
-			display:inline-block;
-			padding: 5px;
-			margin: 5px;
-			@include rounded-corners(2px);
+	width: 100%;
+	div {
+		border-top: 1px solid #CCCCCC;
+		text-align: center;
+		p {
+			color: #333333;
+			display: inline-block;
+			font-weight: bold;
+			margin-right: 5px;
+		}
+		ul {
+			display: inline-block;
+			li {
+				display:inline-block;
+				padding: 5px;
+				margin: 5px;
+				@include rounded-corners(2px);
+			}
 		}
 	}
 }
