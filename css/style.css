@@ -259,6 +259,9 @@ table {
       font-size: 11px;
       font-style: italic;
       text-align: center; }
+    .event-preview .event-details .source {
+      display: block;
+      padding-top: 10px; }
     .event-preview .event-details .time {
       font-size: 14px;
       font-weight: bold;

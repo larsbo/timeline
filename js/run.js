@@ -80,7 +80,13 @@ jQuery(document).ready(function($){
 		var event = $(this);
 
 		// show large image
-		event.siblings().first().find('img').parents('a').fancybox();
+		event.siblings().first().find('img').each(function(){
+			var image = $(this);
+			if (!image.attr('height') && !image.attr('width')) {
+				image.attr('height', 150);
+			}
+			image.parents('a').fancybox();
+		});
 
 		// clone events
 		var clone = event.parent().clone().css({

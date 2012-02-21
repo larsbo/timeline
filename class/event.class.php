@@ -61,13 +61,14 @@ class Event {
 			return false;
 	}
 	function getSource() {
-		$output = "";
+		$output = "<b>Quellen:</b><br />";
 		$links = explode("\n", $this->source);
 		foreach ($links as $link) {
-			if (substr($link, 0, 1) == '-') {
+			if (preg_match('#http://#', $link)) {
 				// link found
-				$link = substr($link, 2);
-				$output .= "<a href=\"".$link."\" class=\"extern\">".$link."</a>\n";
+				$output .= "<a href=\"".$link."\" class=\"extern\">".$link."</a><br />\n";
+			} else {
+				$output .= $link."<br />\n";
 			}
 		}
 		return $output;
