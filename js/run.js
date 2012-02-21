@@ -212,5 +212,5 @@ jQuery(document).ready(function($){
  });
 
 	// open extern links in modal window
-	$('.extern').fancyBox();
+	$('.extern').button({icons: { primary: "ui-icon-extlink" } }).fancyBox();
 });
