@@ -106,4 +106,5 @@ body {
     width: 400px; }
 
 .ui-button {
-  margin: 1px; }
+  margin: 1px;
+  height: 2.2em; }

@@ -14,7 +14,8 @@ refreshList = function(){
 	$.post('admin.inc.php', { 'action': 'refresh' }, function(data){
 			var t = $('#eventList');
 			t.html(data.result);
-			$('.event', t).button();
+//			$('.event', t).button();
+			$('.show', t).button({ icons: { primary: "ui-icon-search" }, text: false });
 			$('.edit', t).button({ icons: { primary: "ui-icon-wrench" }, text: false });
 			$('.delete', t).button({ icons: { primary: "ui-icon-trash" }, text: false });
 			if (data.debug) showDebugMsg(data.debug);
