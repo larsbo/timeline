@@ -54,6 +54,9 @@ h1 {
 input {
 	width: 350px;
 }
+a {
+	color: #06e;
+}
 table {
 	*border-collapse: collapse;
 	border-spacing: 0;
@@ -236,6 +239,7 @@ $wrapperheight: 300px;
 			text-align:center;
 		}
 		.source {
+			clear: both;
 			display: block;
 			padding-top: 10px;
 		}
@@ -243,6 +247,15 @@ $wrapperheight: 300px;
 			font-size: 14px;
 			font-weight: bold;
 			line-height: 30px;
+		}
+		a {
+			font-weight: bold;
+		}
+		a.extern {
+			color: #000;
+			font-weight: normal;
+			text-align: center;
+			width: 100%;
 		}
 		a.back {
 			background: url("../images/left.png") no-repeat;

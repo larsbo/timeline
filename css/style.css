@@ -52,6 +52,9 @@ h1 {
 input {
   width: 350px; }
 
+a {
+  color: #06e; }
+
 table {
   *border-collapse: collapse;
   border-spacing: 0; }
@@ -260,12 +263,20 @@ table {
       font-style: italic;
       text-align: center; }
     .event-preview .event-details .source {
+      clear: both;
       display: block;
       padding-top: 10px; }
     .event-preview .event-details .time {
       font-size: 14px;
       font-weight: bold;
       line-height: 30px; }
+    .event-preview .event-details a {
+      font-weight: bold; }
+    .event-preview .event-details a.extern {
+      color: #000;
+      font-weight: normal;
+      text-align: center;
+      width: 100%; }
     .event-preview .event-details a.back {
       background: url("../images/left.png") no-repeat;
       cursor: pointer;
