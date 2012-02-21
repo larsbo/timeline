@@ -61,7 +61,16 @@ class Event {
 			return false;
 	}
 	function getSource() {
-		return $this->source;
+		$output = "";
+		$links = explode("\n", $this->source);
+		foreach ($links as $link) {
+			if (substr($link, 0, 1) == '-') {
+				// link found
+				$link = substr($link, 2);
+				$output .= "<a href=\"".$link."\" class=\"extern\">".$link."</a>\n";
+			}
+		}
+		return $output;
 	}
 
 	function getStartYear() {
@@ -157,7 +166,7 @@ SET `title` = '{$this->title}',
 	`details` = '{$this->details}', 
 	`colorclass` = '{$this->colorclass}', 
 	`type` = '{$this->type}', 
-	`image` = '{$this->image}' 
+	`image` = '{$this->image}', 
 	`source` = '{$this->source}' 
 WHERE `event_id` = '{$this->event_id}';
 EOD;
