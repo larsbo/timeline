@@ -31,7 +31,6 @@ var zIndices = [];
 		//Set defauls for the control
 		var event = $(this);
 		var options = {
-			width: 400,
 			detailsHTML: $('#event-' + event.data('event')).html(),
 			delay: 0,
 			onHoverIn: function() { },
@@ -45,7 +44,8 @@ var zIndices = [];
 		// align event details container
 		event.next().css({ 
 			'top': event.css('top'), 
-			'left': event.css('left')
+			'left': event.css('left'),
+			'padding-top': event.height() + 12
 		});
 
 

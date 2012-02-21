@@ -186,7 +186,7 @@ $wrapperheight: 300px;
 	font-size:10px;
 	font-weight:bold;
 	line-height:12px;
-	margin:0.5em;
+	margin:5px;
 	padding:3px 5px 4px;
 	position:absolute;
 	text-shadow:0 1px 0 rgba(255,255,255,.8);
@@ -246,6 +246,7 @@ $wrapperheight: 300px;
 	position:absolute;
 	&.sticky .event-details {
 		cursor:move;
+		@include shadows(0 0 20px #000);
 	}
 	.event-details {
 		background:#fff;
@@ -253,8 +254,7 @@ $wrapperheight: 300px;
 		cursor:default;
 		display:none;
 		line-height:1.5em;
-		margin-right:80px;
-		padding:4em 10px 10px;
+		padding:10px;
 		position:absolute;
 		text-align:left;
 		top:0;
@@ -275,6 +275,11 @@ $wrapperheight: 300px;
 			font-size:11px;
 			font-style:italic;
 			text-align:center;
+		}
+		.time {
+			font-size: 14px;
+			font-weight: bold;
+			line-height: 30px;
 		}
 		a.back {
 			background: url("../images/left.png") no-repeat;

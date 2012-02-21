@@ -195,7 +195,10 @@ EOD;
 	>{$this->title}
 		<span class="pin"></span>
 	</span>
-	{$text}
+	<div class="event-details" style="zIndex: 1">
+		<div class="time">{$this->getStartYear()}</div>
+		{$text}
+	</div>
 </div>
 EOD;
 		return $html;
@@ -204,16 +207,12 @@ EOD;
 	private function getTextRepresentation() {
 		$image = $this->resizeImage($this->getImage(), 150, $this->title, 'class="img"');
 
-		return <<<EOD
-<div class="event-details" style="zIndex: 1">{$image}{$this->details}</div>
-EOD;
+		return $image.$this->details;
 	}
 
 	private function getQuoteRepresentation() {
 		return <<<EOD
-<div class="event-details" style="zIndex: 1">
 <blockquote>{$this->details}</blockquote>
-</div>
 EOD;
 	}
 
@@ -221,15 +220,11 @@ EOD;
 		$image = $this->resizeImage($this->getImage(), 150, 'alt="'.$this->title.'" title="'.$this->title.'"');
 		if ($this->details) {
 			return <<<EOD
-<div class="event-details" style="zIndex: 1">
 	<div class="big-img">{$image}</div>
 	<div class="img-text">{$this->details}</div>
-</div>
 EOD;
 		} else {
-			return <<<EOD
-<div class="event-details" style="zIndex: 1"></div>
-EOD;
+			return;
 		}
 	}
 
