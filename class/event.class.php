@@ -14,11 +14,12 @@ class Event {
 	private $colordescription;
 	private $type;
 	private $image;
+	private $source;
 	
 	private $width = -1;	//cache for event representations width
 	private $offset = -1;	//cache for event representations offset
 
-	function __Construct($event_id, $title, $details, $startdate, $enddate, $colorclass, $colordescription, $type, $image) {
+	function __Construct($event_id, $title, $details, $startdate, $enddate, $colorclass, $colordescription, $type, $image, $source) {
 		$this->event_id = $event_id;
 		$this->title = $title;
 		$this->details = $details;
@@ -32,6 +33,7 @@ class Event {
 		$this->colordescription = $colordescription;
 		$this->type = $type;
 		$this->image = $image;
+		$this->source = $source;
 	}
 	
 	/** getter **/
