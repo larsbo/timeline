@@ -43,7 +43,7 @@ class Admin {
 	<tr>
 		<th width="90">Kategorie</th>
 		<th>Ereignis</th>
-		<th width="50">bearbeiten</th>
+		<th>bearbeiten</th>
 	</tr>
 EOD;
 

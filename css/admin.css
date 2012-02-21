@@ -105,4 +105,5 @@ body {
     -webkit-border-radius: 0 0 6px 0; }
 
 .ui-button {
-  margin: 1px; }
+  margin: 1px;
+  height: 2.2em; }
