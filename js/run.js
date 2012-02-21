@@ -196,10 +196,14 @@ jQuery(document).ready(function($){
 				if ($(this).data('colorclass') == value)
 					flag = true;
 			});
-			if (flag)
+			//TODO what about stickies??
+			if (flag) {
 				event.show();
+				$('#minimap-'+event.data('event')).show();
+			}
 			else {
 				event.hide();
+				$('#minimap-'+event.data('event')).hide();
 			}
 		});
 	});
