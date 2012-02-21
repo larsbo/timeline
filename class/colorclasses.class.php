@@ -9,6 +9,10 @@ class ColorClasses {
 		$this->colorclasses = $sqlResult;
 	}
 	
+	function getArray() {
+		return $this->colorclasses;
+	}
+	
 	function toStyleDefinition() {
 		$html = '<style type="text/css">';
 		foreach ($this->colorclasses as $colorclass) {

@@ -18,7 +18,6 @@ class Timeline {
 			if ($this->end_year === null || $event->getEndYear() > $this->end_year)
 				$this->end_year = $event->getEndYear();
 		}
-		$this->alignEvents();
 		$this->colorclasses = ColorClasses::getColorClasses(true);
 		$this->start_year -= 1;
 		$this->end_year += 2;
@@ -36,25 +35,47 @@ class Timeline {
 		return $this->colorclasses;
 	}
 
-	function alignEvents() {
-		$matrix = array();
-		foreach ($this->events as &$e) {
-			$year = $e['event']->getStartYear();
-			// search for the first free row
-			while ($matrix[$year][$e['line']]) {
-				$e['line']++;
+	function alignEvents($filtered = false) {
+		if($filtered) {
+			$matrix = array();
+			foreach ($this->events as &$e) {
+				$x = $e['event']->getColorclass();
+				$e['line'] = 0;
+				$year = $e['event']->getStartYear();
+				// search for the first free row
+				while ($matrix[$x][$year][$e['line']]) {
+					$e['line']++;
+				}
+		//		Log::debug("marking everything used on line: ".$e['line']." from year: ".$year." until ".$e['event']->getEndYear());
+				// found free row -> mark columns (=years) of this row in matrix
+				for ($j = $year; $j <= $e['event']->getEndYear(); $j++) {
+					$matrix[$x][$j][$e['line']] = true;
+				}
 			}
-	//		Log::debug("marking everything used on line: ".$e['line']." from year: ".$year." until ".$e['event']->getEndYear());
-			// found free row -> mark columns (=years) of this row in matrix
-			for ($j = $year; $j <= $e['event']->getEndYear(); $j++) {
-				$matrix[$j][$e['line']] = true;
+		}
+		else {
+			$matrix = array();
+			foreach ($this->events as &$e) {
+				$e['line'] = 0;
+				$year = $e['event']->getStartYear();
+				// search for the first free row
+				while ($matrix[$year][$e['line']]) {
+					$e['line']++;
+				}
+		//		Log::debug("marking everything used on line: ".$e['line']." from year: ".$year." until ".$e['event']->getEndYear());
+				// found free row -> mark columns (=years) of this row in matrix
+				for ($j = $year; $j <= $e['event']->getEndYear(); $j++) {
+					$matrix[$j][$e['line']] = true;
+				}
 			}
 		}
 	}
 
 
-	function getEventsOutput() {
+	function getSimpleEventsOutput() {
 		$c = Config::getInstance();
+
+		$this->alignEvents();
 
 		$html = <<<EOD
 \t<table id="timeline" class="bordered">
@@ -75,6 +96,42 @@ EOD;
 			$html .= "\t\t\t\t</td>\n";
 		}
 		$html .= "\t\t\t</tr>\n\t\t</tbody>\n\t</table>";
+		return $html;
+	}
+
+
+	function getOrderedEventsOutput() {
+		$c = Config::getInstance();
+		$this->alignEvents(true);
+		$x = $this->colorclasses->getArray();
+
+		$html = <<<EOD
+\t<table id="timeline" class="bordered">
+\t\t<thead>
+\t\t\t<tr>\n
+EOD;
+		for ($year = $this->start_year; $year < $this->end_year; $year++) {
+			$html .= "\t\t\t\t<th class=\"date\" style=\"width: ".$c->tl_column_width."px\">".$year."</th>\n";
+		}
+		$html .= "\t\t\t</tr>\n\t\t</thead>\n\t\t<tbody>\n";
+		Log::debug('colorclasses: '.implode(',', $x));
+		foreach ($x as $a) {
+			$html .= "\t\t\t<tr id='content'>\n";
+			for ($year = $this->start_year; $year < $this->end_year; $year++) {
+				$html .= "\t\t\t\t<td>\n";
+				foreach ($this->events as $e) {
+					if ($e['event']->getStartYear() == $year) {
+						if ($a['color_id'] == $e['event']->getColorclass())
+							$html .= $e['event']->toTimelineRepresentation($e['line']);
+						else
+							Log::debug("'".$e['event']->getColorclass()."' does not match '".$a['color_id']."'");
+					}
+				}
+				$html .= "\t\t\t\t</td>\n";
+			}
+			$html .= "\t\t\t</tr>\n";
+		}
+		$html .= "\t\t</tbody>\n\t</table>";
 		return $html;
 	}
 }

@@ -42,7 +42,7 @@ echo $timeline->getColorClasses()->toStyleDefinition();
   </div>
   <div id="wrapper">
 <?php echo "\t<div id=\"scroller\" style=\"width: ".$width."px\">\n" ?>
-<?php echo $timeline->getEventsOutput(); ?>
+<?php echo $timeline->getOrderedEventsOutput(); ?>
     </div>
   </div>
   <div id="options">
