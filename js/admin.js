@@ -12,12 +12,18 @@ showDebugMsg = function(msgs){
 }
 refreshList = function(){
 	$.post('admin.inc.php', { 'action': 'refresh' }, function(data){
-			$('#eventList').find('div:first').html(data.result);
+			var t = $('#eventList').find('div:first');
+			t.html(data.result);
+			$('.event', t).button();
+			$('.edit', t).button({ icons: { primary: "ui-icon-wrench" }, text: false });
+			$('.delete', t).button({ icons: { primary: "ui-icon-trash" }, text: false });
 			if (data.debug) showDebugMsg(data.debug);
 		}, 'json');
 }
 
 jQuery(document).ready(function($){
+
+	refreshList();
 
 	/* messages */
 	$('.message').each(function(){
@@ -44,7 +50,7 @@ jQuery(document).ready(function($){
 	var eventDetails = $('#eventDetails');
 
 	// insert event
-	$('#new').click(function(){
+	$('#new').button({ icons: { primary: "ui-icon-plusthick" } }).click(function(){
 		$.post('admin.inc.php', { 'action': 'insert' }, function(data){
 				eventDetails.html(data.result);
 				if (data.debug) showDebugMsg(data.debug);
@@ -54,7 +60,7 @@ jQuery(document).ready(function($){
 	});
 
 	// show event
-	eventList.on('click', '.event:not(.new)', function(){
+	eventList.on('click', '.event', function(){
 		var id = $(this).parent().data('id');
 		$.post('admin.inc.php', { 
 				'action': 'show',
@@ -131,7 +137,7 @@ jQuery(document).ready(function($){
 	});
 
 		// databaseupdate
-	$('#databaseUpdate').click(function() {
+	$('#databaseUpdate').button().click(function() {
 		$.post('admin.inc.php',{'action':'databaseRefresh'}, function(data) {
 			if (data.result)
 				eventDetails.html("Datenbank Update war erfolgreich.");
@@ -143,7 +149,7 @@ jQuery(document).ready(function($){
 	});
 	
 	//dropAllTables And restart with testdata
-	$('#databaseRestart').click(function() {
+	$('#databaseRestart').button().click(function() {
 		$('#databaseRestart').after("<p id=\"dialogConfirm\">Wirklich?</p>");
 		$('#dialogConfirm').dialog({
 			resizable: false,
@@ -175,6 +181,6 @@ jQuery(document).ready(function($){
 	});
 
 		// refreshbutton
-	$('#refreshbutton').click(refreshList);
+	$('#refreshbutton').button({ icons: { primary: "ui-icon-refresh" } }).click(refreshList);
 
 });

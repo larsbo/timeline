@@ -1,0 +1,58 @@
+/***** ADMIN *****/
+* {
+  margin: 0;
+  padding: 0; }
+
+body {
+  background-color: #fff;
+  color: #000;
+  font-family: Arial;
+  font-size: 12px; }
+
+.adminContent {
+  padding: 5px 10px; }
+  .adminContent h2 {
+    padding: 5px; }
+  .adminContent ul {
+    padding: 0; }
+    .adminContent ul li {
+      display: block; }
+  .adminContent p {
+    padding: 2px 5px; }
+  .adminContent .content {
+    float: left; }
+    .adminContent .content #eventDetails {
+      width: 440px; }
+      .adminContent .content #eventDetails .dateentry {
+        width: 130px; }
+      .adminContent .content #eventDetails input, .adminContent .content #eventDetails select, .adminContent .content #eventDetails textarea {
+        margin: 5px;
+        padding: 2px 3px;
+        width: 350px; }
+      .adminContent .content #eventDetails table {
+        width: 99%; }
+        .adminContent .content #eventDetails table .submit {
+          float: right;
+          width: 100px; }
+  .adminContent .config {
+    float: right; }
+  .adminContent .bordered {
+    float: left;
+    border: solid #ccc 1px;
+    border-radius: 6px;
+    -o-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    box-shadow: 0 1px 1px #cccccc;
+    -o-box-shadow: 0 1px 1px #cccccc;
+    -moz-box-shadow: 0 1px 1px #cccccc;
+    -webkit-box-shadow: 0 1px 1px #cccccc;
+    padding: 1em;
+    margin: 1em; }
+  .adminContent .eventContainer .event {
+    margin: 0;
+    position: relative;
+    width: 400px; }
+
+.ui-button {
+  margin: 1px; }

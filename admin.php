@@ -18,7 +18,9 @@ if ($_POST['username'] && $_POST['password']) {
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>Timeline - Admin</title>
-  <link rel="stylesheet" type="text/css" href="css/style.css" />
+  <link rel="stylesheet" type="text/css" href="css/admin.css" />
+  <link rel="stylesheet" type="text/css" href="css/noty.css" />
+  <link rel="stylesheet" type="text/css" href="css/cleditor.css" />
   <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/themes/flick/jquery-ui.css" />	
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
@@ -39,7 +41,7 @@ if (Admin::loggedIn()) {
 		<div class="bordered" id="eventList">
 			<span id="new" class="button">Neues Ereignis eintragen</span>
 			<div>
-<?php echo Admin::getEvents(); ?>
+<?php //echo Admin::getEvents(); ?>
 			</div>
 		</div>
 		<div class="bordered" id="eventDetails"></div>

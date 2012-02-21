@@ -1,0 +1,43 @@
+@mixin rounded-corners ($radius: 5px) {
+	border-radius: $radius;
+	-o-border-radius: $radius;
+	-moz-border-radius: $radius;
+	-webkit-border-radius: $radius;
+}
+
+@mixin shadows ($shadow: inset 1px 1px 0 rgba(255,255,255,0.5)) {
+	box-shadow: $shadow;
+	-o-box-shadow: $shadow;
+	-moz-box-shadow: $shadow;
+	-webkit-box-shadow: $shadow;
+}
+
+@mixin transitions ($duration: 0.5s) {
+	transition: $duration;
+	-o-transition: $duration;
+	-ms-transition: $duration;
+	-moz-transition: $duration;
+	-webkit-transition: $duration;
+}
+
+@mixin background-gradients($pos: top, $from: #eee, $to: #ccc) {
+	background-image:linear-gradient($pos, $from, $to);
+	background-image:-o-linear-gradient($pos, $from, $to);
+	background-image:-ms-linear-gradient($pos, $from, $to);
+	background-image:-moz-linear-gradient($pos, $from, $to);
+	background-image:-webkit-linear-gradient($pos, $from, $to);
+}
+
+@mixin background-clips($clip: padding-box) {
+	background-clip: $clip;
+	-o-background-clip: $clip;
+	-moz-background-clip: $clip;
+	-webkit-background-clip: $clip;
+}
+
+@mixin box-sizings($sizing: border-box) {
+	box-sizing: $sizing;
+	-o-box-sizing: $sizing;
+	-moz-box-sizing: $sizing;
+	-webkit-box-sizing: $sizing;
+}

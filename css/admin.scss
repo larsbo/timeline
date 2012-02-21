@@ -1,0 +1,67 @@
+
+@import "_mixins.scss";
+
+/***** ADMIN *****/
+* {
+	margin:0;
+	padding:0;
+}
+body {
+	background-color:#fff;
+	color:#000;
+	font-family:Arial;
+	font-size:12px;
+}
+.adminContent {
+	padding:5px 10px;
+	h2 {
+		padding:5px;
+	}
+	ul {
+		padding: 0;
+		li {
+			display: block;
+		}
+	}
+	p { padding:2px 5px; }
+	.content { 
+		float:left;
+		#eventDetails { 
+			width:440px;
+			.dateentry { width: 130px; }
+			input, select, textarea {
+				margin: 5px;
+				padding: 2px 3px;
+				width: 350px;
+			}
+			table {
+				width: 99%;
+				.submit {
+					float: right;
+					width: 100px;
+				}
+			}
+		}
+	}
+	.config { 
+		float:right;
+	}
+	.bordered {
+		float:left;
+		border:solid #ccc 1px;
+		@include rounded-corners(6px);
+		@include shadows(0 1px 1px #ccc);
+		padding: 1em;
+		margin: 1em;
+	}
+	.eventContainer { 
+		.event {
+			margin:0;
+			position:relative;
+			width:400px;
+		}
+	}
+}
+.ui-button {
+	margin: 1px;
+}

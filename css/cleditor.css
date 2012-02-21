@@ -1,0 +1,79 @@
+.cleditorMain {
+  background-color: white;
+  border: 1px solid #999;
+  padding: 0 1px 1px; }
+  .cleditorMain iframe {
+    border: none;
+    margin: 0;
+    padding: 0; }
+  .cleditorMain textarea {
+    border: none;
+    font: 10pt Arial,Verdana;
+    margin: 0;
+    outline: none;
+    /* webkit grip focus */
+    overflow-y: scroll;
+    padding: 0;
+    resize: none; }
+
+.cleditorToolbar {
+  background: url(../images/toolbar.gif); }
+
+.cleditorGroup {
+  float: left;
+  height: 26px; }
+
+.cleditorButton {
+  background: url(../images/buttons.gif);
+  float: left;
+  height: 24px;
+  margin: 1px 0 1px 0;
+  width: 24px; }
+
+.cleditorDisabled {
+  filter: alpha(opacity=30);
+  opacity: 0.3; }
+
+.cleditorDivider {
+  background: #ccc;
+  float: left;
+  height: 23px;
+  margin: 1px 0 1px 0;
+  width: 1px; }
+
+.cleditorPopup {
+  border: solid 1px #999;
+  background-color: white;
+  cursor: default;
+  font: 10pt Arial,Verdana;
+  position: absolute;
+  z-index: 10000; }
+
+.cleditorList div {
+  padding: 2px 4px 2px 4px; }
+.cleditorList p, .cleditorList h1, .cleditorList h2, .cleditorList h3, .cleditorList h4, .cleditorList h5, .cleditorList h6, .cleditorList font {
+  background-color: transparent;
+  margin: 0;
+  padding: 0; }
+
+.cleditorColor {
+  padding: 1px 0 0 1px;
+  width: 150px; }
+  .cleditorColor div {
+    float: left;
+    height: 14px;
+    margin: 0 1px 1px 0;
+    width: 14px; }
+
+.cleditorPrompt {
+  background-color: #F6F7F9;
+  padding: 4px;
+  font-size: 8.5pt; }
+  .cleditorPrompt input, .cleditorPrompt textarea {
+    font: 8.5pt Arial,Verdana; }
+
+.cleditorMsg {
+  background-color: #FDFCEE;
+  font-size: 8.5pt;
+  padding: 4px;
+  width: 150px; }

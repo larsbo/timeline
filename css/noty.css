@@ -1,0 +1,137 @@
+.message {
+  display: none; }
+
+ul.noty_container {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+  position: fixed;
+  top: 20px;
+  width: 400px;
+  z-index: 9999999; }
+  ul.noty_container li {
+    clear: both;
+    float: left;
+    list-style: none;
+    margin: 10px 0 0 0;
+    padding: 0px;
+    position: relative; }
+  ul.noty_container.topLeft {
+    left: 20px; }
+    ul.noty_container.topLeft li {
+      width: 400px; }
+  ul.noty_container.topRight {
+    right: 40px; }
+    ul.noty_container.topRight li {
+      float: right;
+      width: 400px; }
+
+.noty_bar {
+  background-size: 40px 40px;
+  background-image: -webkit-linear-gradient(135deg, rgba(255, 255, 255, 0.05) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0.05) 75%, transparent 75%, transparent);
+  background-image: -moz-linear-gradient(135deg, rgba(255, 255, 255, 0.05) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0.05) 75%, transparent 75%, transparent);
+  background-image: -ms-linear-gradient(135deg, rgba(255, 255, 255, 0.05) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0.05) 75%, transparent 75%, transparent);
+  background-image: -o-linear-gradient(135deg, rgba(255, 255, 255, 0.05) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0.05) 75%, transparent 75%, transparent);
+  background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0.05) 75%, transparent 75%, transparent);
+  border: 1px solid;
+  color: #fff;
+  cursor: pointer;
+  display: none;
+  padding: 15px;
+  position: fixed;
+  _position: absolute;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+  width: 100%;
+  z-index: 9999999;
+  box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.4);
+  -o-box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.4);
+  -moz-box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.4);
+  -webkit-box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.4);
+  box-shadow: 2px 2px 3px #999999;
+  -o-box-shadow: 2px 2px 3px #999999;
+  -moz-box-shadow: 2px 2px 3px #999999;
+  -webkit-box-shadow: 2px 2px 3px #999999;
+  -webkit-background-size: 40px 40px;
+  -moz-background-size: 40px 40px;
+  -webkit-animation: animate-bg 5s linear infinite;
+  -moz-animation: animate-bg 5s linear infinite; }
+  .noty_bar.top {
+    border-bottom: 3px solid #eee;
+    left: 0;
+    top: 0;
+    width: 100%; }
+  .noty_bar.bottom {
+    border-top: 3px solid #eee;
+    bottom: 0;
+    left: 0;
+    width: 100%; }
+  .noty_bar.center {
+    border: 1px solid #eee;
+    left: 19.5%;
+    padding: 4px;
+    top: 40%;
+    width: 60%;
+    border-radius: 5px;
+    -o-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px; }
+  .noty_bar.topLeft, .noty_bar.topRight {
+    border: 1px solid #eee;
+    clear: both;
+    padding: 4px;
+    position: relative;
+    width: 100%;
+    border-radius: 5px;
+    -o-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px; }
+  .noty_bar .noty_message {
+    width: 96%; }
+    .noty_bar .noty_message .noty_buttons {
+      float: right;
+      font-size: 13px;
+      margin-top: -6px;
+      margin-left: -25px; }
+      .noty_bar .noty_message .noty_buttons button {
+        margin-left: 5px; }
+  .noty_bar .noty_close {
+    background-image: url(../images/closelabel.png);
+    cursor: pointer;
+    height: 20px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 20px; }
+  .noty_bar.alert, .noty_bar.debug {
+    background-color: #4ea5cd;
+    border-color: #3b8eb5; }
+  .noty_bar.critical {
+    background-color: #ff0000;
+    border-color: #c43d3d; }
+  .noty_bar.warning {
+    background-color: #eaaf51;
+    border-color: #d99a36; }
+  .noty_bar.error {
+    background-color: #de4343;
+    border-color: #c43d3d; }
+  .noty_bar.success {
+    background-color: #61b832;
+    border-color: #55a12c; }
+  .noty_bar h3 {
+    margin: 0 0 5px 0; }
+  .noty_bar p {
+    margin: 0; }
+
+@-webkit-keyframes animate-bg {
+  from {
+    background-position: 0 0; }
+
+  to {
+    background-position: -80px 0; } }
+
+@-moz-keyframes animate-bg {
+  from {
+    background-position: 0 0; }
+
+  to {
+    background-position: -80px 0; } }

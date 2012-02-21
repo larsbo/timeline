@@ -42,8 +42,8 @@ class Admin {
 		foreach ($events as $event) {
 			$output .= "<li class=\"eventContainer\" data-id=\"".$event->getId()."\">
 										<span title=\"anzeigen\" class=\"event colorclass_".$event->getColorclass()."\">".$event->getTitle()."</span>
-										<span title=\"bearbeiten\" class=\"button edit\"></span>
-										<span title=\"l&ouml;schen\" class=\"button delete\"></span>
+										<button title=\"bearbeiten\" class=\"button edit\">Editieren</button>
+										<button title=\"l&ouml;schen\" class=\"button delete\">Löschen</button>
 									</li>";
 		}
 		$output .= "</ul>";
