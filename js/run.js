@@ -205,4 +205,6 @@ jQuery(document).ready(function($){
 		$(this).parents('table').find('th:nth-child(' + ($(this).index() + 1) + ')').removeClass("hover");
  });
 
+	// open extern links in modal window
+	$('.extern').fancyBox();
 });
