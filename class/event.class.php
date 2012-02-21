@@ -41,6 +41,9 @@ class Event {
 	function getColorclass() {
 		return $this->colorclass;
 	}
+	function getColorDescription() {
+		return $this->colordescription;
+	}
 	function getTitle() {
 		return $this->title;
 	}
@@ -55,7 +58,10 @@ class Event {
 		else
 			return false;
 	}
-	
+	function getSource() {
+		return $this->source;
+	}
+
 	function getStartYear() {
 		return intval(substr($this->startdate, 0, 4));
 	}
@@ -127,6 +133,7 @@ class Event {
 		$this->colorclass = DB::escape($this->colorclass);
 		$this->type = DB::escape($this->type);
 		$this->image = DB::escape($this->image);
+		$this->source = DB::escape($this->source);
 	}
 	
 	function save() {
@@ -135,8 +142,8 @@ class Event {
 		//if we have no id, insert, otherwise do update...
 		if ($this->event_id == null || $this->event_id == -1) {
 			$sql = <<<EOD
-INSERT INTO `events` (`title`, `startdate`, `enddate`, `details`, `colorclass`, `type`, `image`) 
-VALUES ('{$this->title}', '{$this->startdate}', '{$this->enddate}', '{$this->details}', '{$this->colorclass}', '{$this->type}', '{$this->image}');
+INSERT INTO `events` (`title`, `startdate`, `enddate`, `details`, `colorclass`, `type`, `image`, `source`) 
+VALUES ('{$this->title}', '{$this->startdate}', '{$this->enddate}', '{$this->details}', '{$this->colorclass}', '{$this->type}', '{$this->image}', '{$this->source}');
 EOD;
 		}
 		else {
@@ -149,6 +156,7 @@ SET `title` = '{$this->title}',
 	`colorclass` = '{$this->colorclass}', 
 	`type` = '{$this->type}', 
 	`image` = '{$this->image}' 
+	`source` = '{$this->source}' 
 WHERE `event_id` = '{$this->event_id}';
 EOD;
 		}
@@ -169,6 +177,7 @@ EOD;
 		$line = $line * $c->tl_event_padding_y;
 		$colorclass = $this->colorclass != "" ? " custom colorclass_".$this->colorclass : "";
 		$offset = $this->getPixelOffset();
+		$source = $this->getSource() != "" ? "<div class=\"source\">".$this->getSource()."</div>" : "";
 		switch ($this->type) {
 		case 'quote':
 			$text = $this->getQuoteRepresentation();
@@ -198,6 +207,7 @@ EOD;
 	<div class="event-details" style="zIndex: 1">
 		<div class="time">{$this->getStartYear()}</div>
 		{$text}
+		{$source}
 	</div>
 </div>
 EOD;
@@ -252,6 +262,7 @@ EOD;
 <p><b>Typ:</b> {$this->type}</p>
 <p><b>Bild:</b> {$this->image}</p>
 <p>{$this->details}</p>
+<p><b>Quelle:</b> {$this->source}</p>
 EOD;
 	}
 
@@ -263,12 +274,14 @@ EOD;
 		$startdate = $e===null?"":$e->startdate;
 		$enddate = $e===null?"":$e->enddate;
 		$image = $e===null?"":$e->image;
+		$source = $e===null?"":$e->source;
 		$details = $e===null?"":$e->details;
 		$action = $e===null?"save":"update";
 		$eventIdInput = $e===null?"":"<input type=\"hidden\" name=\"id\" value=\"".$e->event_id."\" />";
 		$html = <<<EOD
 <form data-action="$action">$eventIdInput
-<table>
+<p class="validateTips"></p>
+<table class="adminForm">
 	<tr>
 		<td width="50"><label for="title">Titel:</label></td>
 		<td><input type="text" name="title" id="title" maxlength="30" value="{$title}" /></td>
@@ -294,10 +307,11 @@ EOD;
 		<td><input type="text" name="image" id="image" maxlength="100" value="{$image}" /></td>
 	</tr>
 	<tr>
-		<td colspan="2"><textarea name="details" rows="10" cols="50">{$details}</textarea></td>
+		<td colspan="2"><textarea name="details" id="details" rows="10" cols="50">{$details}</textarea></td>
 	</tr>
 	<tr>
-		<td colspan="2"><input class="submit" type="submit" value="Speichern" /></td>
+		<td><label for="source">Quelle:</label></td>
+		<td><textarea name="source" id="source">{$source}</textarea></td>
 	</tr>
 </table>
 </form>
@@ -309,7 +323,7 @@ EOD;
 	static function getEventFromId($id) {
 		$sql = <<<EOD
 SELECT 
-  e.event_id, e.title, e.details, e.colorclass, DATE(e.startdate) AS startdate, DATE(e.enddate) AS enddate, e.type, e.image, c.description AS colordescription 
+  e.event_id, e.title, e.details, e.colorclass, DATE(e.startdate) AS startdate, DATE(e.enddate) AS enddate, e.type, e.image, e.source, c.description AS colordescription 
 FROM `events` AS e 
 LEFT JOIN `colorclasses` AS c ON c.color_id = e.colorclass
 WHERE `event_id` = '$id' 
@@ -317,7 +331,7 @@ LIMIT 1;
 EOD;
 		$r = DB::queryAssocAtom($sql);
 		return new Event($r['event_id'], $r['title'], $r['details'], 
-				$r['startdate'], $r['enddate'], $r['colorclass'], $r['colordescription'], $r['type'], $r['image']);
+				$r['startdate'], $r['enddate'], $r['colorclass'], $r['colordescription'], $r['type'], $r['image'], $r['source']);
 	}
 
 }
@@ -326,7 +340,7 @@ class Events {
 	static function getEvents() {
 		$sql = <<<EOD
 SELECT 
-  e.event_id, e.title, e.details, e.colorclass, DATE(e.startdate) AS startdate, DATE(e.enddate) AS enddate, e.type, e.image, c.description AS colordescription 
+  e.event_id, e.title, e.details, e.colorclass, DATE(e.startdate) AS startdate, DATE(e.enddate) AS enddate, e.type, e.image, e.source, c.description AS colordescription 
 FROM `events` AS e
 LEFT JOIN `colorclasses` AS c ON c.color_id = e.colorclass
 EOD;
@@ -334,7 +348,7 @@ EOD;
 		$events = Array();
 		foreach (DB::queryAssoc($sql) as $r)
 			$events[] = new Event($r['event_id'], $r['title'], $r['details'], 
-					$r['startdate'], $r['enddate'], $r['colorclass'], $r['colordescription'], $r['type'], $r['image']);
+					$r['startdate'], $r['enddate'], $r['colorclass'], $r['colordescription'], $r['type'], $r['image'], $r['image']);
 		return $events;
 	}
 }

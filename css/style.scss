@@ -257,16 +257,24 @@ $wrapperheight: 300px;
 /***** TABLE *****/
 .bordered {
 	border:solid #ccc 1px;
+	*border-collapse: collapse;
+	border-spacing: 0;
 	@include rounded-corners(6px);
 	@include shadows(0 1px 1px #ccc);
 
-	& > td, & > th {
+	tr:nth-child(even) {
+		background: #f5f5f5;
+		@include shadows(0 1px 0 rgba(255,255,255,.8) inset);
+	}
+	td, th {
 		border-left:1px solid #ccc;
 		border-top:1px solid #ccc;
+		padding: 10px;
 		text-align:left;
-		&:first-child { border-left:none; }
+		&:first-child {
+			border-left:none;
+		}
 	}
-
 	th {
 		background:#eeeeee;
 		@include background-gradients(top, #eeeeee 0%, #cccccc 100%);
@@ -274,17 +282,16 @@ $wrapperheight: 300px;
 		padding:10px;
 		text-shadow:0 1px 0 rgba(255,255,255,.5);
 		@include shadows(0 1px 0 rgba(255,255,255,.8) inset);
+		&:first-child {	@include rounded-corners(6px 0 0 0); }
+		&:last-child {	@include rounded-corners(0 6px 0 0); }
+		&:only-child {	@include rounded-corners(6px 6px 0 0); }
 	}
-
-	th:first-child { @include rounded-corners(6px 0 0 0); }
-	th:last-child { @include rounded-corners(0 6px 0 0); }
-	th:only-child{ @include rounded-corners(6px 6px 0 0); }
+	td {
+		padding: 3px 5px;
+	}
 	tr:last-child {
 		td:first-child { @include rounded-corners(0 0 0 6px); }
 		td:last-child {	@include rounded-corners(0 0 6px 0); }
-	}
-	.hover {
-		@include background-gradients(top, #cccccc 0%, #aaaaaa 100%);
 	}
 }
 
@@ -425,4 +432,3 @@ $wrapperheight: 300px;
 		}
 	}
 }
-

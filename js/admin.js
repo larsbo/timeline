@@ -12,7 +12,7 @@ showDebugMsg = function(msgs){
 }
 refreshList = function(){
 	$.post('admin.inc.php', { 'action': 'refresh' }, function(data){
-			var t = $('#eventList').find('div:first');
+			var t = $('#eventList');
 			t.html(data.result);
 			$('.event', t).button();
 			$('.edit', t).button({ icons: { primary: "ui-icon-wrench" }, text: false });
@@ -46,55 +46,158 @@ jQuery(document).ready(function($){
 			changeMonth: true,
 			changeYear: true });
 
+	var eventDetails = $('<div id="eventDetails"></div>');
 	var eventList = $('#eventList');
-	var eventDetails = $('#eventDetails');
+	eventList.append(eventDetails);
 
 	// insert event
 	$('#new').button({ icons: { primary: "ui-icon-plusthick" } }).click(function(){
-		$.post('admin.inc.php', { 'action': 'insert' }, function(data){
-				eventDetails.html(data.result);
-				if (data.debug) showDebugMsg(data.debug);
-				eventDetails.find('.dateentry').datepicker();
-				eventDetails.find('textarea').cleditor({width:'100%'});
-			}, 'json');
+		showDetails($(this), 'insert');
 	});
 
 	// show event
-	eventList.on('click', '.event', function(){
-		var id = $(this).parent().data('id');
-		$.post('admin.inc.php', { 
-				'action': 'show',
-				'id': id 
-			}, function(data){
-				eventDetails.html(data.result);
-				if (data.debug) showDebugMsg(data.debug);
-			}, 'json');
+	eventList.on('click', '.show', function(){
+		showDetails($(this), 'show');
 	});
 
 	// edit event
 	eventList.on('click', '.edit', function(){
-		var id = $(this).parent().data('id');
-		$.post('admin.inc.php', { 
-				'action': 'edit',
-				'id': id 
-			}, function(data){
-				eventDetails.html(data.result);
-				if (data.debug) showDebugMsg(data.debug);
-				eventDetails.find('.dateentry').datepicker();
-				eventDetails.find('textarea').cleditor({width:'100%'});
-			}, 'json');
+		showDetails($(this), 'edit');
 	});
+
+	function showDetails(event, action) {
+		var id = event.parents('tr').data('id');
+
+		// delete old modal form
+		event.dialog("destroy");
+		eventDetails.html('');
+
+		// load event data
+		$.post('admin.inc.php', { 
+			'action': action,
+			'id': id 
+		}, function(data){
+			eventDetails.html(data.result);
+			if (data.debug) showDebugMsg(data.debug);
+			if (action == 'edit' || action == 'insert') {
+				eventDetails.find('.dateentry').datepicker();
+				eventDetails.find('#details').cleditor({width:'100%'});
+			}
+		}, 'json');
+
+		if (action == 'edit') {
+			// create new modal form
+			var title = $("#title"),
+					start = $("#start"),
+					end = $("#end"),
+					colorclass = $("#colorclass"),
+					type = $("#type"),
+					image = $("#image"),
+					details = $("#details"),
+					source = $("#source");
+
+			// create new event
+			eventDetails.dialog({
+				autoOpen: false,
+				width: '80%',
+				modal: true,
+				position: 'top',
+				title: 'Ereignis ' + id + ' bearbeiten',
+				buttons: {
+					"Speichern": function() {
+						var form = $('#eventDetails').find('form');
+						//do update
+						$.ajax({
+							url: 'admin.inc.php',
+							data: form.serialize()+"&action="+form.data('action'),
+							dataType: 'json',
+							type: 'POST',
+							success: function(data){
+								eventDetails.html(data.result);
+								if (data.debug) showDebugMsg(data.debug);
+								refreshList();
+							}
+						});
+
+						$(this).dialog("close");
+					},
+					"Abbrechen": function() {
+						$(this).dialog("close");
+					}
+				}
+			});
+		} else if (action == 'insert') {
+			// create new modal form
+			var title = $("#title"),
+					start = $("#start"),
+					end = $("#end"),
+					colorclass = $("#colorclass"),
+					type = $("#type"),
+					image = $("#image"),
+					details = $("#details"),
+					source = $("#source");
+
+			// create new event
+			eventDetails.dialog({
+				autoOpen: false,
+				width: '80%',
+				modal: true,
+				position: 'top',
+				title: 'Neues Ereignis erstellen',
+				buttons: {
+					"Ereignis erstellen": function() {
+						var form = $('#eventDetails').find('form');
+
+						//do insert
+						$.ajax({
+							url: 'admin.inc.php',
+							data: form.serialize()+"&action="+form.data('action'),
+							dataType: 'json',
+							type: 'POST',
+							success: function(data){
+								eventDetails.html(data.result);
+								if (data.debug) showDebugMsg(data.debug);
+								refreshList();
+							}
+						});
+
+						$(this).dialog("close");
+					},
+					"Abbrechen": function() {
+						$(this).dialog("close");
+					}
+				}
+			});
+		} else {
+			// show event
+			eventDetails.dialog({
+				autoOpen: false,
+				width: '80%',
+				modal: true,
+				position: 'top',
+				title: 'Ereignis ' + id,
+				buttons: {
+					Close: function() {
+						$(this).dialog("close");
+					}
+				}
+			});
+		}
+
+		// show modal form
+		eventDetails.dialog("open");
+	}
 
 	// delete event
 	eventList.on('click', '.delete', function(){
-		var id = $(this).parent().data('id');
+		var id = $(this).parents('tr').data('id');
 		$(this).after("<p id=\"dialogConfirm\">Soll das Ereignis " +  id + " wirklich gel&ouml;scht werden?</p>");
 		$('#dialogConfirm').dialog({
 			resizable: false,
 			height:140,
 			modal: true,
 			buttons: {
-				Confirm: function() {
+				"Ja": function() {
 					//do deletion
 					$.post('admin.inc.php', { 
 							'action': 'deleteconfirmation',
@@ -107,7 +210,7 @@ jQuery(document).ready(function($){
 					$( this ).dialog( "close" );
 					$('#dialogConfirm').remove();
 				},
-				Cancel: function() {
+				"Nein": function() {
 				//do nothing
 					eventDetails.html('Ereignis ' + id + ' wurde nicht geloescht.');
 					$( this ).dialog( "close" );
@@ -116,24 +219,6 @@ jQuery(document).ready(function($){
 			}
 		});
 
-	});
-
-	// looking for form submits...
-	eventDetails.on('submit', 'form', function(e){
-		e.preventDefault();
-		var form = $(this);
-
-		$.ajax({
-			url: 'admin.inc.php',
-			data: form.serialize()+"&action="+form.data('action'),
-			dataType: 'json',
-			type: 'POST',
-			success: function(data){
-				eventDetails.html(data.result);
-				if (data.debug) showDebugMsg(data.debug);
-				refreshList();
-			}
-		});
 	});
 
 		// databaseupdate

@@ -24,36 +24,68 @@ body {
 		}
 	}
 	p { padding:2px 5px; }
-	.content { 
-		float:left;
-		#eventDetails { 
-			width:440px;
-			.dateentry { width: 130px; }
-			input, select, textarea {
-				margin: 5px;
-				padding: 2px 3px;
-				width: 350px;
-			}
-			table {
-				width: 99%;
-				.submit {
-					float: right;
-					width: 100px;
-				}
-			}
+
+	.adminForm {
+		input, select, textarea {
+			margin:5px;
+			padding:2px 3px;
 		}
+		textarea {
+			height: 50px;
+			width: 90%;
+		}
+		.dateentry { width: 70px; }
+		#eventList table {
+			margin: 10px 0;
+			width: 500px;
+		}
+	.events {
+		display: inline-block;
 	}
 	.config { 
 		float:right;
 	}
-	.bordered {
-		float:left;
-		border:solid #ccc 1px;
-		@include rounded-corners(6px);
-		@include shadows(0 1px 1px #ccc);
-		padding: 1em;
-		margin: 1em;
+}
+
+.bordered {
+	border:solid #ccc 1px;
+	*border-collapse: collapse;
+	border-spacing: 0;
+	@include rounded-corners(6px);
+	@include shadows(0 1px 1px #ccc);
+
+	tr:nth-child(even) {
+		background: #f5f5f5;
+		@include shadows(0 1px 0 rgba(255,255,255,.8) inset);
 	}
+	td, th {
+		border-left:1px solid #ccc;
+		border-top:1px solid #ccc;
+		padding: 10px;
+		text-align:left;
+		&:first-child {
+			border-left:none;
+		}
+	}
+	th {
+		background:#eeeeee;
+		@include background-gradients(top, #eeeeee 0%, #cccccc 100%);
+		border-top: none;
+		padding:10px;
+		text-shadow:0 1px 0 rgba(255,255,255,.5);
+		@include shadows(0 1px 0 rgba(255,255,255,.8) inset);
+		&:first-child {	@include rounded-corners(6px 0 0 0); }
+		&:last-child {	@include rounded-corners(0 6px 0 0); }
+		&:only-child {	@include rounded-corners(6px 6px 0 0); }
+	}
+	td {
+		padding: 3px 5px;
+	}
+	tr:last-child {
+		td:first-child { @include rounded-corners(0 0 0 6px); }
+		td:last-child {	@include rounded-corners(0 0 6px 0); }
+	}
+}
 	.eventContainer { 
 		.event {
 			margin:0;
