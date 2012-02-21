@@ -12,6 +12,22 @@ body {
 	font-family:Arial;
 	font-size:12px;
 }
+.adminForm {
+	input, select, textarea {
+		margin:5px;
+		padding:2px 3px;
+	}
+	textarea {
+		height: 50px;
+		width: 90%;
+	}
+	.dateentry { width: 70px; }
+	#eventList table {
+		margin: 10px 0;
+		width: 500px;
+	}
+}
+
 .adminContent {
 	padding:5px 10px;
 	h2 {
@@ -31,22 +47,7 @@ body {
 	}
 	.config {
 		display: inline-block;
-	}
-
-	.adminForm {
-		input, select, textarea {
-			margin:5px;
-			padding:2px 3px;
-		}
-		textarea {
-			height: 50px;
-			width: 90%;
-		}
-		.dateentry { width: 70px; }
-		#eventList table {
-			margin: 10px 0;
-			width: 500px;
-		}
+		float: right;
 	}
 }
 .bordered {

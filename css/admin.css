@@ -9,6 +9,18 @@ body {
   font-family: Arial;
   font-size: 12px; }
 
+.adminForm input, .adminForm select, .adminForm textarea {
+  margin: 5px;
+  padding: 2px 3px; }
+.adminForm textarea {
+  height: 50px;
+  width: 90%; }
+.adminForm .dateentry {
+  width: 70px; }
+.adminForm #eventList table {
+  margin: 10px 0;
+  width: 500px; }
+
 .adminContent {
   padding: 5px 10px; }
   .adminContent h2 {
@@ -22,18 +34,8 @@ body {
   .adminContent .events {
     display: inline-block; }
   .adminContent .config {
-    display: inline-block; }
-  .adminContent .adminForm input, .adminContent .adminForm select, .adminContent .adminForm textarea {
-    margin: 5px;
-    padding: 2px 3px; }
-  .adminContent .adminForm textarea {
-    height: 50px;
-    width: 90%; }
-  .adminContent .adminForm .dateentry {
-    width: 70px; }
-  .adminContent .adminForm #eventList table {
-    margin: 10px 0;
-    width: 500px; }
+    display: inline-block;
+    float: right; }
 
 .bordered {
   border: solid #ccc 1px;
