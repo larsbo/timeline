@@ -348,7 +348,7 @@ EOD;
 		$events = Array();
 		foreach (DB::queryAssoc($sql) as $r)
 			$events[] = new Event($r['event_id'], $r['title'], $r['details'], 
-					$r['startdate'], $r['enddate'], $r['colorclass'], $r['colordescription'], $r['type'], $r['image'], $r['image']);
+					$r['startdate'], $r['enddate'], $r['colorclass'], $r['colordescription'], $r['type'], $r['image'], $r['source']);
 		return $events;
 	}
 }
