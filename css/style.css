@@ -276,6 +276,8 @@ table {
 /***** TABLE *****/
 .bordered {
   border: solid #ccc 1px;
+  *border-collapse: collapse;
+  border-spacing: 0;
   border-radius: 6px;
   -o-border-radius: 6px;
   -moz-border-radius: 6px;
@@ -284,11 +286,18 @@ table {
   -o-box-shadow: 0 1px 1px #cccccc;
   -moz-box-shadow: 0 1px 1px #cccccc;
   -webkit-box-shadow: 0 1px 1px #cccccc; }
-  .bordered > td, .bordered > th {
+  .bordered tr:nth-child(even) {
+    background: #f5f5f5;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset;
+    -o-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset;
+    -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset;
+    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset; }
+  .bordered td, .bordered th {
     border-left: 1px solid #ccc;
     border-top: 1px solid #ccc;
+    padding: 10px;
     text-align: left; }
-    .bordered > td:first-child, .bordered > th:first-child {
+    .bordered td:first-child, .bordered th:first-child {
       border-left: none; }
   .bordered th {
     background: #eeeeee;
@@ -304,21 +313,23 @@ table {
     -o-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset;
     -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset;
     -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset; }
-  .bordered th:first-child {
-    border-radius: 6px 0 0 0;
-    -o-border-radius: 6px 0 0 0;
-    -moz-border-radius: 6px 0 0 0;
-    -webkit-border-radius: 6px 0 0 0; }
-  .bordered th:last-child {
-    border-radius: 0 6px 0 0;
-    -o-border-radius: 0 6px 0 0;
-    -moz-border-radius: 0 6px 0 0;
-    -webkit-border-radius: 0 6px 0 0; }
-  .bordered th:only-child {
-    border-radius: 6px 6px 0 0;
-    -o-border-radius: 6px 6px 0 0;
-    -moz-border-radius: 6px 6px 0 0;
-    -webkit-border-radius: 6px 6px 0 0; }
+    .bordered th:first-child {
+      border-radius: 6px 0 0 0;
+      -o-border-radius: 6px 0 0 0;
+      -moz-border-radius: 6px 0 0 0;
+      -webkit-border-radius: 6px 0 0 0; }
+    .bordered th:last-child {
+      border-radius: 0 6px 0 0;
+      -o-border-radius: 0 6px 0 0;
+      -moz-border-radius: 0 6px 0 0;
+      -webkit-border-radius: 0 6px 0 0; }
+    .bordered th:only-child {
+      border-radius: 6px 6px 0 0;
+      -o-border-radius: 6px 6px 0 0;
+      -moz-border-radius: 6px 6px 0 0;
+      -webkit-border-radius: 6px 6px 0 0; }
+  .bordered td {
+    padding: 3px 5px; }
   .bordered tr:last-child td:first-child {
     border-radius: 0 0 0 6px;
     -o-border-radius: 0 0 0 6px;
@@ -329,12 +340,6 @@ table {
     -o-border-radius: 0 0 6px 0;
     -moz-border-radius: 0 0 6px 0;
     -webkit-border-radius: 0 0 6px 0; }
-  .bordered .hover {
-    background-image: linear-gradient(top, #cccccc 0%, #aaaaaa 100%);
-    background-image: -o-linear-gradient(top, #cccccc 0%, #aaaaaa 100%);
-    background-image: -ms-linear-gradient(top, #cccccc 0%, #aaaaaa 100%);
-    background-image: -moz-linear-gradient(top, #cccccc 0%, #aaaaaa 100%);
-    background-image: -webkit-linear-gradient(top, #cccccc 0%, #aaaaaa 100%); }
 
 /***** BUTTON *****/
 .button {
@@ -635,53 +640,48 @@ ul.noty_container {
 
 /***** ADMIN *****/
 .adminContent {
-  padding: 50px 10px; }
+  padding: 20px; }
   .adminContent h2 {
     padding: 5px; }
-  .adminContent input, .adminContent select, .adminContent textarea {
-    margin: 5px;
-    padding: 2px 3px; }
-  .adminContent p {
-    padding: 2px 5px; }
-  .adminContent .content {
-    float: left; }
+  .adminContent ul li {
+    display: block;
+    margin: 5px 0; }
+  .adminContent .button {
+    color: #000;
+    padding: 3px 5px; }
   .adminContent .config {
     float: right; }
-    .adminContent .config ul li {
-      display: block;
-      margin: 5px 0; }
-  .adminContent .bordered {
-    float: left;
-    margin-right: 20px;
-    padding: 5px; }
-  .adminContent .dateentry {
-    width: 70px; }
-  .adminContent .eventContainer {
-    display: block;
-    width: 460px; }
-    .adminContent .eventContainer .event {
-      margin: 0;
-      position: relative;
-      width: 400px; }
-  .adminContent #eventDetails {
-    width: 440px; }
-  .adminContent .button.edit {
-    background: url(../images/edit.png) no-repeat center center;
-    float: right;
-    height: 16px;
-    padding: 1px;
-    width: 16px; }
-  .adminContent .button.delete {
-    background: url(../images/delete.png) no-repeat center center;
-    float: right;
-    height: 16px;
-    padding: 1px;
-    width: 16px; }
-  .adminContent table {
-    width: 99%; }
-    .adminContent table .submit {
-      float: right;
-      width: 100px; }
+  .adminContent .events {
+    float: left; }
+  .adminContent .eventList {
+    margin: 10px 0;
+    width: 500px; }
+    .adminContent .eventList .button.show {
+      background: url(../images/show.png) no-repeat center center;
+      height: 16px;
+      padding: 1px;
+      width: 16px; }
+    .adminContent .eventList .button.edit {
+      background: url(../images/edit.png) no-repeat center center;
+      height: 16px;
+      padding: 1px;
+      width: 16px; }
+    .adminContent .eventList .button.delete {
+      background: url(../images/delete.png) no-repeat center center;
+      height: 16px;
+      padding: 1px;
+      width: 16px; }
+
+.adminForm input, .adminForm select, .adminForm textarea {
+  margin: 5px;
+  padding: 2px 3px; }
+.adminForm textarea {
+  height: 50px;
+  width: 90%; }
+.adminForm p {
+  padding: 2px 5px; }
+.adminForm .dateentry {
+  width: 70px; }
 
 /***** FANCY BOX *****/
 #fancybox-loading {

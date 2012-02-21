@@ -38,15 +38,29 @@ class Admin {
 	static function getEvents() {
 		$events = Events::getEvents($start, $end);
 
-		$output = "<ul>\n";
+		$output = <<<EOD
+<table class="eventList bordered">
+	<tr>
+		<th width="90">Kategorie</th>
+		<th>Ereignis</th>
+		<th width="50">bearbeiten</th>
+	</tr>
+EOD;
+
 		foreach ($events as $event) {
-			$output .= "<li class=\"eventContainer\" data-id=\"".$event->getId()."\">
-										<span title=\"anzeigen\" class=\"event colorclass_".$event->getColorclass()."\">".$event->getTitle()."</span>
-										<span title=\"bearbeiten\" class=\"button edit\"></span>
-										<span title=\"l&ouml;schen\" class=\"button delete\"></span>
-									</li>";
+			$output .= <<<EOD
+<tr data-id="{$event->getId()}">
+	<td class="colorclass_{$event->getColorclass()}">{$event->getColorDescription()}</td>
+	<td title="Ereignis anzeigen">{$event->getTitle()}</td>
+	<td>
+		<span title="Ereignis anzeigen" class="button show"></span>
+		<span title="Ereignis bearbeiten" class="button edit"></span>
+		<span title="Ereignis l&ouml;schen" class="button delete"></span>
+	</td>
+</tr>
+EOD;
 		}
-		$output .= "</ul>";
+		$output .= "</table>";
 		return $output;
 	}
 
@@ -60,7 +74,7 @@ class Admin {
 
 	static function saveEvent($data) {
 		//-1 indicates, that there is no id yet ... so it will get inserted, when calling save
-		$e = new Event(-1, $data['title'], $data['details'], $data['start'], $data['end'], $data['colorclass'], "", $data['type'], $data['image']);
+		$e = new Event(-1, $data['title'], $data['details'], $data['start'], $data['end'], $data['colorclass'], "", $data['type'], $data['image'], $data['source']);
 		if ($e->save())
 			return "Ereignis erfolgreich eingetragen!";
 		else
@@ -73,7 +87,7 @@ class Admin {
 	}
 
 	static function updateEvent($id, $data) {
-		$e = new Event($id, $data['title'], $data['details'], $data['start'], $data['end'], $data['colorclass'], "", $data['type'], $data['image']);
+		$e = new Event($id, $data['title'], $data['details'], $data['start'], $data['end'], $data['colorclass'], "", $data['type'], $data['image'], $data['source']);
 		if ($e->save())
 			return "Ereignis ".$id." erfolgreich bearbeitet!";
 		else
@@ -136,7 +150,7 @@ EOD;
 	}
 
 	static function checkAndUpdateTableEvents($insertData) {
-		$tablediff = DB::checkForTable('events', array('colorclass', 'details', 'enddate', 'event_id', 'startdate', 'title', 'type', 'image'));
+		$tablediff = DB::checkForTable('events', array('colorclass', 'details', 'enddate', 'event_id', 'startdate', 'title', 'type', 'image', 'source'));
 
 		//the table is in some wrong state .... need to update or create
 		if ($tablediff === null) {
@@ -144,14 +158,15 @@ EOD;
 			Log::debug("table '<em>events</em>' doesn't exist -> creating table ...");
 			$sql = <<<EOD
 CREATE TABLE IF NOT EXISTS `events` (
-  `event_id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(30) NOT NULL,
-  `details` text NOT NULL,
+  `event_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(30) NOT NULL,
+  `details` TEXT NOT NULL,
   `startdate` DATE NOT NULL,
   `enddate` DATE NOT NULL,
-  `colorclass` varchar(14) NOT NULL,
+  `colorclass` VARCHAR(14) NOT NULL,
   `type` VARCHAR(10) NOT NULL,
   `image` VARCHAR(100) NOT NULL,
+  `source` TEXT NOT NULL,
   PRIMARY KEY (`event_id`),
   INDEX `startdate` (`startdate`),
   INDEX `enddate` (`enddate`)
@@ -170,19 +185,21 @@ EOD;
 
 			$sql = "";
 			if (in_array('colorclass', $tablediff))
-				$sql .= "ALTER TABLE `events` ADD `colorclass` varchar(14) NOT NULL;";
+				$sql .= "ALTER TABLE `events` ADD `colorclass` VARCHAR(14) NOT NULL;";
 			if (in_array('details', $tablediff))
-				$sql .= "ALTER TABLE `events` ADD `details` text NOT NULL;";
+				$sql .= "ALTER TABLE `events` ADD `details` TEXT NOT NULL;";
 			if (in_array('title', $tablediff))
-				$sql .= "ALTER TABLE `events` ADD `title` varchar(30) NOT NULL;";
+				$sql .= "ALTER TABLE `events` ADD `title` VARCHAR(30) NOT NULL;";
 			if (in_array('startdate', $tablediff))
 				$sql .= "ALTER TABLE `events` ADD `startdate` DATE NOT NULL , ADD INDEX ( `startdate` );";
 			if (in_array('enddate', $tablediff))
 				$sql .= "ALTER TABLE `events` ADD `enddate` DATE NOT NULL , ADD INDEX ( `enddate` );";
 			if (in_array('type', $tablediff))
-				$sql .= "ALTER TABLE `events` ADD `type` varchar(10) NOT NULL;";
+				$sql .= "ALTER TABLE `events` ADD `type` VARCHAR(10) NOT NULL;";
 			if (in_array('image', $tablediff))
-				$sql .= "ALTER TABLE `events` ADD `image` varchar(100) NOT NULL;";
+				$sql .= "ALTER TABLE `events` ADD `image` VARCHAR(100) NOT NULL;";
+			if (in_array('source', $tablediff))
+				$sql .= "ALTER TABLE `events` ADD `source` TEXT NOT NULL;";
 
 			return DB::execute($sql);
 		}
@@ -198,10 +215,10 @@ EOD;
 			Log::debug("table '<em>users</em>' doesn't exist -> creating table ...");
 			$sql = <<<EOD
 CREATE TABLE IF NOT EXISTS `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) NOT NULL,
-  `pass` varchar(32) NOT NULL,
-  `email` varchar(64) NOT NULL,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(32) NOT NULL,
+  `pass` VARCHAR(32) NOT NULL,
+  `email` VARCHAR(64) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 EOD;
@@ -215,11 +232,11 @@ EOD;
 
 			$sql = "";
 			if (in_array('email', $tablediff))
-				$sql .= "ALTER TABLE `users` ADD `email` varchar(64) NOT NULL;";
+				$sql .= "ALTER TABLE `users` ADD `email` VARCHAR(64) NOT NULL;";
 			if (in_array('name', $tablediff))
-				$sql .= "ALTER TABLE `users` ADD `pass` varchar(32) NOT NULL;";
+				$sql .= "ALTER TABLE `users` ADD `pass` VARCHAR(32) NOT NULL;";
 			if (in_array('title', $tablediff))
-				$sql .= "ALTER TABLE `users` ADD `name` varchar(32) NOT NULL;";
+				$sql .= "ALTER TABLE `users` ADD `name` VARCHAR(32) NOT NULL;";
 
 			return DB::execute($sql);
 		}

@@ -29,24 +29,22 @@ if ($_POST['username'] && $_POST['password']) {
 <?php echo ColorClasses::getColorClasses(false)->toStyleDefinition(); ?>
 </head>
 <body>
-<div class="adminContent">
-	<div class="content">
 <?php
 // logged in
 if (Admin::loggedIn()) {
 ?>
+<div class="adminContent">
+
+	<div class="events">
 		<h2>Ereignisse</h2>
-		<div class="bordered" id="eventList">
-			<span id="new" class="button">Neues Ereignis eintragen</span>
-			<div>
+		<span id="new" class="button">Neues Ereignis eintragen</span>
 <?php echo Admin::getEvents(); ?>
-			</div>
-		</div>
-		<div class="bordered" id="eventDetails"></div>
 	</div>
+	<div id="eventDetails"></div>
+
 	<div class="config">
 		<h2>Konfiguration</h2>
-		<ul class="bordered">
+		<ul>
 			<li id="databaseUpdate" class="button">Datenbank Update</a></li>
 			<li id="databaseRestart" class="button">Datenbanken neu anlegen und Testdaten einfügen</a></li>
 			<li id="refreshbutton" class="button">Ansicht aktualisieren</a></li>

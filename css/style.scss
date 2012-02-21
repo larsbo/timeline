@@ -298,16 +298,24 @@ $wrapperheight: 300px;
 /***** TABLE *****/
 .bordered {
 	border:solid #ccc 1px;
+	*border-collapse: collapse;
+	border-spacing: 0;
 	@include rounded-corners(6px);
 	@include shadows(0 1px 1px #ccc);
 
-	& > td, & > th {
+	tr:nth-child(even) {
+		background: #f5f5f5;
+		@include shadows(0 1px 0 rgba(255,255,255,.8) inset);
+	}
+	td, th {
 		border-left:1px solid #ccc;
 		border-top:1px solid #ccc;
+		padding: 10px;
 		text-align:left;
-		&:first-child { border-left:none; }
+		&:first-child {
+			border-left:none;
+		}
 	}
-
 	th {
 		background:#eeeeee;
 		@include background-gradients(top, #eeeeee 0%, #cccccc 100%);
@@ -315,17 +323,16 @@ $wrapperheight: 300px;
 		padding:10px;
 		text-shadow:0 1px 0 rgba(255,255,255,.5);
 		@include shadows(0 1px 0 rgba(255,255,255,.8) inset);
+		&:first-child {	@include rounded-corners(6px 0 0 0); }
+		&:last-child {	@include rounded-corners(0 6px 0 0); }
+		&:only-child {	@include rounded-corners(6px 6px 0 0); }
 	}
-
-	th:first-child { @include rounded-corners(6px 0 0 0); }
-	th:last-child { @include rounded-corners(0 6px 0 0); }
-	th:only-child{ @include rounded-corners(6px 6px 0 0); }
+	td {
+		padding: 3px 5px;
+	}
 	tr:last-child {
 		td:first-child { @include rounded-corners(0 0 0 6px); }
 		td:last-child {	@include rounded-corners(0 0 6px 0); }
-	}
-	.hover {
-		@include background-gradients(top, #cccccc 0%, #aaaaaa 100%);
 	}
 }
 
@@ -611,61 +618,55 @@ ul.noty_container {
 
 @mixin admin-button($image) {
 	background:$image;
-	float:right;
 	height:16px;
 	padding:1px;
 	width:16px;
 }
 
 .adminContent {
-	padding:50px 10px;
+	padding: 20px;
 	h2 {
-		padding:5px;
+		padding: 5px;
 	}
+	ul li { 
+		display: block;
+		margin: 5px 0;
+	}
+	.button {
+		color: #000;
+		padding: 3px 5px;
+	}
+	.config { float:right; }
+	.events { float: left; }
+	.eventList {
+		margin: 10px 0;
+		width: 500px;
+		.button {
+			&.show {
+				@include admin-button(url(../images/show.png) no-repeat center center);
+			}
+			&.edit {
+				@include admin-button(url(../images/edit.png) no-repeat center center);
+			}
+			&.delete {
+				@include admin-button(url(../images/delete.png) no-repeat center center);
+			}
+		}
+	}
+}
+.adminForm {
 	input, select, textarea {
 		margin:5px;
 		padding:2px 3px;
 	}
-	p { padding:2px 5px; }
-	.content { float:left; }
-	.config { 
-		float:right;
-		ul li { 
-			display: block;
-			margin: 5px 0;
-		}
+	textarea {
+		height: 50px;
+		width: 90%;
 	}
-	.bordered {
-		float:left;
-		margin-right:20px;
-		padding:5px;
+	p {
+		padding: 2px 5px;
 	}
 	.dateentry { width: 70px; }
-	.eventContainer { 
-		display:block;
-		width: 460px;
-		.event {
-			margin:0;
-			position:relative;
-			width:400px;
-		}
-	}
-	#eventDetails { width:440px; }
-	.button {
-		&.edit {
-			@include admin-button(url(../images/edit.png) no-repeat center center);
-		}
-		&.delete {
-			@include admin-button(url(../images/delete.png) no-repeat center center);
-		}
-	}
-	table {
-		width: 99%;
-		.submit {
-			float: right;
-			width: 100px;
-		}
-	}
 }
 
 
