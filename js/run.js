@@ -47,6 +47,29 @@ setWrapperHeight = function() {
 	scroller.css('height', full_height - parseInt(wrapper.css('top')) - 70 + 'px');
 };
 
+initialize = function(initialClass) {
+	//highlight initial Category
+	$('#colorclasses').find('li').each(function(){
+		var a = $(this);
+		if (a.data('colorclass') == initialClass)
+			a.addClass('selected');
+		else
+			a.removeClass('selected');
+	});
+	//hide and show only initial events...
+	$('.event').each(function(){
+		var event = $(this);
+		if (event && initialClass != event.data('colorclass')){
+			console.log('hiding: '+event.data('colorclass'));
+			event.hide();
+			$('#minimap-'+event.data('event')).hide();
+		}
+		else {
+			jumpToEvent(null, event.data('event'));
+		}
+	});
+};
+
 jQuery(document).ready(function($){
 	//make internal links
 	$('.event-details').find('a').each(function() {
@@ -218,8 +241,11 @@ jQuery(document).ready(function($){
 		$(this).parents('table').find('th:nth-child(' + ($(this).index() + 1) + ')').addClass("hover");
 	}, function(){
 		$(this).parents('table').find('th:nth-child(' + ($(this).index() + 1) + ')').removeClass("hover");
- });
+	});
 
 	// open extern links in modal window
 	$('.extern').button({icons: { primary: "ui-icon-extlink" } }).fancyBox();
+	
+	//show initial stuff
+	initialize('semiotic');
 });
