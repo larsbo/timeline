@@ -22,13 +22,13 @@ Licensed like jQuery - http://docs.jquery.com/License
 			$('#current-view').css('left', -timeline.x/factor);
 		};
 
-		var height = Math.round(2*el.height()/factor);
+		var height = Math.round(el.height()/factor);
 		var width = Math.round(el.width()/factor);
-		miniMap.height(height + 10);
+		miniMap.height(height + 20);
 		miniMap.width(width);
 		$('#map-container').width(width);
 
-		miniMapCurrentView.height(height + 12);
+		miniMapCurrentView.height(height + 20);
 		miniMapCurrentView.width(Math.round($(window).width()/factor));
 
 		// show every 5th year
@@ -57,7 +57,7 @@ Licensed like jQuery - http://docs.jquery.com/License
 			mapIcon
 			.attr('id', 'minimap-'+event.data('event'))
 			.css({
-				'height': Math.round(event.height()/factor), 
+				'height': Math.round(1.5*event.height()/factor), 
 				'width': Math.round(event.width()/factor), 
 				'left': Math.round(eventCoords.left/factor),
 				'top': Math.round(eventCoords.top/factor) + 3
