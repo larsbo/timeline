@@ -22,7 +22,7 @@ Licensed like jQuery - http://docs.jquery.com/License
 			$('#current-view').css('left', -timeline.x/factor);
 		};
 
-		var height = Math.round(el.height()/factor);
+		var height = Math.round(2*el.height()/factor);
 		var width = Math.round(el.width()/factor);
 		miniMap.height(height + 10);
 		miniMap.width(width);

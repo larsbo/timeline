@@ -99,11 +99,17 @@ EOD;
 		return $html;
 	}
 
+	private function getMaxLine($filterBy = null) {
+		$max = 0;
+		foreach ($this->events as $e)
+			if (!$filterBy || $e['event']->getColorclass() == $filterBy)
+				$max = $e['line']>$max ? $e['line'] : $max;
+		return $max;
+	}
 
 	function getOrderedEventsOutput() {
 		$c = Config::getInstance();
 		$this->alignEvents(true);
-		$x = $this->colorclasses->getArray();
 
 		$html = <<<EOD
 \t<table id="timeline" class="bordered">
@@ -114,17 +120,18 @@ EOD;
 			$html .= "\t\t\t\t<th class=\"date\" style=\"width: ".$c->tl_column_width."px\">".$year."</th>\n";
 		}
 		$html .= "\t\t\t</tr>\n\t\t</thead>\n\t\t<tbody>\n";
-		Log::debug('colorclasses: '.implode(',', $x));
-		foreach ($x as $a) {
-			$html .= "\t\t\t<tr id='content'>\n";
+		foreach ($this->colorclasses->getArray() as $a) {
+			$colorclass = $a['color_id'];
+			$max = $this->getMaxLine($colorclass) + 1;
+			Log::debug('maxline for '.$colorclass.' is '.$max);
+			$max *= $c->tl_event_padding_y;
+			$html .= "\t\t\t<tr id='content' style='height: ".$max."px;'>\n";
 			for ($year = $this->start_year; $year < $this->end_year; $year++) {
 				$html .= "\t\t\t\t<td>\n";
 				foreach ($this->events as $e) {
 					if ($e['event']->getStartYear() == $year) {
-						if ($a['color_id'] == $e['event']->getColorclass())
+						if ($colorclass == $e['event']->getColorclass())
 							$html .= $e['event']->toTimelineRepresentation($e['line']);
-						else
-							Log::debug("'".$e['event']->getColorclass()."' does not match '".$a['color_id']."'");
 					}
 				}
 				$html .= "\t\t\t\t</td>\n";
