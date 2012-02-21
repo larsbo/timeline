@@ -1,9 +1,10 @@
 var timeline = null;
 
 jumpToEvent = function(currentEventId, eventId) {
-	timeline.scrollToElement('#event'+eventId, 300);
 	var el = $('#event'+eventId);
 	if(el.length) {
+		var nx = el.offset().left + Math.round(el.width()/2) - Math.round($(window).width()/2);
+		timeline.scrollTo(nx*-1, 300);
 		//show back button
 		if (el.find('a.back').length == 0 && currentEventId) {
 			var a = $("<a class=\"back\"></a>");
@@ -30,7 +31,11 @@ jumpToEvent = function(currentEventId, eventId) {
 };
 
 jumpBack = function(el) {
-	timeline.scrollToElement('#event'+el, 300);
+	var x = $('#event'+el);
+	if(x.length) {
+		var nx = x.offset().left + Math.round(x.width()/2) - Math.round($(window).width()/2);
+		timeline.scrollTo(nx*-1, 300);
+	}
 };
 
 /* set wrapper height to current browser viewport */
