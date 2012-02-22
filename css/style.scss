@@ -238,7 +238,7 @@ $wrapperheight: 300px;
 		}
 		.source {
 			clear: both;
-			display: block;
+			display: none;
 			padding-top: 10px;
 		}
 		.time {
@@ -388,6 +388,7 @@ $wrapperheight: 300px;
 	}
 }
 
+/***** OPTIONS *****/
 #options {
 	background: #fff;
 	border-top:solid #ccc 1px;
@@ -405,6 +406,7 @@ $wrapperheight: 300px;
 		@include shadows(0 1px 1px #ccc);
 		margin: 0 2px;
 		padding: 0 5px;
+		vertical-align: middle;
 		p {
 			color:#333;
 			display:inline-block;
@@ -430,6 +432,16 @@ $wrapperheight: 300px;
 					font-weight: normal;
 				}
 			}
+		}
+	}
+	.toggle {
+		cursor: pointer;
+		display: inline-block;
+		margin: 5px 2px 1px;
+		vertical-align: middle;
+		.switch {
+			background: url('../images/switch.png') no-repeat;
+			display: inline-block;
 		}
 	}
 }

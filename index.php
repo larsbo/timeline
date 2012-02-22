@@ -22,6 +22,7 @@
   <script type="text/javascript" src="js/jquery.hovercard.js"></script>
   <script type="text/javascript" src="js/jquery.mini-map.js"></script>
   <script type="text/javascript" src="js/jquery.noty.js"></script>
+  <script type="text/javascript" src="js/jquery.switch.js"></script>
   <script type="text/javascript" src="js/run.js"></script>
 <?php
 include 'class/timeline.class.php';
@@ -57,6 +58,10 @@ echo $timeline->getColorClasses()->toStyleDefinition();
         <li class="button" data-type="short" title="kurze Ereignisse anzeigen">kurz</li>
         <li class="button" data-type="hidden" title="Ereignisse ausblenden">gefiltert</li>
       </ul>
+    </div>
+    <div id="source">
+      <p>Quellen:</p>
+      <span class="toggle"></span>
     </div>
   </div>
 </div>
