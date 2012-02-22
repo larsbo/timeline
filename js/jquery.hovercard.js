@@ -48,7 +48,8 @@ Event = {
 		if($('#'+id).length == 0) {
 			var clone = eventContainer.clone().css({
 				'opacity': 1,
-				'z-Index': 0
+				'z-Index': 0,
+				'bottom': ''
 			});
 			clone.find('.event').addClass('clone');
 			clone.find('.event-details, .pin').remove(); // remove unneeded elements
@@ -72,7 +73,17 @@ Event = {
 						.width(event.attr('data-width'))
 						.html(event.data('title') + '<span class="pin"></span>');
 				}
-				event.next().stop(true, true).fadeIn();
+				
+				var eventDetails = event.next();
+				eventDetails.stop(true, true).fadeIn();
+
+				xE = eventDetails.offset().top + eventDetails.outerHeight();
+				xB = $(window).height() - $('#options').outerHeight();
+				if (xE >= xB) {
+					//event is too big, we need to shift it up a bit ...
+					eventDetails.css('bottom', 0).css('position', 'relative');
+					eventDetails.parent().css('bottom', 0).css('top', '');
+				}
 			}
 			else {
 				//remove self from list, find max and set to max+1
@@ -86,6 +97,12 @@ Event = {
 	};
 	hoverOutFunction = function($this, event){
 		if (!$this.hasClass('sticky')) {
+			var eventDetails = event.next();
+			eventDetails.css('bottom', '').css('position', '');
+			eventDetails.parent().css('bottom', '');
+			if (eventDetails.parent().data('top'))
+				eventDetails.parent().css('top', eventDetails.parent().data('top'));
+
 			event.next().stop(true, true).fadeOut(300, function(){
 
 				if (shortModus()) {
@@ -141,9 +158,10 @@ Event = {
 				// move event back to original position
 				if (!eventContainer.hasClass('sticky')) {
 					eventContainer.draggable('disable');
+					var cl = $('#clone-' + eventContainer.find('.event').attr('data-event'));
 					eventContainer.animate({
-						top: eventContainer.data('origtop'),
-						left: eventContainer.data('origleft'),
+						top: cl.css('top'),
+						left: cl.css('left'),
 						duration: 'slow'
 					}, function(){
 						var id = 'clone-' + eventContainer.find('.event').attr('data-event');
