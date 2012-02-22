@@ -66,7 +66,6 @@ initialize = function(initialClass) {
 	});
 };
 
-
 /************ PAGE LOAD *************/
 jQuery(document).ready(function($){
 	var events = $('.event');
@@ -94,7 +93,6 @@ jQuery(document).ready(function($){
 
 	/*** mini map ***/
 	$('#timeline').minimap(timeline, $(window).width()-4);
-
 
 	// update timeline height
 	setWrapperHeight();
@@ -138,7 +136,7 @@ jQuery(document).ready(function($){
 	});
 
 	/* toggle long event names */
-	$('#options-container').find('.button').click(function(){
+	$('#options-container').on('click', '.button', function(e){
 		var button = $(this);
 		var clones = $('.clones');
 
@@ -185,7 +183,7 @@ jQuery(document).ready(function($){
 	});
 	
 	/* legend is intelligent filter */
-	$('#colorclasses').find('li').click(function(){
+	$('#colorclasses').on('click', 'li', function(e){
 		var button = $(this);
 		button.toggleClass('selected');
 		var activeFilters = button.parent().children().filter('.selected');
@@ -212,7 +210,7 @@ jQuery(document).ready(function($){
 	});
 
 	// highlight timeline column on hover
-	$('#content').delegate('td','mouseover mouseleave', function(e) {
+	$('#content').on('mouseover mouseleave', 'td', function(e) {
 		var index = $(this).index();
 		if (e.type == 'mouseover') {
 			$(this).parents('table').find('th:nth-child(' + (index + 1) + ')').addClass("hover");
