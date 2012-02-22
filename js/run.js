@@ -281,7 +281,8 @@ jQuery(document).ready(function($){
 	$('.toggle').Switch("off", function() {
 		sources.slideDown();
 	}, function() {
-		sources.slideUp();
+		sources.filter(":visible").slideUp();
+		sources.filter(":not(:visible)").hide();
 	});
 
 	//show initial stuff

@@ -267,7 +267,7 @@ table {
       text-align: center; }
     .event-preview .event-details .source {
       clear: both;
-      display: block;
+      display: none;
       padding-top: 10px; }
     .event-preview .event-details .time {
       font-size: 14px;
