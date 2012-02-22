@@ -58,6 +58,52 @@ Event = {
 	}
 };
 
+	hoverInFunction = function($this, event){
+		if ($this.find('.event-details').text().length) {	// check for content
+
+			if (!$this.hasClass('sticky')) {
+				//create new max of zIndices, so element will hover on top...
+				zIndices.push(zIndices.last()+1);
+				$this.css("zIndex", zIndices.last().toString());
+
+				if (shortModus()) {
+					// show title on hover
+					event
+						.width(event.attr('data-width'))
+						.html(event.data('title') + '<span class="pin"></span>');
+				}
+				event.next().stop(true, true).fadeIn();
+			}
+			else {
+				//remove self from list, find max and set to max+1
+				zIndices.rmElem(parseInt($this.css("zIndex")));
+				zIndices.push(zIndices.last()+1);
+				$this.css("zIndex", zIndices.last().toString());
+			}
+		
+			Event.hoverin($this.find('.event'));
+		}
+	};
+	hoverOutFunction = function($this, event){
+		if (!$this.hasClass('sticky')) {
+			event.next().stop(true, true).fadeOut(300, function(){
+
+				if (shortModus()) {
+					event.width('').html('+');
+				}
+
+				//remove self from list
+				zIndices.rmElem(parseInt($this.css("zIndex")));
+				$this.css("zIndex", "1");
+
+				Event.hoverout($this.find('.event'));
+			});
+		}
+		else {
+			Event.hoverout($this.find('.event'));
+		}
+	};
+
 	$.fn.hovercard = function(){
 		//Set defauls for the control
 		var event = $(this);
@@ -111,55 +157,11 @@ Event = {
 		});
 
 		// show event details on hover
-		event.parent().hover(function(){
-			var $this = $(this);
-
-			if ($this.find('.event-details').text().length) {	// check for content
-	
-				if (!$this.hasClass('sticky')) {
-					//create new max of zIndices, so element will hover on top...
-					zIndices.push(zIndices.last()+1);
-					$this.css("zIndex", zIndices.last().toString());
-	
-					if (shortModus()) {
-						// show title on hover
-						event
-							.width(event.attr('data-width'))
-							.html(event.data('title') + '<span class="pin"></span>');
-					}
-					event.next().stop(true, true).fadeIn();
-				}
-				else {
-					//remove self from list, find max and set to max+1
-					zIndices.rmElem(parseInt($this.css("zIndex")));
-					zIndices.push(zIndices.last()+1);
-					$this.css("zIndex", zIndices.last().toString());
-				}
-				
-				Event.hoverin($this.find('.event'));
-			}
-		},
-		// hide event details on hover out
-		function(){
-			$this = $(this);
-
-			if (!$this.hasClass('sticky')) {
-				event.next().stop(true, true).fadeOut(300, function(){
-
-					if (shortModus()) {
-						event.width('').html('+');
-					}
-
-					//remove self from list
-					zIndices.rmElem(parseInt($this.css("zIndex")));
-					$this.css("zIndex", "1");
-
-					Event.hoverout($this.find('.event'));
-				});
-			}
-			else {
-				Event.hoverout($this.find('.event'));
-			}
+		event.parent().on('mouseover mouseleave', function(e){
+			if (e.type == 'mouseover')
+				hoverInFunction($(this), event);
+			else
+				hoverOutFunction($(this), event);
 		});
 	};
 })(jQuery);

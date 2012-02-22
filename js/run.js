@@ -12,16 +12,20 @@ jumpToEvent = function(currentEventId, eventId) {
 		//show back button
 		if (currentEventId) {
 			var a = $("<a class=\"back\"></a>");
-			a.title = $('#event'+currentEventId).data('title');
+			var oldel = $('#event'+currentEventId);
+			hoverOutFunction(oldel.parent(), oldel);
+			a.title = oldel.data('title');
 			a.click(function(e){
 				e.preventDefault();
+				hoverOutFunction(el.parent(), el);
 				jumpBack(currentEventId);
 				a.remove();
 			});
 			el.next().append(a);
 		}
+		hoverInFunction(el.parent(), el);
 		el.parent().addClass('sticky').draggable('enable');
-		el.next().stop(true, true).fadeIn();
+//		el.next().stop(true, true).fadeIn();
 	}
 };
 
