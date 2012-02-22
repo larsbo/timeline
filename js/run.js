@@ -93,7 +93,7 @@ jQuery(document).ready(function($){
 
 
 	/*** mini map ***/
-	$('#timeline').minimap(timeline, $(window).width()-10);
+	$('#timeline').minimap(timeline, $(window).width()-4);
 
 
 	// update timeline height
@@ -239,10 +239,14 @@ jQuery(document).ready(function($){
 	});
 
 	// highlight timeline column on hover
-	$('#content').find('td').hover(function(){
-		$(this).parents('table').find('th:nth-child(' + ($(this).index() + 1) + ')').addClass("hover");
-	}, function(){
-		$(this).parents('table').find('th:nth-child(' + ($(this).index() + 1) + ')').removeClass("hover");
+	$('#content').delegate('td','mouseover mouseleave', function(e) {
+		var index = $(this).index();
+		if (e.type == 'mouseover') {
+			$(this).parents('table').find('th:nth-child(' + (index + 1) + ')').addClass("hover");
+		}
+		else {
+			$(this).parents('table').find('th:nth-child(' + (index + 1) + ')').removeClass("hover");
+		}
 	});
 
 	// open extern links in modal window

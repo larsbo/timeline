@@ -85,7 +85,7 @@ EOD;
 		for ($year = $this->start_year; $year < $this->end_year; $year++) {
 			$html .= "\t\t\t\t<th class=\"date\" style=\"width: ".$c->tl_column_width."px\">".$year."</th>\n";
 		}
-		$html .= "\t\t\t</tr>\n\t\t</thead>\n\t\t<tbody>\n\t\t\t<tr id='content'>\n";
+		$html .= "\t\t\t</tr>\n\t\t</thead>\n\t\t<tbody id='content'>\n\t\t\t<tr>\n";
 		for ($year = $this->start_year; $year < $this->end_year; $year++) {
 			$html .= "\t\t\t\t<td>\n";
 			foreach ($this->events as $e) {
@@ -119,13 +119,13 @@ EOD;
 		for ($year = $this->start_year; $year < $this->end_year; $year++) {
 			$html .= "\t\t\t\t<th class=\"date\" style=\"width: ".$c->tl_column_width."px\">".$year."</th>\n";
 		}
-		$html .= "\t\t\t</tr>\n\t\t</thead>\n\t\t<tbody>\n";
+		$html .= "\t\t\t</tr>\n\t\t</thead>\n\t\t<tbody id='content'>\n";
 		foreach ($this->colorclasses->getArray() as $a) {
 			$colorclass = $a['color_id'];
 			$max = $this->getMaxLine($colorclass) + 1;
 			Log::debug('maxline for '.$colorclass.' is '.$max);
 			$max *= $c->tl_event_padding_y;
-			$html .= "\t\t\t<tr id='content' style='height: ".$max."px;'>\n";
+			$html .= "\t\t\t<tr style='height: ".$max."px;'>\n";
 			for ($year = $this->start_year; $year < $this->end_year; $year++) {
 				$html .= "\t\t\t\t<td>\n";
 				foreach ($this->events as $e) {

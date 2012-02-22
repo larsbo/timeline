@@ -17,7 +17,7 @@ Licensed like jQuery - http://docs.jquery.com/License
 		var miniMapCurrentView = $('#current-view');
 		
 		//factor-calc:
-		factor = Math.round(el.width()/size);
+		factor = Math.ceil(el.width()/size);
 		timeline.options.onScrollEnd = function(){
 			$('#current-view').css('left', -timeline.x/factor);
 		};
