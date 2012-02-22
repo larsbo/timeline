@@ -273,6 +273,14 @@ table {
       font-size: 14px;
       font-weight: bold;
       line-height: 30px; }
+    .event-preview .event-details .video_overlay {
+      background: url("../images/video.png") no-repeat;
+      display: inline-block;
+      height: 48px;
+      left: -140px;
+      position: relative;
+      top: 50px;
+      width: 48px; }
     .event-preview .event-details a {
       font-weight: bold; }
     .event-preview .event-details a.extern {
