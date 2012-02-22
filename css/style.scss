@@ -97,7 +97,7 @@ $wrapperheight: 300px;
 			th {
 				border-left:1px solid #ccc;
 				border-right:1px solid #fff;
-				font:bold 18px Arial, Helvetica;
+				font:bold 18px;
 				height:30px;
 				text-align:center;
 				text-shadow:0 1px 0 rgba(255, 255, 255, 0.9);
@@ -142,7 +142,6 @@ $wrapperheight: 300px;
 	display:inline-block;
 	background-color:#ddd;
 	@include background-gradients(top, #eee, #ccc);
-	font-family:Arial, Helvetica;
 	font-size:10px;
 	font-weight:bold;
 	line-height:12px;
@@ -312,28 +311,18 @@ $wrapperheight: 300px;
 
 /***** BUTTON *****/
 .button {
-	border:1px solid #777;
 	color:#666;
-	cursor:pointer;
-	display:inline-block;
 	background-color:#ddd;
 	@include background-gradients(top, #eee, #ccc);
-	padding:0 0.9em;
 	text-decoration:none;
 	text-shadow:0 1px 0 rgba(255,255,255,.8);
 	white-space:nowrap;
-	@include rounded-corners(.2em);
 	@include shadows(0 0 1px 1px rgba(255,255,255,.8) inset);
 
 	&:hover {
 		background-color:#eee;
 		@include background-gradients(top, #fafafa, #ddd);
 		color:#666;
-	}
-	&:active {
-		position:relative;
-		top:1px;
-		@include shadows(0 0 4px 2px rgba(0,0,0,.3) inset);
 	}
 	&.selected {
 		outline:0;
@@ -391,13 +380,8 @@ $wrapperheight: 300px;
 		@include rounded-corners(.2em);
 		-moz-user-select:none;
 		-khtml-user-select: none;
-		&.h1 { background: #666; }
-		&.h2 { background: #999; }
-		&.h3 { background: #ccc; }
-		&.p { background: #F9F9F9; }
 		&.span { background: #06c; }
 		&.th { background: #eee; }
-		&.pre { background: #0Cf; }
 		
 		&.hovered { background: #0cc; }
 	}
@@ -429,6 +413,7 @@ $wrapperheight: 300px;
 		ul {
 			display: inline-block;
 			li {
+				border:1px solid #777;
 				cursor: pointer;
 				display: inline-block;
 				opacity: 0.5;
