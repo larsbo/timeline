@@ -121,7 +121,7 @@ jQuery(document).ready(function($){
 	});
 
 	var timelineheight = $('#content').height();
-	var maxElementHeight = Math.max(timelineheight-100,100);
+	var maxElementHeight = Math.min(Math.max(timelineheight-100,100), 400);
 
 	/*** events ***/
 	events.each(function(){
