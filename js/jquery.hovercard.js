@@ -100,8 +100,8 @@ Event = {
 			var eventDetails = event.next();
 			eventDetails.css('bottom', '').css('position', '');
 			eventDetails.parent().css('bottom', '');
-			if (eventDetails.parent().data('top'))
-				eventDetails.parent().css('top', eventDetails.parent().data('top'));
+	//		if (eventDetails.parent().data('top'))
+	//			eventDetails.parent().css('top', eventDetails.parent().data('top'));
 
 			event.next().stop(true, true).fadeOut(300, function(){
 
