@@ -93,7 +93,7 @@ jQuery(document).ready(function($){
 
 
 	/*** mini map ***/
-	$('#timeline').minimap(timeline, $(window).width()-10);
+	$('#timeline').minimap(timeline, $(window).width()-4);
 
 
 	// update timeline height
