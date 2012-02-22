@@ -120,6 +120,8 @@ jQuery(document).ready(function($){
 		setWrapperHeight();
 	});
 
+	var timelineheight = $('#content').height();
+	var maxElementHeight = Math.max(timelineheight-100,100);
 
 	/*** events ***/
 	events.each(function(){
@@ -153,6 +155,11 @@ jQuery(document).ready(function($){
 			}
 		});
 		event.parent().draggable('disable');	// disable on startup
+		
+		var elementDetails = $(this).next();
+		while (elementDetails.height() > maxElementHeight) {
+			elementDetails.width(elementDetails.width()+100);
+		}
 	});
 
 	/* toggle long event names */

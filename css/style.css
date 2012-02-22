@@ -245,6 +245,10 @@ table {
     text-align: left;
     top: 0;
     width: 600px;
+    column-width: 300px;
+    -moz-column-width: 300px;
+    -webkit-column-width: 300px;
+    text-align: justify;
     border-radius: 3px;
     -o-border-radius: 3px;
     -moz-border-radius: 3px;

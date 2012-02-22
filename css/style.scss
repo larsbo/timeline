@@ -219,6 +219,10 @@ $wrapperheight: 300px;
 		text-align:left;
 		top:0;
 		width:600px;
+		column-width: 300px;
+		-moz-column-width: 300px;
+		-webkit-column-width: 300px;
+		text-align: justify;
 		@include rounded-corners(3px);
 		@include shadows(5px 5px 5px #888);
 		.img {
