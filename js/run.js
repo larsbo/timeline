@@ -41,7 +41,7 @@ jumpToEvent = function(currentEventId, eventId) {
 		}
 		hoverInFunction(el.parent(), el);
 		el.parent().addClass('sticky').draggable('enable');
-//		el.next().stop(true, true).fadeIn();
+		Event.makeClone(el.parent());
 	}
 };
 
