@@ -1,9 +1,25 @@
 var timeline = null;
 
 /*************** FUNCTIONS **************/
+$.fn.showEvent = function(){
+	var el = $(this);
+	el.show();
+	$('#minimap-'+el.data('event')).show();
+}
+$.fn.hideEvent = function(){
+	var el = $(this);//TODO stickies?
+	el.hide();
+	$('#minimap-'+el.data('event')).hide();
+}
+
 jumpToEvent = function(currentEventId, eventId) {
 	var el = $('#event'+eventId);
 	if(el.length) {
+		//if hidden, make visible...
+		if (el.filter(':not(:visible)').length) {
+			el.showEvent();
+		}
+	
 		var nx = el.offset().left + Math.round(el.width()/2) - Math.round($(window).width()/2);
 		timeline.scrollTo(nx*-1, 300);
 
@@ -201,15 +217,10 @@ jQuery(document).ready(function($){
 				if ($(this).data('colorclass') == value)
 					flag = true;
 			});
-			//TODO what about stickies??
-			if (flag) {
-				event.show();
-				$('#minimap-'+event.data('event')).show();
-			}
-			else {
-				event.hide();
-				$('#minimap-'+event.data('event')).hide();
-			}
+			if (flag)
+				event.showEvent();
+			else
+				event.hideEvent();
 		});
 	});
 
