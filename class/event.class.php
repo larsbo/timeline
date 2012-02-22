@@ -255,9 +255,14 @@ EOD;
 	}
 
 	private function getVideoRepresentation() {
+		parse_str(parse_url($this->image, PHP_URL_QUERY), $video);
+
 		return <<<EOD
+	<a class="video" href="{$this->image}" title="Video starten">
+		<img class="img" src="http://img.youtube.com/vi/{$video['v']}/1.jpg" />
+		<span class="video_overlay"></span>
+	</a>
 	{$this->details}
-	<div><a href="{$this->image}" class="video">Video starten</a></div>
 EOD;
 	}
 

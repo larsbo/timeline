@@ -246,6 +246,15 @@ $wrapperheight: 300px;
 			font-weight: bold;
 			line-height: 30px;
 		}
+		.video_overlay {
+			background: url('../images/video.png') no-repeat;
+			display: inline-block;
+			height: 48px;
+			left: -140px;
+			position: relative;
+			top: 50px;
+			width: 48px;
+		}
 		a {
 			font-weight: bold;
 		}
