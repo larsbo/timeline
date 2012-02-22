@@ -1,5 +1,6 @@
 var timeline = null;
 
+/*************** FUNCTIONS **************/
 jumpToEvent = function(currentEventId, eventId) {
 	var el = $('#event'+eventId);
 	if(el.length) {
@@ -18,7 +19,7 @@ jumpToEvent = function(currentEventId, eventId) {
 			a.remove();
 		});
 		el.next().append(a);
-		el.parent().addClass('sticky');
+		el.parent().addClass('sticky').draggable('enable');
 		el.next().stop(true, true).fadeIn();
 	}
 };
@@ -40,6 +41,7 @@ setWrapperHeight = function() {
 	scroller.css('height', full_height - parseInt(wrapper.css('top')) - 70 + 'px');
 };
 
+/* initial actions */
 initialize = function(initialClass) {
 	//highlight initial Category
 	$('#colorclasses').find('li').each(function(){
@@ -49,6 +51,7 @@ initialize = function(initialClass) {
 		else
 			a.removeClass('selected');
 	});
+
 	//hide and show only initial events...
 	$('.event').each(function(){
 		var event = $(this);
@@ -63,8 +66,12 @@ initialize = function(initialClass) {
 	});
 };
 
+
+/************ PAGE LOAD *************/
 jQuery(document).ready(function($){
-	//make internal links
+	var events = $('.event');
+
+	/*** internal links ***/
 	$('.event-details').find('a').each(function() {
 		var ab = $(this);
 		var hr = ab.attr('href');
@@ -76,8 +83,7 @@ jQuery(document).ready(function($){
 	});
 
 
-
-	/* iScroll */
+	/*** iScroll ***/
 	timeline = new iScroll('wrapper',{
 		bounce: false,
 		scrollbarClass: 'scrollbar',
@@ -85,8 +91,10 @@ jQuery(document).ready(function($){
 		vScrollbar: false
 	});
 
-	/* show mini map of the timeline */
+
+	/*** mini map ***/
 	$('#timeline').minimap(timeline, $(window).width()-10);
+
 
 	// update timeline height
 	setWrapperHeight();
@@ -94,13 +102,12 @@ jQuery(document).ready(function($){
 		setWrapperHeight();
 	});
 
-	var events = $('.event');
 
-	/* show event details */
+	/*** events ***/
 	events.each(function(){
 		var event = $(this);
 
-		// show large image
+		// show large images
 		event.siblings().first().find('img').each(function(){
 			var image = $(this);
 			if (!image.attr('height') && !image.attr('width')) {
@@ -119,10 +126,11 @@ jQuery(document).ready(function($){
 		clone.attr('id', 'clone-' + clone.find('.event').attr('data-event'));
 		event.parent().after(clone);	// insert clone after original event
 
+		// show event details
 		event.hovercard();
+
+		// make events draggable
 		event.parent().draggable({
-			/*axis: 'y',*/
-			/*handle: 'div',*/
 			start: function(){
 				var current = $(this);
 
@@ -137,22 +145,23 @@ jQuery(document).ready(function($){
 			}
 		});
 		event.parent().draggable('disable');	// disable on startup
+
+		// highlight event clone
+		event.parent().hover(function() {
+			var event = $(this).find('.event');
+			var clone = $('#clone-' + event.data('event'));
+			$('#minimap-' + event.data('event')).addClass('hovered');
+			$('.event').not(event).not(clone.find('.clone')).stop().animate({'opacity': '0.2'}, 'slow');
+			clone.stop().animate({'opacity': '1'}, 'slow');
+		}, function() {
+			var event = $(this).find('.event');
+			var clone = $('#clone-' + event.data('event'));
+			$('#minimap-' + event.data('event')).removeClass('hovered');
+			$('.event').not(event).not(clone.find('.clone')).stop().animate({'opacity': '1'}, 'slow');
+			clone.stop().animate({'opacity': '0.2'}, 'slow');
+		});
 	});
 
-	// highlight event clone
-	events.parent().hover(function() {
-		var event = $(this).find('.event');
-		var clone = $('#clone-' + event.data('event'));
-		$('#minimap-' + event.data('event')).addClass('hovered');
-		$('.event').not(event).not(clone.find('.clone')).stop().animate({'opacity': '0.2'}, 'slow');
-		clone.stop().animate({'opacity': '1'}, 'slow');
-	}, function() {
-		var event = $(this).find('.event');
-		var clone = $('#clone-' + event.data('event'));
-		$('#minimap-' + event.data('event')).removeClass('hovered');
-		$('.event').not(event).not(clone.find('.clone')).stop().animate({'opacity': '1'}, 'slow');
-		clone.stop().animate({'opacity': '0.2'}, 'slow');
-	});
 
 
 	/* toggle long event names */
