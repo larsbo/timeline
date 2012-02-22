@@ -249,14 +249,20 @@ $wrapperheight: 300px;
 		.video_overlay {
 			background: url('../images/video.png') no-repeat;
 			display: inline-block;
+			float: left;
 			height: 48px;
-			left: -140px;
-			position: relative;
-			top: 50px;
+			left: 85px;
+			position: absolute;
+			top: 100px;
 			width: 48px;
+			@include rounded-corners(6px);
+			@include shadows(0 0 5px #fff);
 		}
 		a {
 			font-weight: bold;
+		}
+		a.video:hover span {
+			@include shadows(0 0 15px #fff);
 		}
 		a.extern {
 			background: url('../images/extern.png') no-repeat 5px center;
