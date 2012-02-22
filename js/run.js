@@ -5,26 +5,19 @@ jumpToEvent = function(currentEventId, eventId) {
 	if(el.length) {
 		var nx = el.offset().left + Math.round(el.width()/2) - Math.round($(window).width()/2);
 		timeline.scrollTo(nx*-1, 300);
+
+		//remove old back button if exists
+		el.siblings().first().find('a.back').remove();
+
 		//show back button
-		if (el.find('a.back').length == 0 && currentEventId) {
-			var a = $("<a class=\"back\"></a>");
-			a.title = $('#event'+currentEventId).data('title');
-			a.click(function(e){
-				e.preventDefault();
-				jumpBack(currentEventId);
-				a.remove();
-			});
-			el.next().append(a);
-		}
-		else if (currentEventId) {
-			var a = el.find('a.back');
-			a.click(function(e){
-				e.preventDefault();
-				jumpBack(currentEventId);
-				a.remove();
-			});
-			a.title = $('#event'+currentEventId).data('title');
-		}
+		var a = $("<a class=\"back\"></a>");
+		a.title = $('#event'+currentEventId).data('title');
+		a.click(function(e){
+			e.preventDefault();
+			jumpBack(currentEventId);
+			a.remove();
+		});
+		el.next().append(a);
 		el.parent().addClass('sticky');
 		el.next().stop(true, true).fadeIn();
 	}
