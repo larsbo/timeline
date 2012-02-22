@@ -466,6 +466,7 @@ table {
     #mini-map div.hovered {
       background: #0cc; }
 
+/***** OPTIONS *****/
 #options {
   background: #fff;
   border-top: solid #ccc 1px;
@@ -488,7 +489,8 @@ table {
     -moz-box-shadow: 0 1px 1px #cccccc;
     -webkit-box-shadow: 0 1px 1px #cccccc;
     margin: 0 2px;
-    padding: 0 5px; }
+    padding: 0 5px;
+    vertical-align: middle; }
     #options div p {
       color: #333;
       display: inline-block;
@@ -511,3 +513,11 @@ table {
           opacity: 1; }
         #options div ul li:not(.selected) {
           font-weight: normal; }
+  #options .toggle {
+    cursor: pointer;
+    display: inline-block;
+    margin: 5px 2px 1px;
+    vertical-align: middle; }
+    #options .toggle .switch {
+      background: url("../images/switch.png") no-repeat;
+      display: inline-block; }

@@ -272,6 +272,14 @@ jQuery(document).ready(function($){
 		return false;
 	});
 
+	// fancy switch
+	var sources = $('.source');
+	$('.toggle').Switch("off", function() {
+		sources.slideDown();
+	}, function() {
+		sources.slideUp();
+	});
+
 	//show initial stuff
 	initialize('semiotic');
 });
