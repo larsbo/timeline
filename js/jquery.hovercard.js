@@ -26,15 +26,43 @@ var zIndices = [];
 		else
 			return 10; //start with 10, if no element is hovered yet
 	}
+	
+Event = {
+	hoverin: function(event) {
+		//highlight my clone and disable all other events
+		$('.event').not(event).stop().animate({'opacity': '0.2'}, 'slow');
+		var clone = $('#clone-' + event.data('event'));
+		if(clone)
+			clone.find('.clone').stop().animate({'opacity': '1'}, 'slow');
+	},
+	hoverout: function(event) {
+		//restore event visibility states...
+		$('.event').not(event).stop().animate({'opacity': '1'}, 'slow');
+		var clone = $('#clone-' + event.data('event'));
+		if(clone)
+			clone.find('.clone').stop().animate({'opacity': '0.2'}, 'slow');
+	},
+	makeClone: function(eventContainer) {
+		var event = eventContainer.find('.event');
+		var id = 'clone-' + event.attr('data-event');
+		if($('#'+id).length == 0) {
+			var clone = eventContainer.clone().css({
+				'opacity': 1,
+				'z-Index': 0
+			});
+			clone.find('.event').addClass('clone');
+			clone.find('.event-details, .pin').remove(); // remove unneeded elements
+			clone.attr('id', id);
+			event.parent().after(clone);	// insert clone after original event
+		}
+	}
+};
 
 	$.fn.hovercard = function(){
 		//Set defauls for the control
 		var event = $(this);
 		var options = {
 			detailsHTML: $('#event-' + event.data('event')).html(),
-			delay: 0,
-			onHoverIn: function() { },
-			onHoverOut: function() { }
 		};
 
 		shortModus = function(){
@@ -47,7 +75,6 @@ var zIndices = [];
 			'left': event.css('left'),
 			'padding-top': event.height() + 12
 		});
-
 
 		var isDragging = false;
 		event.mousedown(function() {
@@ -72,9 +99,13 @@ var zIndices = [];
 						top: eventContainer.data('origtop'),
 						left: eventContainer.data('origleft'),
 						duration: 'slow'
+					}, function(){
+						var id = 'clone-' + eventContainer.find('.event').attr('data-event');
+						$('#'+id).remove();
 					});
 				} else {
 					eventContainer.draggable('enable');
+					Event.makeClone(eventContainer);
 				}
 			}
 		});
@@ -96,7 +127,7 @@ var zIndices = [];
 							.width(event.attr('data-width'))
 							.html(event.data('title') + '<span class="pin"></span>');
 					}
-					event.next().stop(true, true).delay(options.delay).fadeIn();
+					event.next().stop(true, true).fadeIn();
 				}
 				else {
 					//remove self from list, find max and set to max+1
@@ -104,15 +135,11 @@ var zIndices = [];
 					zIndices.push(zIndices.last()+1);
 					$this.css("zIndex", zIndices.last().toString());
 				}
-	
-				//Default functionality on hoverin, and also allows callback
-				if (typeof options.onHoverIn == 'function') {
-					//Callback function
-					options.onHoverIn.call(this);
-				}
+				
+				Event.hoverin($this.find('.event'));
 			}
 		},
-		// hode event details on hover out
+		// hide event details on hover out
 		function(){
 			$this = $(this);
 
@@ -127,15 +154,11 @@ var zIndices = [];
 					zIndices.rmElem(parseInt($this.css("zIndex")));
 					$this.css("zIndex", "1");
 
-					if (typeof options.onHoverOut == 'function') {
-						options.onHoverOut.call(this);
-					}
+					Event.hoverout($this.find('.event'));
 				});
 			}
 			else {
-				if (typeof options.onHoverOut == 'function') {
-					options.onHoverOut.call(this);
-				}
+				Event.hoverout($this.find('.event'));
 			}
 		});
 	};

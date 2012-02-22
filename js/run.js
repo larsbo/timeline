@@ -9,16 +9,17 @@ jumpToEvent = function(currentEventId, eventId) {
 
 		//remove old back button if exists
 		el.siblings().first().find('a.back').remove();
-
 		//show back button
-		var a = $("<a class=\"back\"></a>");
-		a.title = $('#event'+currentEventId).data('title');
-		a.click(function(e){
-			e.preventDefault();
-			jumpBack(currentEventId);
-			a.remove();
-		});
-		el.next().append(a);
+		if (currentEventId) {
+			var a = $("<a class=\"back\"></a>");
+			a.title = $('#event'+currentEventId).data('title');
+			a.click(function(e){
+				e.preventDefault();
+				jumpBack(currentEventId);
+				a.remove();
+			});
+			el.next().append(a);
+		}
 		el.parent().addClass('sticky').draggable('enable');
 		el.next().stop(true, true).fadeIn();
 	}
@@ -56,7 +57,6 @@ initialize = function(initialClass) {
 	$('.event').each(function(){
 		var event = $(this);
 		if (event && initialClass != event.data('colorclass')){
-			console.log('hiding: '+event.data('colorclass'));
 			event.hide();
 			$('#minimap-'+event.data('event')).hide();
 		}
@@ -65,7 +65,6 @@ initialize = function(initialClass) {
 		}
 	});
 };
-
 
 /************ PAGE LOAD *************/
 jQuery(document).ready(function($){
@@ -95,7 +94,6 @@ jQuery(document).ready(function($){
 	/*** mini map ***/
 	$('#timeline').minimap(timeline, $(window).width()-4);
 
-
 	// update timeline height
 	setWrapperHeight();
 	$(window).resize(function() {
@@ -116,16 +114,6 @@ jQuery(document).ready(function($){
 			image.parents('a').fancybox();
 		});
 
-		// clone events
-		var clone = event.parent().clone().css({
-			'opacity': 0.2,
-			'z-Index': 0
-		});
-		clone.find('.event').addClass('clone');
-		clone.find('.event-details, .pin').remove(); // remove unneeded elements
-		clone.attr('id', 'clone-' + clone.find('.event').attr('data-event'));
-		event.parent().after(clone);	// insert clone after original event
-
 		// show event details
 		event.hovercard();
 
@@ -145,27 +133,10 @@ jQuery(document).ready(function($){
 			}
 		});
 		event.parent().draggable('disable');	// disable on startup
-
-		// highlight event clone
-		event.parent().hover(function() {
-			var event = $(this).find('.event');
-			var clone = $('#clone-' + event.data('event'));
-			$('#minimap-' + event.data('event')).addClass('hovered');
-			$('.event').not(event).not(clone.find('.clone')).stop().animate({'opacity': '0.2'}, 'slow');
-			clone.stop().animate({'opacity': '1'}, 'slow');
-		}, function() {
-			var event = $(this).find('.event');
-			var clone = $('#clone-' + event.data('event'));
-			$('#minimap-' + event.data('event')).removeClass('hovered');
-			$('.event').not(event).not(clone.find('.clone')).stop().animate({'opacity': '1'}, 'slow');
-			clone.stop().animate({'opacity': '0.2'}, 'slow');
-		});
 	});
 
-
-
 	/* toggle long event names */
-	$('#options-container').find('.button').click(function(){
+	$('#options-container').on('click', '.button', function(e){
 		var button = $(this);
 		var clones = $('.clones');
 
@@ -212,7 +183,7 @@ jQuery(document).ready(function($){
 	});
 	
 	/* legend is intelligent filter */
-	$('#colorclasses').find('li').click(function(){
+	$('#colorclasses').on('click', 'li', function(e){
 		var button = $(this);
 		button.toggleClass('selected');
 		var activeFilters = button.parent().children().filter('.selected');
@@ -239,7 +210,7 @@ jQuery(document).ready(function($){
 	});
 
 	// highlight timeline column on hover
-	$('#content').delegate('td','mouseover mouseleave', function(e) {
+	$('#content').on('mouseover mouseleave', 'td', function(e) {
 		var index = $(this).index();
 		if (e.type == 'mouseover') {
 			$(this).parents('table').find('th:nth-child(' + (index + 1) + ')').addClass("hover");
