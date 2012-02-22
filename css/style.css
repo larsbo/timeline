@@ -270,10 +270,9 @@ table {
     .event-preview .event-details a {
       font-weight: bold; }
     .event-preview .event-details a.extern {
-      color: #000;
+      background: url("../images/extern.png") no-repeat 5px center;
       font-weight: normal;
-      text-align: center;
-      width: 100%; }
+      padding-left: 20px; }
     .event-preview .event-details a.back {
       background: url("../images/left.png") no-repeat;
       cursor: pointer;

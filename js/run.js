@@ -246,8 +246,12 @@ jQuery(document).ready(function($){
 	});
 
 	// open extern links in modal window
-	$('.extern').button({icons: { primary: "ui-icon-extlink" } }).fancyBox();
-	
+	$('.extern').fancybox({
+		width: '100%',
+		height: '100%',
+		autoScale: false,
+	});
+
 	//show initial stuff
 	initialize('semiotic');
 });

@@ -66,7 +66,7 @@ class Event {
 		foreach ($links as $link) {
 			if (preg_match('#http://#', $link)) {
 				// link found
-				$output .= "<a href=\"".$link."\" class=\"extern\">".$link."</a><br />\n";
+				$output .= "<a href=\"".$link."\" class=\"extern iframe\">".$link."</a><br />\n";
 			} else {
 				$output .= $link."<br />\n";
 			}
