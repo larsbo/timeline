@@ -14,12 +14,14 @@ body {
   padding: 2px 3px; }
 .adminForm textarea {
   height: 50px;
-  width: 90%; }
+  width: 100%; }
 .adminForm .dateentry {
   width: 70px; }
 .adminForm #eventList table {
   margin: 10px 0;
   width: 500px; }
+.adminForm .long {
+  width: 700px; }
 
 .adminContent {
   padding: 5px 10px; }

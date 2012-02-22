@@ -19,12 +19,15 @@ body {
 	}
 	textarea {
 		height: 50px;
-		width: 90%;
+		width: 100%;
 	}
 	.dateentry { width: 70px; }
 	#eventList table {
 		margin: 10px 0;
 		width: 500px;
+	}
+	.long {
+		width: 700px;
 	}
 }
 

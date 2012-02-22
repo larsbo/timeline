@@ -134,7 +134,7 @@ class Event {
 	}
 	
 	static function getTypes() {
-		return array('text', 'quote', 'image');
+		return array('text', 'quote', 'image', 'video');
 	}
 	
 	private function escape() {
@@ -191,15 +191,19 @@ EOD;
 		$offset = $this->getPixelOffset();
 		$source = $this->getSource() != "" ? "<div class=\"source\">".$this->getSource()."</div>" : "";
 		switch ($this->type) {
-		case 'quote':
-			$text = $this->getQuoteRepresentation();
-			break;
 		case 'image':
 			$text = $this->getImageRepresentation();
+			break;
+		case 'quote':
+			$text = $this->getQuoteRepresentation();
 			break;
 		case 'text':
 			default:
 			$text = $this->getTextRepresentation();
+			break;
+		case 'video':
+			default:
+			$text = $this->getVideoRepresentation();
 			break;
 		}
 		$html = <<<EOD
@@ -226,20 +230,8 @@ EOD;
 		return $html;
 	}
 
-	private function getTextRepresentation() {
-		$image = $this->resizeImage($this->getImage(), 150, $this->title, 'class="img"');
-
-		return $image.$this->details;
-	}
-
-	private function getQuoteRepresentation() {
-		return <<<EOD
-<blockquote>{$this->details}</blockquote>
-EOD;
-	}
-
 	private function getImageRepresentation() {
-		$image = $this->resizeImage($this->getImage(), 150, 'alt="'.$this->title.'" title="'.$this->title.'"');
+		$image = $this->resizeImage(150, 'alt="'.$this->title.'" title="'.$this->title.'"');
 		if ($this->details) {
 			return <<<EOD
 	<div class="big-img">{$image}</div>
@@ -250,8 +242,28 @@ EOD;
 		}
 	}
 
-	private function resizeImage($image, $max, $title, $extra = "") {
-		if ($image && file_exists($image)) {
+	private function getQuoteRepresentation() {
+		return <<<EOD
+	<blockquote>{$this->details}</blockquote>
+EOD;
+	}
+
+	private function getTextRepresentation() {
+		$image = $this->resizeImage(150, $this->title, 'class="img"');
+
+		return $image.$this->details;
+	}
+
+	private function getVideoRepresentation() {
+		return <<<EOD
+	{$this->details}
+	<div><a href="{$this->image}" class="video">Video starten</a></div>
+EOD;
+	}
+
+	private function resizeImage($max, $title, $extra = "") {
+		$image = $this->getImage();
+		if ($image) {
 			list($width, $height) = getimagesize($image);
 			if ($width > 2*$max) {
 				return "<a title=\"".$title."\" href=\"".$image."\"><img src=\"".$image."\" width=\"".$max."\" ".$extra."/></a>";
@@ -296,7 +308,7 @@ EOD;
 <table class="adminForm">
 	<tr>
 		<td width="50"><label for="title">Titel:</label></td>
-		<td><input type="text" name="title" id="title" maxlength="30" value="{$title}" /></td>
+		<td><input type="text" name="title" id="title" maxlength="30" class="long" value="{$title}" /></td>
 	</tr>
 	<tr>
 		<td><label for="start">Start:</label></td>
@@ -316,7 +328,7 @@ EOD;
 	</tr>
 	<tr>
 		<td><label for="image">Bild:</label></td>
-		<td><input type="text" name="image" id="image" maxlength="100" value="{$image}" /></td>
+		<td><input type="text" placeholder="http://" name="image" id="image" maxlength="200" class="long" value="{$image}" /></td>
 	</tr>
 	<tr>
 		<td colspan="2"><textarea name="details" id="details" rows="10" cols="50">{$details}</textarea></td>
