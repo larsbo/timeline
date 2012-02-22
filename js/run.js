@@ -9,16 +9,17 @@ jumpToEvent = function(currentEventId, eventId) {
 
 		//remove old back button if exists
 		el.siblings().first().find('a.back').remove();
-
 		//show back button
-		var a = $("<a class=\"back\"></a>");
-		a.title = $('#event'+currentEventId).data('title');
-		a.click(function(e){
-			e.preventDefault();
-			jumpBack(currentEventId);
-			a.remove();
-		});
-		el.next().append(a);
+		if (currentEventId) {
+			var a = $("<a class=\"back\"></a>");
+			a.title = $('#event'+currentEventId).data('title');
+			a.click(function(e){
+				e.preventDefault();
+				jumpBack(currentEventId);
+				a.remove();
+			});
+			el.next().append(a);
+		}
 		el.parent().addClass('sticky').draggable('enable');
 		el.next().stop(true, true).fadeIn();
 	}
