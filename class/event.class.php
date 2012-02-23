@@ -210,7 +210,7 @@ EOD;
 			break;
 		}
 		$html = <<<EOD
-<div class="event-preview" style="zIndex: 0">
+<div class="event-preview" style="zIndex: 0" data-top="{$line}">
 	<span 
 		id="event{$this->event_id}"
 		class="event{$colorclass}" 
@@ -220,7 +220,8 @@ EOD;
 		data-offset="{$offset}" 
 		data-width="{$length}"
 		data-colorclass="{$this->colorclass}"
-	>{$this->title}
+	>
+		<span class="title">{$this->title}</span>
 		<span class="pin"></span>
 	</span>
 	<div class="event-details" style="zIndex: 1">

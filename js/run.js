@@ -41,7 +41,7 @@ jumpToEvent = function(currentEventId, eventId) {
 		}
 		hoverInFunction(el.parent(), el);
 		el.parent().addClass('sticky').draggable('enable');
-//		el.next().stop(true, true).fadeIn();
+		Event.makeClone(el.parent());
 	}
 };
 
@@ -121,14 +121,15 @@ jQuery(document).ready(function($){
 	});
 
 	var timelineheight = $('#content').height();
-	var maxElementHeight = Math.max(timelineheight-100,100);
+	var maxElementHeight = Math.min(Math.max(timelineheight-100,100), 400);
 
 	/*** events ***/
 	events.each(function(){
 		var event = $(this);
+		var details = event.siblings().first();
 
 		// show large images
-		event.siblings().first().find('img').each(function(){
+		details.find('img').each(function(){
 			var image = $(this);
 			if (!image.attr('height') && !image.attr('width')) {
 				image.attr('height', 150);
@@ -137,7 +138,7 @@ jQuery(document).ready(function($){
 		});
 
 		// show event details
-		event.hovercard();
+		event.hovercard(timeline);
 
 		// make events draggable
 		event.parent().draggable({

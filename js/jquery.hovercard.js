@@ -48,18 +48,42 @@ Event = {
 		if($('#'+id).length == 0) {
 			var clone = eventContainer.clone().css({
 				'opacity': 1,
-				'z-Index': 0
+				'z-Index': 0,
+				'bottom': ''
 			});
 			clone.find('.event').addClass('clone');
 			clone.find('.event-details, .pin').remove(); // remove unneeded elements
+			clone.removeClass('ui-draggable sticky'); // remove unneeded classes
 			clone.attr('id', id);
 			event.parent().after(clone);	// insert clone after original event
 		}
 	}
 };
 
-	hoverInFunction = function($this, event){
-		if ($this.find('.event-details').text().length) {	// check for content
+	hoverInFunction = function($this, event, e, timelineOffset){
+		var details = event.next();
+
+		if (details.text().length) {	// check for content
+
+			// move title & details on long events to mouse position
+			if (e) {
+				var title = $this.find('.title');
+				var eventOffset = event.offset().left + timelineOffset;	// corrects window offset by adding timelines internal 'x'
+				var newPos = e.pageX - eventOffset;	// mouse x-offset - event x-offset
+						newPos = newPos - (title.width() * 0.5);	// center title under mouse position
+						newPos = Math.max(Math.min(newPos, event.width() - title.width()), 0);	// avoid that title move out of container
+
+				// change title position
+				if (event.width() > title.width() + 60) {	// small buffer to avoid that all event titles move
+					title.animate({left: newPos + 'px'}, {queue:false, duration:1000});
+					title.data('moved', true);
+				}
+				// change details position
+				if (event.width() > details.width()) {
+					newPos = Math.min(newPos, event.width() - details.width());	// avoid that details move out of container
+					details.css({left: newPos + 'px'});
+				}
+			}
 
 			if (!$this.hasClass('sticky')) {
 				//create new max of zIndices, so element will hover on top...
@@ -72,7 +96,16 @@ Event = {
 						.width(event.attr('data-width'))
 						.html(event.data('title') + '<span class="pin"></span>');
 				}
-				event.next().stop(true, true).fadeIn();
+
+				details.stop(true, true).fadeIn();
+
+				xE = details.offset().top + details.outerHeight();
+				xB = $(window).height() - $('#options').outerHeight();
+				if (xE >= xB) {
+					//event is too big, we need to shift it up a bit ...
+					details.css('bottom', 0).css('position', 'relative');
+					details.parent().css('bottom', 0).css('top', '');
+				}
 			}
 			else {
 				//remove self from list, find max and set to max+1
@@ -80,12 +113,27 @@ Event = {
 				zIndices.push(zIndices.last()+1);
 				$this.css("zIndex", zIndices.last().toString());
 			}
-		
+
 			Event.hoverin($this.find('.event'));
 		}
 	};
-	hoverOutFunction = function($this, event){
+	hoverOutFunction = function($this, event, e){
+
+			if (e) {	// move title on long events
+				var title = $this.find('.title');
+
+				// change title position back
+				if (title.data('moved'))
+					title.animate({left: '0px'}, {queue:false, duration:1000});
+			}
+
 		if (!$this.hasClass('sticky')) {
+			var eventDetails = event.next();
+			eventDetails.css('bottom', '').css('position', '');
+			eventDetails.parent().css('bottom', '');
+	//		if (eventDetails.parent().data('top'))
+	//			eventDetails.parent().css('top', eventDetails.parent().data('top'));
+
 			event.next().stop(true, true).fadeOut(300, function(){
 
 				if (shortModus()) {
@@ -104,7 +152,7 @@ Event = {
 		}
 	};
 
-	$.fn.hovercard = function(){
+	$.fn.hovercard = function(timeline){
 		//Set defauls for the control
 		var event = $(this);
 		var options = {
@@ -141,9 +189,10 @@ Event = {
 				// move event back to original position
 				if (!eventContainer.hasClass('sticky')) {
 					eventContainer.draggable('disable');
+					var cl = $('#clone-' + eventContainer.find('.event').attr('data-event'));
 					eventContainer.animate({
-						top: eventContainer.data('origtop'),
-						left: eventContainer.data('origleft'),
+						top: cl.css('top'),
+						left: cl.css('left'),
 						duration: 'slow'
 					}, function(){
 						var id = 'clone-' + eventContainer.find('.event').attr('data-event');
@@ -157,11 +206,12 @@ Event = {
 		});
 
 		// show event details on hover
-		event.parent().on('mouseover mouseleave', function(e){
-			if (e.type == 'mouseover')
-				hoverInFunction($(this), event);
+		event.parent().on('mouseenter mouseleave', function(e){
+			var offset = timeline.x ? timeline.x : 0;
+			if (e.type == 'mouseenter')
+				hoverInFunction($(this), event, e, offset);
 			else
-				hoverOutFunction($(this), event);
+				hoverOutFunction($(this), event, e);
 		});
 	};
 })(jQuery);
