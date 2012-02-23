@@ -126,9 +126,10 @@ jQuery(document).ready(function($){
 	/*** events ***/
 	events.each(function(){
 		var event = $(this);
+		var details = event.siblings().first();
 
 		// show large images
-		event.siblings().first().find('img').each(function(){
+		details.find('img').each(function(){
 			var image = $(this);
 			if (!image.attr('height') && !image.attr('width')) {
 				image.attr('height', 150);
@@ -137,7 +138,7 @@ jQuery(document).ready(function($){
 		});
 
 		// show event details
-		event.hovercard();
+		event.hovercard(timeline);
 
 		// make events draggable
 		event.parent().draggable({

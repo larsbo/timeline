@@ -182,6 +182,10 @@ $wrapperheight: 300px;
 		@include shadows(1px 0 0 rgba(0,0,0,.5));
 		@include rounded-corners(.15em 0 0 .15em);
 	}
+	.title {
+		display: inline-block;
+		position: relative;
+	}
 }
 .clone {
 	cursor:inherit;
