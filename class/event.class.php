@@ -217,7 +217,8 @@ EOD;
 		data-offset="{$offset}" 
 		data-width="{$length}"
 		data-colorclass="{$this->colorclass}"
-	>{$this->title}
+	>
+		<span class="title">{$this->title}</span>
 		<span class="pin"></span>
 	</span>
 	<div class="event-details" style="zIndex: 1">
