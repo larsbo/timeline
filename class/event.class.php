@@ -53,7 +53,7 @@ class Event {
 		return $this->type;
 	}
 	function getDetails() {
-		return preg_replace('#<img src="data/[a-zA-Z0-9]+.[a-Z]+" />#', '<a title="'.$this->title.'" href="$1">$1</a>', $this->details);
+		return preg_replace('#(<img.* src=")(data/[a-zA-Z0-9\.-_]+)(".*>)#is', '<a title="'.$this->title.'" href="$2"><img class="img" height="200" src="$2" /></a>', $this->details);
 	}
 	function getImage() {
 		if (!empty($this->image) && substr($this->image,0,4)=='http')
@@ -239,7 +239,7 @@ EOD;
 		if ($this->details) {
 			return <<<EOD
 	<div class="big-img">{$image}</div>
-	<div class="img-text">{$this->details}</div>
+	<div class="img-text">{$this->getDetails()}</div>
 EOD;
 		} else {
 			return;
@@ -248,14 +248,14 @@ EOD;
 
 	private function getQuoteRepresentation() {
 		return <<<EOD
-	<blockquote>{$this->details}</blockquote>
+	<blockquote>{$this->getDetails()}</blockquote>
 EOD;
 	}
 
 	private function getTextRepresentation() {
 		$image = $this->resizeImage(150, $this->title, 'class="img"');
 
-		return $image.$this->details;
+		return $image.$this->getDetails();
 	}
 
 	private function getVideoRepresentation() {
@@ -266,7 +266,7 @@ EOD;
 		<img class="img" src="http://img.youtube.com/vi/{$video['v']}/1.jpg" />
 		<span class="video_overlay"></span>
 	</a>
-	{$this->details}
+	{$this->getDetails()}
 EOD;
 	}
 

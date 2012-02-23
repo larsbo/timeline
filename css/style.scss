@@ -229,6 +229,10 @@ $wrapperheight: 300px;
 		text-align: justify;
 		@include rounded-corners(3px);
 		@include shadows(5px 5px 5px #888);
+		p .img {
+			clear: both;
+			margin: 10px 30px;
+		}
 		.img {
 			border:1px solid #ccc;
 			float:left;
