@@ -258,7 +258,7 @@ EOD;
 		parse_str(parse_url($this->image, PHP_URL_QUERY), $video);
 
 		return <<<EOD
-	<a class="video" href="{$this->image}" title="Video starten">
+	<a class="video" href="{$this->image}" title="{$this->title}">
 		<img class="img" src="http://img.youtube.com/vi/{$video['v']}/1.jpg" />
 		<span class="video_overlay"></span>
 	</a>
