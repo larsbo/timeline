@@ -52,6 +52,9 @@ class Event {
 	function getType() {
 		return $this->type;
 	}
+	function getDetails() {
+		return preg_replace('#<img src="data/[a-zA-Z0-9]+.[a-Z]+" />#', '<a title="'.$this->title.'" href="$1">$1</a>', $this->details);
+	}
 	function getImage() {
 		if (!empty($this->image) && substr($this->image,0,4)=='http')
 			return $this->image;
@@ -259,7 +262,7 @@ EOD;
 		parse_str(parse_url($this->image, PHP_URL_QUERY), $video);
 
 		return <<<EOD
-	<a class="video" href="{$this->image}" title="Video starten">
+	<a class="video" href="{$this->image}" title="{$this->title}">
 		<img class="img" src="http://img.youtube.com/vi/{$video['v']}/1.jpg" />
 		<span class="video_overlay"></span>
 	</a>
