@@ -24,13 +24,17 @@ jumpToEvent = function(currentEventId, eventId) {
 		timeline.scrollTo(nx*-1, 300);
 
 		//remove old back button if exists
-		el.siblings().first().find('a.back').remove();
+		el.siblings().first().find('a.jump').remove();
 		//show back button
 		if (currentEventId) {
-			var a = $("<a class=\"back\"></a>");
+			var a = $("<a class=\"jump\"></a>");
 			var oldel = $('#event'+currentEventId);
 			hoverOutFunction(oldel.parent(), oldel);
 			a.title = oldel.data('title');
+			if (el.offset().left < oldel.offset().left)
+				a.addClass('right-arrow');
+			else
+				a.addClass('left-arrow');
 			a.click(function(e){
 				e.preventDefault();
 				hoverOutFunction(el.parent(), el);

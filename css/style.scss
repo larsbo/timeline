@@ -277,12 +277,17 @@ $wrapperheight: 300px;
 			font-weight: normal;
 			padding-left: 20px;
 		}
-		a.back {
-			background: url("../images/left.png") no-repeat;
+		a.jump {
 			cursor: pointer;
 			float: right;
 			height: 32px;
 			width: 32px;
+			@include rounded-corners(16px);
+			&:hover {
+				@include shadows(0 0 15px grey);
+			}
+			&.left-arrow { background: url("../images/left.png") no-repeat; }
+			&.right-arrow { background: url("../images/right.png") no-repeat; }
 		}
 	}
 	&.ui-state-disabled, &.ui-widget-content &.ui-state-disabled, &.ui-widget-header &.ui-state-disabled {
