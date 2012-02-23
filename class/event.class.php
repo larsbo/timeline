@@ -52,6 +52,9 @@ class Event {
 	function getType() {
 		return $this->type;
 	}
+	function getDetails() {
+		return preg_replace('#<img src="data/[a-zA-Z0-9]+.[a-Z]+" />#', '<a title="'.$this->title.'" href="$1">$1</a>', $this->details);
+	}
 	function getImage() {
 		if (!empty($this->image) && substr($this->image,0,4)=='http')
 			return $this->image;
