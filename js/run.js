@@ -8,6 +8,22 @@ $.fn.showEvent = function(){
 }
 $.fn.hideEvent = function(){
 	var el = $(this);//TODO stickies?
+	var parent = el.parent();
+	if (parent.hasClass('sticky')) {
+		parent.removeClass('sticky')
+		el.next().hide();
+
+		// move event back to original position
+		var cl = $('#clone-' + el.attr('data-event'));
+		parent.animate({
+			top: cl.css('top'),
+			left: cl.css('left'),
+			duration: 'slow'
+		}, function(){
+			var id = 'clone-' + el.attr('data-event');
+			$('#'+id).remove();
+		});
+	}
 	el.hide();
 	$('#minimap-'+el.data('event')).hide();
 }
