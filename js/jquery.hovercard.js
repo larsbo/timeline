@@ -175,8 +175,8 @@ Event = {
 		});
 
 		// show event details on hover
-		event.parent().on('mouseover mouseleave', function(e){
-			if (e.type == 'mouseover')
+		event.parent().on('mouseenter mouseleave', function(e){
+			if (e.type == 'mouseenter')
 				hoverInFunction($(this), event);
 			else
 				hoverOutFunction($(this), event);
