@@ -42,6 +42,7 @@ jumpToEvent = function(currentEventId, eventId) {
 		hoverInFunction(el.parent(), el);
 		el.parent().addClass('sticky').draggable('enable');
 		Event.makeClone(el.parent());
+		hoverOutFunction(el.parent(), el);
 	}
 };
 
