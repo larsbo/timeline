@@ -311,12 +311,24 @@ table {
       background: url("../images/extern.png") no-repeat 5px center;
       font-weight: normal;
       padding-left: 20px; }
-    .event-preview .event-details a.back {
-      background: url("../images/left.png") no-repeat;
+    .event-preview .event-details a.jump {
       cursor: pointer;
       float: right;
       height: 32px;
-      width: 32px; }
+      width: 32px;
+      border-radius: 16px;
+      -o-border-radius: 16px;
+      -moz-border-radius: 16px;
+      -webkit-border-radius: 16px; }
+      .event-preview .event-details a.jump:hover {
+        box-shadow: 0 0 15px grey;
+        -o-box-shadow: 0 0 15px grey;
+        -moz-box-shadow: 0 0 15px grey;
+        -webkit-box-shadow: 0 0 15px grey; }
+      .event-preview .event-details a.jump.left-arrow {
+        background: url("../images/left.png") no-repeat; }
+      .event-preview .event-details a.jump.right-arrow {
+        background: url("../images/right.png") no-repeat; }
   .event-preview.ui-state-disabled, .event-preview.ui-widget-content .event-preview.ui-state-disabled, .event-preview.ui-widget-header .event-preview.ui-state-disabled {
     opacity: 1 !important; }
 
